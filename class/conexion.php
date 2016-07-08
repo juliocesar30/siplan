@@ -23,7 +23,7 @@ class conexion {
             $this->clave = "key";
             case 5:
             $this->usuario = "siplan_consultas";
-            $this->clave = "IEwmQLQfNYmaRkih";
+            $this->clave = "IEwmQLQf&/NYmaRkih4";
         }
        $conn = new mysqli($this->host,$this->usuario,$this->clave,$this->db);
        return $conn;
