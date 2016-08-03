@@ -55,6 +55,5 @@ if($infoUsuario['activo']==0){
 
 // Cargamos la información del usuario a las variables de sesion
 include("session_var.php");
-
-
+header("location:../main.php");
 ?>

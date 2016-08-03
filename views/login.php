@@ -30,9 +30,7 @@
                 <input type="password" class="form-control" placeholder="Password" name="clave" required="">
                 </div>
                 <button type="submit" class="btn btn-primary block full-width m-b"><i class="fa fa-sign-in" aria-hidden="true"></i> Ingresar</button>
-
             </form>
-
         </div>
     </div>
     <script src="js/jquery-2.1.1.js"></script>
