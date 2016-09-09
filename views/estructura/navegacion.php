@@ -28,9 +28,9 @@
 <li>
 <a href="index.html"><i class="fa fa-list"></i> <span class="nav-label">Planeación</span> <span class="fa arrow"></span></a>
  <ul class="nav nav-second-level collapse">
-   <li><a href="main.php?token=<?php echo md5(1);?>">Marco Teórico</a></li>
-   <li><a href="index.html">Proyectos</a></li>
-   <li><a href="dashboard_2.html">Obras</a></li>
+   <li><a href="main.php?token=<?php echo md5(1);?>">Marco Estratégico</a></li>
+   <li><a href="main.php?token=<?php echo md5(2);?>">Proyectos</a></li>
+   <li><a href="main.php?token=<?php echo md5(0);?>">Obras</a></li>
    <li><a href="dashboard_3.html">Inversión</a></li>
 </ul>
 </li>

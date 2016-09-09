@@ -8,6 +8,12 @@
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <?php if(isset($_GET['token'])){
+		if(md5(2) == $_GET['token']){
+			echo "<link href='css/datatables.min.css' rel='stylesheet'>";
+		}
+	}
+	?>
 </head>
 
 

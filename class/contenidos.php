@@ -13,6 +13,12 @@
 					  require_once("views/marco_teorico.php");
 					  break;
 				  }
+
+
+				    case md5(2): {
+					  require_once("views/proyectos.php");
+					  break;
+				  }
                  default: {
                    require_once("views/error404.php");
                    break;
