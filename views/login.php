@@ -14,9 +14,9 @@
         <div>
             <div>
                <?php if($conf[2] == 1){ ?>
-                <img src="images/logotipo_zac.png">
+                <img src="images/logotipo_zac.png" width="300">
                 <?php }else{ ?>
-                <img src="images/logotipo_zac.png">
+                <img src="images/logotipo_zac.png" width="300">
                 <?php } ?>
             </div>
             <h3>Bienvenido</h3>
