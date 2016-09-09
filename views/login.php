@@ -9,14 +9,14 @@
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 </head>
-<body class="gray-bg">
+<body class="white-bg">
     <div class="middle-box text-center loginscreen animated fadeInDown">
         <div>
             <div>
                <?php if($conf[2] == 1){ ?>
-                <img src="images/logotipo_elecciones.png">
+                <img src="images/logotipo_zac.png">
                 <?php }else{ ?>
-                <img src="images/logotipo_normal.png">
+                <img src="images/logotipo_zac.png">
                 <?php } ?>
             </div>
             <h3>Bienvenido</h3>
