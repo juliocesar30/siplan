@@ -11,8 +11,7 @@
 <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><?php echo $_SESSION['nombre']; ?></strong>
 </span> <span class="text-muted text-xs block"><?php echo $_SESSION['dependencia']; ?><b class="caret"></b></span> </span> </a>
 <ul class="dropdown-menu animated fadeInRight m-t-xs">
-	<li><a href="profile.html">Perfil</a></li>
-    <li><a href="contacts.html">Contactos</a></li>
+	<li><a href="main.php?token=<?php echo md5(3); ?>">Perfil</a></li>
     <li><a href="mailbox.html">Mensajes</a></li>
     <li class="divider"></li>
  <li><a href="login.html">Salir</a></li>
