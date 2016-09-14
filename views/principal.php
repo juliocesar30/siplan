@@ -4,6 +4,9 @@
 <h2><i class="fa fa-home"></i> Inicio</h2>
 <small>Resumen de Proyectos e indicadores - Ejercicio <b><?php echo $_SESSION['ejercicio'];  ?> </b></small>
 </div>
+    <hr>
+   <div align="center"> <img src="images/UplaLogoGrande.png" width="400"> </div>
+    <br>
 <div class="col-sm-4">
 <ul class="list-group clear-list m-t">
 <li class="list-group-item fist-item">
