@@ -9,6 +9,6 @@ $_SESSION['nombre'] = $infoUsuario['nombre'];
 $_SESSION['activo'] = $infoUsuario['activo'];
 $_SESSION['dependencia'] = $infoUsuario['dependencia'];
 $_SESSION['avatar'] = $infoUsuario['avatar'];
-$_SESSION['ejercicio'] = 2016;
+$_SESSION['ejercicio'] = 2017;
 unset($infoUsuario);
 ?>

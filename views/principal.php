@@ -42,7 +42,7 @@ Información
 	}
 	$conexion->close();
 ?>
-<p>Por el momento el sistema se encuentra en fase de desarrollo, algunos modulos pueden no funcionar correctamente.</p>
+
 </div>
 </div>
 </div>
