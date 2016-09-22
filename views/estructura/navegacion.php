@@ -33,7 +33,7 @@
    <li><a href="dashboard_3.html">Inversión</a></li>
 </ul>
 </li>
-
+<?php /*
 <li>
 <a href="index.html"><i class="fa fa-line-chart"></i> <span class="nav-label">Evaluación</span> <span class="fa arrow"></span></a>
  <ul class="nav nav-second-level collapse">
@@ -75,7 +75,7 @@
 
 </ul>
 </li>
-
+*/?>
 </ul>
 </div>
 </nav>

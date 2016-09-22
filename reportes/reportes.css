@@ -1,0 +1,17 @@
+body{
+    font-family: sans-serif;
+    color:#333;
+}
+
+hr{
+    color: #2f7531;
+    background-color: #2f7531;
+    height: 1px;
+}
+
+.contenido {
+    text-align: justify;
+    color: black;
+    font-size: 12px;
+}
+
