@@ -27,3 +27,18 @@ function ejes(){
      document.getElementById('ejes_div').innerHTML = msg;
   });
 }
+
+function cargarLineasPED(v){
+document.getElementById('linea_div').innerHTML = "<label >Linea</label><select class='form-control m-b'><option>-Sleccione Eje-</option></select>";
+document.getElementById('estrategia_div').innerHTML = "<label >Estrategia</label><select class='form-control m-b'><option>-Sleccione Linea-</option></select>";
+var catalogo = "lineas";
+       $.ajax({
+       method: "POST",
+       url: "class/catalogos.php",
+       data: { catalogo: catalogo,eje: v}
+})
+  .done(function(msg) {
+     document.getElementById('linea_div').innerHTML = msg;
+  });
+
+}

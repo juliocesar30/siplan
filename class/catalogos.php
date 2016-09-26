@@ -24,6 +24,18 @@ session_start();
 
         }
 
+        function linea(){
+            require_once('conexion.php');
+            $sql = "SELECT * FROM lineas WHERE id_eje = ".$_POST['eje'];
+            $conn = new conexion();
+            $conexion = $conn->conectar($_SESSION['id_perfil']);
+            $conexion->set_charset("utf8");
+            $ExeConsulta = $conexion->query($sql);
+            $conexion ->close();
+            return $ExeConsulta;
+
+        }
+
     }
 
 
@@ -45,12 +57,24 @@ if(isset($_POST['catalogo'])){
             $catalogo = new catalogos;
             $prog_pres = $catalogo->eje();
             echo "<label for='sltEje'>Eje</label>";
-            echo "<select class='form-control m-b' id='sltEje' name='sltEje'><option value='0'>-Seleccione-</option>";
+            echo "<select class='form-control m-b' id='sltEje' name='sltEje' onchange='cargarLineasPED(this.value);'><option value='0'>-Seleccione-</option>";
             while($res = $prog_pres->fetch_array()){
                 echo "<option value='".$res[0]."'>".$res[1]."</option>";
             }
             echo "<select>";
         break;
+
+        case "lineas":
+            $catalogo = new catalogos;
+            $prog_pres = $catalogo->linea();
+            echo "<label for='sltLinea'>Linea</label>";
+            echo "<select class='form-control m-b' id='sltLinea' name='sltLinea' onchange='cargarEstrategiasPED(this.value);'><option value='0'>-Seleccione-</option>";
+            while($res = $prog_pres->fetch_array()){
+                echo "<option value='".$res[0]."'>".$res[2]."</option>";
+            }
+            echo "<select>";
+        break;
+
     }
 }
 
