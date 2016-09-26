@@ -7,90 +7,89 @@
 <div class="row">
 <div class="col-lg-12">
 <div class="ibox float-e-margins">
-<div class="ibox-title">
-<h5>Listado de proyectos Registrados por la dependencia</h5>
-</div>
+
+        <div class="tooltip-demo ibox-title">
+&nbsp;&nbsp;
+<div class="btn-group">
+<a href="javascript:nuevo()" class="btn btn-outline btn-default" data-toggle="tooltip" data-placement="bottom" title="Importar a PDF">&nbsp;<i class="fa fa-plus" aria-hidden="true"></i> Nuevo</a>
+<a href="reportes/marco_estrategico_pdf.php" target="_blank" class="btn btn-outline btn-default" data-toggle="tooltip" data-placement="bottom" title="Importar a PDF">&nbsp;<i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF</a>
+<a href="reportes/marco_estrategico_xls.php" target="_blank" class="btn btn-outline btn-default" data-toggle="tooltip" data-placement="bottom" title="Importar a XLS">&nbsp;<i class="fa fa-file-excel-o" aria-hidden="true"></i> XLS</a>
+        <a href="reportes/marco_estrategico_doc.php" target="_blank"class="btn btn-outline btn-default" data-toggle="tooltip" data-placement="bottom" title="Importar a DOC">&nbsp;<i class="fa fa-file-word-o" aria-hidden="true"></i> DOC</a></div></div>
+
 <div class="ibox-content">
-<div class="table-responsive">
-<table class="table table-striped table-bordered table-hover dataTables-example" >
-<thead>
-<tr>
-<th>No.</th>
-<th>Proyecto</th>
-<th>PED</th>
-<th>Ponderación</th>
-<th>Estatus</th>
-<th>Herramientas</th>
+<div class="table-responsive" id="lista_proyectos">
 
-</tr>
-</thead>
-<tbody>
-<tr class="gradeX">
-<td>1</td>
-<td>Título Proyecto N</td>
-<td>1.2.1</td>
-<td>20%</td>
-<td>Sin aprobar</td>
-<td>
-   <a href="#" title="Información"><i class="fa fa-info-circle" aria-hidden="true"></i></a>&nbsp;&nbsp;
-  <a href="#" title="Información"> <i class="fa fa-cog" aria-hidden="true"></i></a>&nbsp;&nbsp;
-   <a href="#" title="Información"><i class="fa fa-bar-chart" aria-hidden="true"></i></a>&nbsp;&nbsp;
-   <a href="#" title="Información"><i class="fa fa-check-circle-o" aria-hidden="true"></i></a>&nbsp;&nbsp;
-   <a href="#" title="Información"><i class="fa fa-pencil" aria-hidden="true"></i></a>&nbsp;&nbsp;
-   <a href="#" title="Información"><i class="fa fa-toggle-on" aria-hidden="true"></i></a>&nbsp;&nbsp;
-   <a href="#" title="Información"><i class="fa fa-trash" aria-hidden="true"></i></a>&nbsp;&nbsp;
-</td>
-</tr>
-<tr class="gradeX" style="background-color:#FAF2C0;">
-<td>2</td>
-<td>Título Proyecto N</td>
-<td>1.2.2</td>
-<td>20%</td>
-<td>Aprob Dep.</td>
-<td>
-   <a href="#" title="Información"><i class="fa fa-info-circle" aria-hidden="true"></i></a>&nbsp;&nbsp;
-  <a href="#" title="Información"> <i class="fa fa-cog" aria-hidden="true"></i></a>&nbsp;&nbsp;
-   <a href="#" title="Información"><i class="fa fa-bar-chart" aria-hidden="true"></i></a>&nbsp;&nbsp;
-   <a href="#" title="Información"><i class="fa fa-check-circle-o" aria-hidden="true"></i></a>&nbsp;&nbsp;
-   <a href="#" title="Información"><i class="fa fa-pencil" aria-hidden="true"></i></a>&nbsp;&nbsp;
-   <a href="#" title="Información"><i class="fa fa-toggle-on" aria-hidden="true"></i></a>&nbsp;&nbsp;
-   <a href="#" title="Información"><i class="fa fa-trash" aria-hidden="true"></i></a>&nbsp;&nbsp;
-
-</td>
-</tr>
-<tr class="gradeX" style="background-color:#DCF6EE;">
-<td>3</td>
-<td>Título Proyecto N</td>
-<td>1.2.3</td>
-<td>60%</td>
-<td>Aprob. UPLA</td>
-<td>
-   <a href="#" title="Información"><i class="fa fa-info-circle" aria-hidden="true"></i></a>&nbsp;&nbsp;
-   <a href="#" title="Información"> <i class="fa fa-cog" aria-hidden="true"></i></a>&nbsp;&nbsp;
-   <a href="#" title="Información"><i class="fa fa-bar-chart" aria-hidden="true"></i></a>&nbsp;&nbsp;
-   <i class="fa fa-check-circle-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;
-   <a href="#" title="Información"><i class="fa fa-pencil" aria-hidden="true"></i></a>&nbsp;&nbsp;
-   <a href="#" title="Información"><i class="fa fa-toggle-on" aria-hidden="true"></i></a>&nbsp;&nbsp;
-   <a href="#" title="Información"><i class="fa fa-trash" aria-hidden="true"></i></a>&nbsp;&nbsp;
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 
 
-</td>
-</tr>
-</tbody>
-<tfoot>
-<tr>
-<th>No.</th>
-<th>Proyecto</th>
-<th>PED</th>
-<th>Ponderación</th>
-<th>Estatus</th>
-<th>Herramientas</th>
-</tr>
-</tfoot>
-</table>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+<script src="js/plugins/jquery.jeditable.js"></script>
+<script src="js/plugins/datatables.min.js"></script>
+<script>
+
+function listar(){
+     $.ajax({
+       method: "POST",
+       url: "class/proyectos.php",
+       data: { accion: 1}
+})
+  .done(function(msg) {
+     document.getElementById('lista_proyectos').innerHTML = msg;
+     cargar();
+  });
+
+}
+
+function cargar(){
+       $('.dataTables-example').DataTable({
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+
+                ]
+            });
+
+            /* Init DataTables */
+            var oTable = $('#editable').DataTable();
+            /* Apply the jEditable handlers to the table */
+            oTable.$('td').editable( '../example_ajax.php', {
+                "callback": function( sValue, y ) {
+                    var aPos = oTable.fnGetPosition( this );
+                    oTable.fnUpdate( sValue, aPos[0], aPos[1] );
+                },
+                "submitdata": function ( value, settings ) {
+                    return {
+                        "row_id": this.parentNode.getAttribute('id'),
+                        "column": oTable.fnGetPosition( this )[2]
+                    };
+                },
+                "width": "90%",
+                "height": "100%"
+            } );
+
+}
+
+function fnClickAddRow() {
+            $('#editable').dataTable().fnAddData( [
+                "Custom row",
+                "New row",
+                "New row",
+                "New row",
+                "New row" ] );
+        }
+
+window.onload = listar;
+
+function nuevo(){
+    var ponderacion = document.getElementById('ponderacionTotal').value;
+    if(ponderacion == 100){
+        alert("No puedes agregar más proyectos, ponderación 100%");
+        return false;
+    } else {
+        location.href = "main.php?token=<?php echo md5(4); ?>"
+    }
+}
+</script>

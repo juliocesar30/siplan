@@ -23,6 +23,12 @@
 					  require_once("views/perfil.php");
 					  break;
 				  }
+
+                         case md5(4): {
+					  require_once("views/nuevo_proyecto.php");
+					  break;
+				  }
+
                  default: {
                    require_once("views/error404.php");
                    break;

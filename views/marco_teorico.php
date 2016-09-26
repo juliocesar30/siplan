@@ -12,9 +12,12 @@
 </div>
     <div class="tooltip-demo ibox-title">
 &nbsp;&nbsp;&nbsp;Importar: &nbsp;
-<a href="reportes/marco_estrategico_pdf.php" target="_blank" class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Importar a PDF">&nbsp;<i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp;</a>
-<a href="reportes/marco_estrategico_xls.php" target="_blank" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="Importar a XLS">&nbsp;<i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;</a>
-<a href="reportes/marco_estrategico_doc.php" target="_blank"class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Importar a DOC">&nbsp;<i class="fa fa-file-word-o" aria-hidden="true"></i>&nbsp;</a>
+<div class="btn-group">
+<a href="reportes/marco_estrategico_pdf.php" target="_blank" class="btn btn-outline btn-default" data-toggle="tooltip" data-placement="bottom" title="Importar a PDF">&nbsp;<i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF</a>
+<a href="reportes/marco_estrategico_xls.php" target="_blank" class="btn btn-outline btn-default" data-toggle="tooltip" data-placement="bottom" title="Importar a XLS">&nbsp;<i class="fa fa-file-excel-o" aria-hidden="true"></i> XLS</a>
+        <a href="reportes/marco_estrategico_doc.php" target="_blank"class="btn btn-outline btn-default" data-toggle="tooltip" data-placement="bottom" title="Importar a DOC">&nbsp;<i class="fa fa-file-word-o" aria-hidden="true"></i> DOC</a></div></div>
+
+
 <div class="ibox-content">
 <form method="get" class="form-horizontal">
 <div class="form-group">
