@@ -23,7 +23,22 @@ class proyectos{
     }
 
     function agregar(){
-        return false;
+        $dep = $_SESSION['id_dependencia'];
+       $ejercicio = $_SESSION['ejercicio'];
+        extract($_POST);
+       require_once('conexion.php');
+       $sql = "CALL listarProyectos($dep,$eje,$linea,$est,$num,'$nomb',$inversion,$pondera,'$umedida',$proganual,$progsem,$secpob,$benh,$benm,'$just',$fin,$fun,$subf,'$prop','$obspro','$uresp','$titular','$obj',$pndeje,$pndobj,$pndest,$pndlin,$progpres,'$ejercicio')";
+       $conn = new conexion();
+       $conexion = $conn->conectar($_SESSION['id_perfil']);
+       $conexion->set_charset("utf8");
+       if($conexion->query($sql)){
+          $conexion->close();
+           return true;
+       }else{
+           return false;
+       }
+
+
     }
 
     function eliminar(){
@@ -99,8 +114,19 @@ if(isset($_POST['accion'])){
 </table>
 <input type="hidden" id="ponderacionTotal" value="<?php echo $ponderacionTotal; ?>">
 <?php
-            break;
+break;
+case 2:
+$proyecto = new proyectos();
+$lista = $proyecto->listar();
+$ponderacionTotal = 0;
+while($Res = $lista->fetch_array()){
+    $ponderacionTotal = $ponderacionTotal + $Res[4];
+}
+print(100-$ponderacionTotal);
+break;
+
     }
 }
+
 
 ?>
