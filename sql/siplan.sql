@@ -1,5 +1,36 @@
 use siplan2017;
 
+CREATE TABLE `configuracion` (
+  `id_conf` tinyint(4) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de la configuracion',
+  `valor` varchar(16) COLLATE utf8_spanish_ci NOT NULL COMMENT 'valor de la configuración',
+  `descripcion` varchar(128) COLLATE utf8_spanish_ci NOT NULL COMMENT 'descripcion de la configuración',
+  PRIMARY KEY (`id_conf`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Configuración del SIPLAN';
+
+
+CREATE TABLE `eventos` (
+  `id_evento` smallint(6) NOT NULL AUTO_INCREMENT,
+  `evento` varchar(128) NOT NULL,
+  PRIMARY KEY (`id_evento`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+
+CREATE TABLE `historial` (
+  `id_historial` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id_evento` smallint(6) NOT NULL,
+  `fecha` date NOT NULL,
+  `hora` time NOT NULL,
+  `id_usuario` smallint(6) NOT NULL,
+  `ip_remota` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`id_historial`),
+  KEY `id_usuario_idx` (`id_usuario`),
+  KEY `id_evento_idx` (`id_evento`),
+  CONSTRAINT `id_evento` FOREIGN KEY (`id_evento`) REFERENCES `eventos` (`id_evento`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `id_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+
+
+
 CREATE TABLE `sectores` (
   `id_sector` tinyint(11) NOT NULL,
   `sector` varchar(45) NOT NULL,
@@ -431,3 +462,4 @@ CREATE TABLE `actividades` (
   CONSTRAINT `actindd` FOREIGN KEY (`dimension_indicador`) REFERENCES `dimension_indicador` (`id_dimension_indicador`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `actividad_componente` FOREIGN KEY (`id_componente`) REFERENCES `componentes` (`id_componente`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
