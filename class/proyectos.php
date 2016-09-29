@@ -27,15 +27,17 @@ class proyectos{
        $ejercicio = $_SESSION['ejercicio'];
         extract($_POST);
        require_once('conexion.php');
-       $sql = "CALL listarProyectos($dep,$eje,$linea,$est,$num,'$nomb',$inversion,$pondera,'$umedida',$proganual,$progsem,$secpob,$benh,$benm,'$just',$fin,$fun,$subf,'$prop','$obspro','$uresp','$titular','$obj',$pndeje,$pndobj,$pndest,$pndlin,$progpres,'$ejercicio')";
-       $conn = new conexion();
-       $conexion = $conn->conectar($_SESSION['id_perfil']);
-       $conexion->set_charset("utf8");
-       if($conexion->query($sql)){
+       $sql = "CALL guardar_proyecto ($dep,$eje,$linea,$est,$num,'$nomb',$inversion,$pondera,'$umedida',$proganual,$progsem,$secpob,$benh,$benm,'$just',$fin,$fun,$subf,'$prop','$obspro','$uresp','$titular','$obj',$pndeje,$pndobj,$pndest,$pndlin,$progpres,'$ejercicio')";
+     $conn = new conexion();
+      $conexion = $conn->conectar($_SESSION['id_perfil']);
+     $conexion->set_charset("utf8");
+
+        if($conexion->query($sql)){
           $conexion->close();
-           return true;
-       }else{
-           return false;
+           return "guardado";
+      }else{
+           $conexion->close();
+         return "error";
        }
 
 
@@ -48,11 +50,25 @@ class proyectos{
     function actualizar(){
         return false;
     }
+    function numero(){
+       $dep = $_SESSION['id_dependencia'];
+       $ejercicio = $_SESSION['ejercicio'];
+       extract($_POST);
+       require_once('conexion.php');
+       $sql = "SELECT COUNT(*) FROM proyectos WHERE id_dependencia = $dep AND num_proyecto = $num_proyecto AND ejercicio = '$ejercicio'";
+       $conn = new conexion();
+       $conexion = $conn->conectar($_SESSION['id_perfil']);
+       $ExeQuery = $conexion->query($sql);
+       $conexion->close();
+       $Res = $ExeQuery->fetch_array();
+        return $Res[0];
+    }
 }
 
+
+// ---------------- POST --------------------- //
 if(isset($_POST['accion'])){
     switch($_POST['accion']){
-
         case 1:
             $proyecto = new proyectos();
             $lista = $proyecto->listar();
@@ -124,7 +140,16 @@ while($Res = $lista->fetch_array()){
 }
 print(100-$ponderacionTotal);
 break;
-
+        case 3:
+        $proyecto = new proyectos();
+        $numero = $proyecto->numero();
+        echo $numero;
+        break;
+        case 4:
+        $proyecto = new proyectos();
+        $accion = $proyecto->agregar();
+        echo $accion;
+        break;
     }
 }
 
