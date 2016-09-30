@@ -36,8 +36,8 @@ class proyectos{
           $conexion->close();
            return "guardado";
       }else{
-           $conexion->close();
-         return "error";
+        $conexion->close();
+        return "error:";
        }
 
 
@@ -148,8 +148,8 @@ echo
 <td>".$leyenda."</td>
 <td>
 <a href='#' title='Información' class='btn btn-default btn-circle'><i class='fa fa-info' aria-hidden='true'></i></a>&nbsp;&nbsp;
-<a href='#' title='Componentes' class='btn btn-default btn-circle'><i class='fa fa-gear' aria-hidden='true'></i></a>&nbsp;&nbsp;
-<a href='#' title='Indicadores' class='btn btn-default btn-circle'><i class='fa fa-bar-chart' aria-hidden='true'></i></a>&nbsp;&nbsp;
+<a href='main.php?token=".md5(6)."&p=".$id_pr."' title='Componentes' class='btn btn-default btn-circle'><i class='fa fa-gear' aria-hidden='true'></i></a>&nbsp;&nbsp;
+<a href='main.php?token=e4da3b7fbbce2345d7772b0674a318d5&p=".$id_pr."' title='Indicadores' class='btn btn-default btn-circle'><i class='fa fa-bar-chart' aria-hidden='true'></i></a>&nbsp;&nbsp;
 ".$aprob."
 </td></tr>
 ";

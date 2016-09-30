@@ -13,8 +13,8 @@ class conexion {
             $this->usuario = "siplan_admin";
             $this->clave = "key";
             case 2:
-            $this->usuario = "siplan_admin";
-            $this->clave = "key";
+            $this->usuario = "siplan_dep";
+            $this->clave = "jhh.!!rtTusj889L?yd%";
             case 3:
             $this->usuario = "siplan_admin";
             $this->clave = "key";
