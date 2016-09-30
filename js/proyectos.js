@@ -261,6 +261,7 @@ data: {accion: 4,eje: eje,linea: linea,est: est,num: num,nomb: nomb,inversion: i
         alert("el proyecto con numero "+num+" se guardó correctamente");
         location.href="main.php?token=c81e728d9d4c2f636f067f89cc14862c";
       }else{
+          console.log(msg);
           alert("ha ocurrido un error al intentar guardar el proyecto");
       }
   });
@@ -285,4 +286,5 @@ function mostrarModal(){
 function ocultarModal(){
     modal.style.display = "none";
 }
+
 

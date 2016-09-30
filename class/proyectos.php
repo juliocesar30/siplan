@@ -44,7 +44,23 @@ class proyectos{
     }
 
     function eliminar(){
-        return false;
+
+       $dep = $_SESSION['id_dependencia'];
+       $ejercicio = $_SESSION['ejercicio'];
+       extract($_POST);
+       require_once('conexion.php');
+       $sql = "SELECT COUNT(*) FROM componentes WHERE id_proyecto = ".$proyecto;
+         $conn = new conexion();
+       $conexion = $conn->conectar($_SESSION['id_perfil']);
+       $ExSql = $conexion->query($sql);
+        $conexion->close();
+        $Res = $ExSql->fetch_array();
+        if($Res[0] == 0){
+           $ConsultaElimina = "DELETE FROM proyectos WHERE id_proyecto = ".$proyecto;
+             $conn = new conexion();
+       $conexion = $conn->conectar($_SESSION['id_perfil']);
+            if($conexion->query($ConsultaElimina)){return "eliminado";}else{return "error01";}
+        }else{ return "error02";}
     }
 
     function actualizar(){
@@ -62,6 +78,11 @@ class proyectos{
        $conexion->close();
        $Res = $ExeQuery->fetch_array();
         return $Res[0];
+    }
+
+    function aprobar(){
+       return "aprueba";
+
     }
 }
 
@@ -88,6 +109,8 @@ if(isset($_POST['accion'])){
     <?php
     $ponderacionTotal = 0;
     while($Res = $lista->fetch_array()){
+    $aprob = "";
+    $id_pr =  $Res[0];
     $status = $Res[5];
     $ponderacionActual = $Res[4];
     $ponderacionTotal = $ponderacionTotal + $ponderacionActual;
@@ -96,22 +119,38 @@ if(isset($_POST['accion'])){
         $leyenda = "Sin Aprobar";
     }
     if($status == 1){
-        echo "<tr class='gradeX'>";
+        echo "<tr class='gradeX bg_aprob1'>";
         $leyenda = "Aprob. Dep.";
     }
     if($status == 2){
-        echo "<tr class='gradeX'>";
+        echo "<tr class='gradeX bg_aprob2'>";
         $leyenda = "Aprob. UPLA";
     }
 
-    echo
-          " <td>".$Res[1]."</td>
+    if($status == 0 && $_SESSION['id_perfil'] == 2){
+        $aprob = "<a href='javascript:aprobar($id_pr);' title='Aprobar' class='btn btn-default btn-circle'><i class='fa fa-check' aria-hidden='true'></i></a>&nbsp;&nbsp;<a href='javascript:eliminar($id_pr);' title='Eliminar' class='btn btn-danger btn-circle'><i class='fa fa-trash' aria-hidden='true'></i></a>&nbsp;&nbsp;";
+    }
+
+    if($status == 1 && $_SESSION['id_perfil'] == 3 or $status == 1 && $_SESSION['id_perfil'] == 1 ){
+        $aprob = "<a href='#' title='Aprobar' class='btn btn-success btn-circle'><i class='fa fa-check' aria-hidden='true'></i></a>&nbsp;&nbsp;
+         <a href='#' title='Rechazar' class='btn btn-warning btn-circle'><i class='fa fa-close' aria-hidden='true'></i></a>&nbsp;&nbsp;";
+    }
+
+      if($status == 2 && $_SESSION['id_perfil'] == 3 or $status == 2 && $_SESSION['id_perfil'] == 1 ){
+        $aprob = "<a href='#' title='Rechazar' class='btn btn-warning btn-circle'><i class='fa fa-close' aria-hidden='true'></i></a>&nbsp;&nbsp;";
+    }
+
+echo
+"<td>".$Res[1]."</td>
 <td>".$Res[2]."</td>
-<td>".$Res[3]."</td>
+<td>".substr($Res[3],0,5)."</td>
 <td>".$ponderacionActual."</td>
 <td>".$leyenda."</td>
 <td>
-   <a href='#' title='Información'><i class='fa fa-info-circle' aria-hidden='true'></i></a>&nbsp;&nbsp;
+<a href='#' title='Información' class='btn btn-default btn-circle'><i class='fa fa-info' aria-hidden='true'></i></a>&nbsp;&nbsp;
+<a href='#' title='Componentes' class='btn btn-default btn-circle'><i class='fa fa-gear' aria-hidden='true'></i></a>&nbsp;&nbsp;
+<a href='#' title='Indicadores' class='btn btn-default btn-circle'><i class='fa fa-bar-chart' aria-hidden='true'></i></a>&nbsp;&nbsp;
+".$aprob."
 </td></tr>
 ";
     }
@@ -148,6 +187,11 @@ break;
         case 4:
         $proyecto = new proyectos();
         $accion = $proyecto->agregar();
+        echo $accion;
+        break;
+        case 5:
+        $proyecto = new proyectos();
+        $accion = $proyecto->eliminar();
         echo $accion;
         break;
     }

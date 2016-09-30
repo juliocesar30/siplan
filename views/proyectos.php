@@ -1,3 +1,11 @@
+<style>
+    .bg_aprob1  {
+        color: coral;
+    }
+    .bg_aprob2  {
+        color: #129912;
+    }
+</style>
 <div class="row wrapper border-bottom white-bg page-heading">
 <div class="col-lg-10">
 <h2>Proyectos Registrados</h2>
@@ -71,7 +79,6 @@ function cargar(){
             } );
 
 }
-
 function fnClickAddRow() {
             $('#editable').dataTable().fnAddData( [
                 "Custom row",
@@ -82,7 +89,6 @@ function fnClickAddRow() {
         }
 
 window.onload = listar;
-
 function nuevo(){
     var ponderacion = document.getElementById('ponderacionTotal').value;
     if(ponderacion == 100){
@@ -91,5 +97,33 @@ function nuevo(){
     } else {
         location.href = "main.php?token=<?php echo md5(4); ?>"
     }
+}
+
+function eliminar(v){
+    if(confirm("Desea eliminar el proyecto?")){
+         $.ajax({
+       method: "POST",
+       url: "class/proyectos.php",
+       data: { accion: 5,proyecto: v}
+})
+  .done(function(msg) {
+     if(msg == "eliminado"){
+        console.log("eliminado");
+        location.reload();
+     }
+     if(msg == "error01"){
+        console.log(msg);
+     }
+     if(msg == "error02"){
+        console.log(msg);
+     }
+
+  });
+    }
+}
+
+function aprobar(v){
+    console.log("aprueba "+v);
+        listar();
 }
 </script>
