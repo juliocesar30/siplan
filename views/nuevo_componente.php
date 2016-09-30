@@ -110,6 +110,7 @@
 </div>
 <div class="col-lg-4">
 <div class="form-group" id="linea_div">
+    <input type="hidden" id="idproyecto" value="<?php echo $_GET['p']; ?>">
 <label >Linea</label>
 <select class='form-control m-b'><option>-Sleccione Eje-</option></select>
 </div>

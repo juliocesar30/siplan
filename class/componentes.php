@@ -20,6 +20,18 @@ class componentes {
 
 	}
 
+    function eje(){
+        require_once('conexion.php');
+		extract($_POST);
+		$sql = "select p.id_eje, e.eje from ejes e inner join proyectos p on (p.id_eje = e.id_eje) where p.id_proyecto = ".$proyecto;
+		$conn = new conexion();
+		$conexion = $conn->conectar($_SESSION['id_perfil']);
+		$conexion->set_charset("utf8");
+		$ExeConsulta = $conexion->query($sql);
+		$conexion->close();
+		return $ExeConsulta;
+    }
+
 }
 
 if(isset($_POST['accion'])){
@@ -85,6 +97,11 @@ if(isset($_POST['accion'])){
 			<input type="hidden" id="ponderacionTotal" value="<?php echo $ponderacionTotal; ?>">
 			<?php
 			break;
+            case 2:
+              $eje = $componente->eje();
+              $Res = $eje->fetch_array();
+              echo "<input type='text' value= '".$Res[1]."'>";
+            break;
 	}
 }
 
