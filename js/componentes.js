@@ -34,18 +34,20 @@ console.log(msg);
 
 
 function ponderacion_maxima(){
+    var id_proyecto = $('#idproyecto').val();
     $.ajax({
        method: "POST",
-       url: "class/proyectos.php",
-       data: { accion: 2}
+       url: "class/componentes.php",
+       data: { accion: 3, id_proyecto: id_proyecto}
 })
   .done(function(msg) {
-     if(msg == 0){
+     if(msg == 100){
          alert("No tienes ponderacion disponible, no se puede agregar un proyecto");
          location.href="main.php?token=c81e728d9d4c2f636f067f89cc14862c";
          return false;
      }
-     document.getElementById('ponderacion_max').innerHTML = "&nbsp;debe ser menor o igual a: "+msg;
+        max = 100 - msg;
+     document.getElementById('ponderacion_max').innerHTML = "&nbsp;debe ser menor o igual a: "+max;
      document.getElementById('ponderacion_max_h').value=msg;
   });
 }

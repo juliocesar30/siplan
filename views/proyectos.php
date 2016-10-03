@@ -122,8 +122,24 @@ function eliminar(v){
     }
 }
 
+
 function aprobar(v){
-    console.log("aprueba "+v);
-        listar();
+       $.ajax({
+       method: "POST",
+       url: "class/proyectos.php",
+       data: {accion: 6,id_proyecto: v}
+})
+  .done(function(msg) {
+     if(msg == "actualizado"){
+         alert("proyecto actualizado");
+         listar();
+
+     }
+     if (msg == "errorPondera"){
+         alert("No se puede aprobar, ponderación incompleta en componentes");
+         return false;
+     }
+  });
+
 }
 </script>

@@ -175,14 +175,14 @@ function cargaFuncion(v){
 
 function cargaSubFuncion(v){
     document.getElementById('subfuncion_div').innerHTML = "Cargando . . . <img src='images/loading_verde.gif'>";
-    var finalidad = document.getElementById('sltFinalidad').value;
     var catalogo = "subfuncion";
        $.ajax({
        method: "POST",
        url: "class/catalogos.php",
-       data: {catalogo: catalogo,funcion: v,finalidad: finalidad}
+       data: {catalogo: catalogo,funcion: v}
 })
   .done(function(msg) {
+
      document.getElementById('subfuncion_div').innerHTML = msg;
   });
 }
@@ -268,14 +268,10 @@ data: {accion: 4,eje: eje,linea: linea,est: est,num: num,nomb: nomb,inversion: i
 
 }
 
-
-
 // Get the modal
 var modal = document.getElementById('myModal');
-
 // Get the button that opens the modal
 var btn = document.getElementById("myBtn");
-
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 
@@ -286,5 +282,3 @@ function mostrarModal(){
 function ocultarModal(){
     modal.style.display = "none";
 }
-
-

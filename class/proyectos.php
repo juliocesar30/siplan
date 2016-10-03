@@ -66,6 +66,8 @@ class proyectos{
     function actualizar(){
         return false;
     }
+
+
     function numero(){
        $dep = $_SESSION['id_dependencia'];
        $ejercicio = $_SESSION['ejercicio'];
@@ -81,8 +83,33 @@ class proyectos{
     }
 
     function aprobar(){
-       return "aprueba";
+        require_once('componentes.php');
+        $componente = new componentes();
+        $contar = $componente->contarPonderacion();
+        if($contar < 100){
+            return "errorPondera";
+            die();
+        }
 
+        if($_SESSION['id_perfil'] == 2){
+            $sql = "UPDATE proyectos SET estatus = 1 WHERE id_proyecto = ".$_POST['id_proyecto'];
+            require_once('conexion.php');
+            $conn = new conexion();
+            $conexion = $conn->conectar($_SESSION['id_perfil']);
+            $conexion->query($sql);
+            $conexion->close();
+            return "actualizado";
+        }
+        if($_SESSION['id_perfil'] == 1 OR $_SESSION['id_perfil'] == 3){
+            $sql = "UPDATE proyectos SET estatus = 2 WHERE id_proyecto = ".$_POST['id_proyecto'];
+            require_once('conexion.php');
+            $conn = new conexion();
+            $conexion = $conn->conectar($_SESSION['id_perfil']);
+            $conexion->query($sql);
+            $conexion->close();
+            return "actualizado";
+        }
+        return false;
     }
 }
 
@@ -128,7 +155,9 @@ if(isset($_POST['accion'])){
     }
 
     if($status == 0 && $_SESSION['id_perfil'] == 2){
-        $aprob = "<a href='javascript:aprobar($id_pr);' title='Aprobar' class='btn btn-default btn-circle'><i class='fa fa-check' aria-hidden='true'></i></a>&nbsp;&nbsp;<a href='javascript:eliminar($id_pr);' title='Eliminar' class='btn btn-danger btn-circle'><i class='fa fa-trash' aria-hidden='true'></i></a>&nbsp;&nbsp;";
+        $aprob = "<a href='javascript:aprobar($id_pr);' title='Aprobar' class='btn btn-default btn-circle'><i class='fa fa-check' aria-hidden='true'></i></a>&nbsp;&nbsp;
+        <a href='main.php?token=".md5(8)."&p=$id_pr' title='Editar' class='btn btn-default btn-circle'><i class='fa fa-edit' aria-hidden='true'></i></a>&nbsp;&nbsp;
+        <a href='javascript:eliminar($id_pr);' title='Eliminar' class='btn btn-danger btn-circle'><i class='fa fa-trash' aria-hidden='true'></i></a>&nbsp;&nbsp;";
     }
 
     if($status == 1 && $_SESSION['id_perfil'] == 3 or $status == 1 && $_SESSION['id_perfil'] == 1 ){
@@ -192,6 +221,11 @@ break;
         case 5:
         $proyecto = new proyectos();
         $accion = $proyecto->eliminar();
+        echo $accion;
+        break;
+        case 6:
+            $proyecto = new proyectos();
+        $accion = $proyecto->aprobar();
         echo $accion;
         break;
     }

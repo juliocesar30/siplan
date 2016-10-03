@@ -48,7 +48,7 @@
 <form role="form" class="form-horizontal" onsubmit="return validar();">
 <h3><span class="text text-success">Información General del componente</span></h3>
 <div class="row">
-<div class="col-lg-1">
+<div class="col-lg-2">
 <div class="form-group">
 <label for="intNumComponente">Num. Componente</label>
 <input type="number" id="intNumProyecto" name="intNumProyecto" class="form-control" required>
@@ -191,16 +191,13 @@
 </div>
 
 </div>
+    <input type="hidden" id="id_proyecto" value="<?php echo $_GET['p']; ?>">
 </form>
 </div>
 </div>
 </div>
 </div>
 </div>
-
-
-
-
 <!-- The Modal -->
 <div id="myModal" class="modal">
 
@@ -211,8 +208,6 @@
   </div>
 
 </div>
-
-
 <script src="js/componentes.js"></script>
 <script type="text/javascript">
     window.onload = cargar_selects_iniciales();

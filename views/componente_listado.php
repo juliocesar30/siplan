@@ -80,13 +80,8 @@ function fnClickAddRow() {
        }
 
 function nuevo(){
-    var ponderacion = $('#ponderacionTotal').val();
-    if(ponderacion == 100){
-        alert("No puedes agregar más proyectos, ponderación 100%");
-        return false;
-    } else {
-        location.href = "main.php?token=<?php echo md5(7); ?>"
-    }
+        location.href = "main.php?token=<?php echo md5(7); ?>&p=<?php echo $_GET['p'];?>";
+
 }
 
 window.onload = listar;

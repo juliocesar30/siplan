@@ -40,7 +40,7 @@
 
 
 <div class="row wrapper border-bottom white-bg page-heading">
-<div class="col-lg-10"><h2>Agregar Proyecto</h2></div>
+<div class="col-lg-10"><h2>Editar Proyecto</h2></div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
 <div class="row">
@@ -244,7 +244,7 @@
 </div>
 <div class="row">
 <div class="col-lg-4">
-    <button type="button" class="btn btn-default" onclick="cancelar();"><i class="fa fa-ban" aria-hidden="true"></i> Cancelar</button>
+    <button type="button" class="btn btn-default" onclick="cancelarEdit();"><i class="fa fa-ban" aria-hidden="true"></i> Cancelar</button>
     &nbsp;
     <button type="submit" class="btn btn-default"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
 </div>
@@ -274,9 +274,8 @@
 
 <script src="js/proyectos.js"></script>
 <script type="text/javascript">
-    window.onload = cargar_selects_iniciales();
-
-    function cancelar(){
-        location.href ="main.php?token=<?php echo md5(2);?>";
+    function cancelarEdit(){
+        location.href="main.php?token=<?php echo md5(2); ?>"
     }
+    window.onload = cargar_selects_iniciales();
 </script>

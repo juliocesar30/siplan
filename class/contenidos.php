@@ -25,6 +25,9 @@
 					  case md5(7):
 					  	require_once("views/nuevo_componente.php");
 					  	break;
+                      case md5(8):
+					  	require_once("views/editar_proyecto.php");
+					  	break;
                  default:
                    require_once("views/error404.php");
                    break;

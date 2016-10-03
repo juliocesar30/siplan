@@ -122,7 +122,7 @@ session_start();
 
         function funcion(){
             require_once('conexion.php');
-            $sql = "SELECT id_funf,funcion FROM funcion WHERE id_finalidad = ".$_POST['finalidad'];
+            $sql = "SELECT id_funcion,funcion FROM funcion WHERE id_finalidad = ".$_POST['finalidad'];
             $conn = new conexion();
             $conexion = $conn->conectar($_SESSION['id_perfil']);
             $conexion->set_charset("utf8");
@@ -133,14 +133,21 @@ session_start();
         }
 
         function subfuncion(){
-              require_once('conexion.php');
-            $sql = "SELECT id_subfuncion,subfuncion  FROM subfuncion WHERE id_finalidad = ".$_POST['finalidad']." AND id_funcion_f = ".$_POST['funcion'];
+            require_once('conexion.php');
+            $sql_funcion = "SELECT id_funf FROM funcion WHERE id_funcion = ".$_POST['funcion'];
+            $conn = new conexion();
+            $conexion = $conn->conectar($_SESSION['id_perfil']);
+            $ExeConsultaF = $conexion->query($sql_funcion);
+            $conexion ->close();
+            $Rfun = $ExeConsultaF->fetch_array();
+            $sql = "SELECT id_subfuncion,subfuncion FROM subfuncion WHERE id_funcion_f = ".$Rfun[0];
             $conn = new conexion();
             $conexion = $conn->conectar($_SESSION['id_perfil']);
             $conexion->set_charset("utf8");
             $ExeConsulta = $conexion->query($sql);
             $conexion ->close();
             return $ExeConsulta;
+            return $sql_funcion;
         }
 
 
@@ -268,6 +275,7 @@ if(isset($_POST['catalogo'])){
             case "subfuncion":
             $catalogo = new catalogos;
             $prog_pres = $catalogo->subfuncion();
+
             echo "<label for='sltSubFuncion'>Funcion</label>";
             echo "<select class='form-control m-b' id='sltSubFuncion' name='sltSubFuncion'><option value='0' required>-Seleccione-</option>";
             while($res = $prog_pres->fetch_array()){

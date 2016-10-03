@@ -32,26 +32,40 @@ class componentes {
 		return $ExeConsulta;
     }
 
+    function contarPonderacion(){
+        require_once('conexion.php');
+		$sql = "SELECT sum(ponderacion) FROM componentes WHERE id_proyecto = ".$_POST['id_proyecto'];
+       $conn = new conexion();
+		$conexion = $conn->conectar($_SESSION['id_perfil']);
+		$ExeConsulta = $conexion->query($sql);
+		$conexion->close();
+        $Ponderacion = $ExeConsulta->fetch_array();
+        return $Ponderacion[0];
+
+    }
+
 }
 
-if(isset($_POST['accion'])){
-	$componente = new componentes;
 
-	switch($_POST['accion']){
-		case 1:
-			$lista = $componente->listar();
-			?>
-			<table class="table table-striped table-bordered table-hover dataTables-example" >
-			<thead>
-			<tr>
-			<th>Num</th>
-			<th>Componente</th>
-			<th>U. medida</th>
-			<th>Cantidad</th>
-			<th>Ponderación</th>
-			<th>Herramientas</th>
-			</tr>
-			</thead>
+/*--------------------------- fin de la clase ---------------*/
+if(isset($_POST['accion'])){
+$componente = new componentes;
+
+switch($_POST['accion']){
+case 1:
+$lista = $componente->listar();
+?>
+<table class="table table-striped table-bordered table-hover dataTables-example" >
+<thead>
+<tr>
+<th>Num</th>
+<th>Componente</th>
+<th>U. medida</th>
+<th>Cantidad</th>
+<th>Ponderación</th>
+<th>Herramientas</th>
+</tr>
+</thead>
 			<tbody>
 			    <?php
 			    $ponderacionTotal = 0;
@@ -101,6 +115,9 @@ if(isset($_POST['accion'])){
               $eje = $componente->eje();
               $Res = $eje->fetch_array();
               echo "<input type='text' value= '".$Res[1]."'>";
+            break;
+            case 3:
+               echo $componente->contarPonderacion();
             break;
 	}
 }
