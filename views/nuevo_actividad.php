@@ -1,3 +1,14 @@
+<?php /*
+require_once('conexion.php');
+$id_componente = $_GET['c'];
+$conn = new conexion();
+$conexion = $conn->conectar($_SESSION['id_perfil']);
+$conexion->set_charset("utf8");
+$ExeConsulta = $conexion->query($sql);
+$conexion->close();
+return $ExeConsulta;
+*/
+?>
 <style>
 /* The Modal (background) */
 .modal {
@@ -38,7 +49,7 @@
 }
 </style>
 <div class="row wrapper border-bottom white-bg page-heading">
-<div class="col-lg-10"><h2>Agregar Componente</h2></div>
+<div class="col-lg-10"><h2>Agregar Actividad</h2></div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
 <div class="row">
@@ -47,11 +58,11 @@
 <div class="ibox-content">
 <form role="form" class="form-horizontal" method="post" action="views/guardar_componente.php" enctype="application/x-www-form-urlencoded">
 <input type="hidden" id="id_proyecto" name='id_proyecto' value="<?php echo $_GET['p']; ?>">
-<h3><span class="text text-success">Información General del componente</span></h3>
+<h3><span class="text text-success">Información General de la actividad</span></h3>
 <div class="row">
 <div class="col-lg-2">
 <div class="form-group">
-<label for="intNumComponente">Num. Componente</label>
+<label for="intNumComponente">Num. Actividad</label>
 <input type="number" id="intNumComponente" name="intNumComponente" class="form-control" required>
 </div>
 </div>
@@ -62,25 +73,19 @@
 <input type="number" id="intPonderacion" name="intPonderacion" class="form-control" required>
 </div>
 </div>
+    <div class="col-lg-3">
+<div class="form-group">
+<div class="i-checks"><label> <input type="checkbox" value=""> <i></i> Demanda </label></div>
+</div>
+</div>
 </div>
 <div class="row">
 <div class="col-lg-8">
 <div class="form-group">
-<label for="txtNombreComponente">Descripción del Componente</label>
+<label for="txtNombreComponente">Descripción de la Actividad</label>
 <textarea id="txtNombreComponente" name="txtNombreComponente" maxlength="254" class="form-control" required></textarea>
 </div>
 </div>
-</div>
-<div class="row">
-    <div class="col-lg-6">
-<div class="form-group">
-<label for="txtUresponsable">Unidad Responsable</label>
-<input type="text" id="txtUresponsable" name="txtUresponsable" maxlength="254" class="form-control" required>
-</div>
-</div>
-     <div class="col-lg-4">
-        <div class="form-group" id="prog_pres_div"></div>
-    </div>
 </div>
 <div class="row">
 <div class="col-lg-4">
@@ -117,7 +122,88 @@ Cargando . . . <img src='images/loading_verde.gif'>
 </div>
 </div>
 <div class="hr-line-dashed"></div>
-<h3><span class="text text-success">Indicador del Componente</span></h3>
+<h3><span class="text text-success">Calendarización</span></h3>
+<div class="row">
+    <div class="col-lg-3">
+      <div class="form-group">
+          <label>Enero</label>
+          <input type="number">
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="form-group">
+          <label>Enero</label>
+          <input type="number">
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="form-group">
+          <label>Enero</label>
+          <input type="number">
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="form-group">
+          <label>Enero</label>
+          <input type="number">
+      </div>
+    </div>
+</div>
+    <div class="row">
+    <div class="col-lg-3">
+      <div class="form-group">
+          <label>Enero</label>
+          <input type="number">
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="form-group">
+          <label>Enero</label>
+          <input type="number">
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="form-group">
+          <label>Enero</label>
+          <input type="number">
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="form-group">
+          <label>Enero</label>
+          <input type="number">
+      </div>
+    </div>
+</div>
+    <div class="row">
+    <div class="col-lg-3">
+      <div class="form-group">
+          <label>Enero</label>
+          <input type="number">
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="form-group">
+          <label>Enero</label>
+          <input type="number">
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="form-group">
+          <label>Enero</label>
+          <input type="number">
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="form-group">
+          <label>Enero</label>
+          <input type="number">
+      </div>
+    </div>
+</div>
+
+<div class="hr-line-dashed"></div>
+<h3><span class="text text-success">Indicador de la Actividad</span></h3>
 
 <div class="row">
   <div class="col-lg-6">
@@ -223,7 +309,4 @@ Cargando . . . <img src='images/loading_verde.gif'>
   </div>
 
 </div>
-<script src="js/componentes.js"></script>
-<script type="text/javascript">
-    window.onload = cargar_selects_iniciales();
-</script>
+

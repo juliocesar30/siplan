@@ -147,9 +147,30 @@ session_start();
             $ExeConsulta = $conexion->query($sql);
             $conexion ->close();
             return $ExeConsulta;
-            return $sql_funcion;
+
         }
 
+             function uMedidasProg01(){
+            require_once('conexion.php');
+            $sql = "SELECT * FROM u_medida_prog01";
+            $conn = new conexion();
+            $conexion = $conn->conectar($_SESSION['id_perfil']);
+            $conexion->set_charset("utf8");
+            $ExeConsulta = $conexion->query($sql);
+            $conexion ->close();
+            return $ExeConsulta;
+             }
+                   function tipouMedidasProg01(){
+            require_once('conexion.php');
+            $sql = "SELECT id_tipo_unidad,tipo_unidad FROM tipo_unidad_prog01 WHERE id_unidad_medida = ".$_POST['id_unidad'];
+            $conn = new conexion();
+            $conexion = $conn->conectar($_SESSION['id_perfil']);
+            $conexion->set_charset("utf8");
+            $ExeConsulta = $conexion->query($sql);
+            $conexion ->close();
+            return $ExeConsulta;
+
+        }
 
     }
 
@@ -283,6 +304,27 @@ if(isset($_POST['catalogo'])){
             }
             echo "<select>";
         break;
+
+        case "umedidaprog01":
+            $catalogo = new catalogos;
+            $prog_pres = $catalogo->uMedidasProg01();
+            echo "<label for='sltumedida'>Unidad de Medida</label>";
+            echo "<select class='form-control m-b' id='sltumedida' name='sltumedida' onchange='cargaTipoMedida(this.value)' required><option value='0'>-Seleccione-</option>";
+            while($res = $prog_pres->fetch_array()){
+                echo "<option value='".$res[0]."'>".$res[1]."</option>";
+            }
+            echo "<select>";
+            break;
+        case "tipomedidaprog01":
+            $catalogo = new catalogos;
+            $prog_pres = $catalogo->tipouMedidasProg01();
+            echo "<label for='slttipoumedida'>Tipo Unidad de Medida</label>";
+            echo "<select class='form-control m-b' id='slttipoumedida' name='slttipoumedida' required><option value='0'>-Seleccione-</option>";
+            while($res = $prog_pres->fetch_array()){
+                echo "<option value='".$res[0]."'>".$res[1]."</option>";
+            }
+            echo "<select>";
+            break;
 
     }
 }

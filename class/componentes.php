@@ -44,6 +44,18 @@ class componentes {
 
     }
 
+    function guardar(){
+          require_once('conexion.php');
+        extract($_POST);
+		$sql = "SELECT sum(ponderacion) FROM componentes WHERE id_proyecto = ".$_POST['id_proyecto'];
+       $conn = new conexion();
+		$conexion = $conn->conectar($_SESSION['id_perfil']);
+		$ExeConsulta = $conexion->query($sql);
+		$conexion->close();
+        $Ponderacion = $ExeConsulta->fetch_array();
+        return $Ponderacion[0];
+    }
+
 }
 
 
@@ -89,9 +101,7 @@ $lista = $componente->listar();
 			<td>".$Res[6]."</td>
 			<td>
 			<a href='#' title='Información' class='btn btn-default btn-circle'><i class='fa fa-info' aria-hidden='true'></i></a>&nbsp;&nbsp;
-			<a href='main.php?token=".md5(6)."&p=".$id_pr."' title='Componentes' class='btn btn-default btn-circle'><i class='fa fa-gear' aria-hidden='true'></i></a>&nbsp;&nbsp;
-			<a href='main.php?token=e4da3b7fbbce2345d7772b0674a318d5&p=".$id_pr."' title='Indicadores' class='btn btn-default btn-circle'><i class='fa fa-bar-chart' aria-hidden='true'></i></a>&nbsp;&nbsp;
-			".$aprob."
+			<a href='main.php?token=".md5(9)."&p=".$id_proy."&c=".$id_comp."' title='Actividades' class='btn btn-default btn-circle'><i class='fa fa-cogs' aria-hidden='true'></i></a>&nbsp;&nbsp;
 			</td></tr>
 			";
 			    }
@@ -114,11 +124,16 @@ $lista = $componente->listar();
             case 2:
               $eje = $componente->eje();
               $Res = $eje->fetch_array();
-              echo "<input type='text' value= '".$Res[1]."'>";
+              echo "<label for='sltEje'>Eje</label>";
+              echo "<select class='form-control m-b' name='sltEje' id='sltEje'>
+              <option value='".$Res[0]."' selected>".$Res[0]." - ".$Res[1]."</option>";
             break;
             case 3:
                echo $componente->contarPonderacion();
             break;
+    case 4:
+         echo $componente->guardar();
+        break;
 	}
 }
 

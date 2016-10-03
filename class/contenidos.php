@@ -28,6 +28,13 @@
                       case md5(8):
 					  	require_once("views/editar_proyecto.php");
 					  	break;
+                     case md5(9):
+                     require_once("views/actividades.php");
+					  	break;
+                 case md5(10):
+                     require_once("views/nuevo_actividad.php");
+                     break;
+
                  default:
                    require_once("views/error404.php");
                    break;
