@@ -1,13 +1,6 @@
-<?php /*
-require_once('conexion.php');
-$id_componente = $_GET['c'];
-$conn = new conexion();
-$conexion = $conn->conectar($_SESSION['id_perfil']);
-$conexion->set_charset("utf8");
-$ExeConsulta = $conexion->query($sql);
-$conexion->close();
-return $ExeConsulta;
-*/
+<?php
+
+require_once("class/conexion.php");
 ?>
 <style>
 /* The Modal (background) */
@@ -58,32 +51,43 @@ return $ExeConsulta;
 <div class="ibox-content">
 <form role="form" class="form-horizontal" method="post" action="views/guardar_componente.php" enctype="application/x-www-form-urlencoded">
 <input type="hidden" id="id_proyecto" name='id_proyecto' value="<?php echo $_GET['p']; ?>">
+<input type="hidden" id="id_proyecto" name='id_componente' value="<?php echo $_GET['c']; ?>">
+
 <h3><span class="text text-success">Información General de la actividad</span></h3>
 <div class="row">
 <div class="col-lg-2">
 <div class="form-group">
-<label for="intNumComponente">Num. Actividad</label>
-<input type="number" id="intNumComponente" name="intNumComponente" class="form-control" required>
+<label for="intNumActividad">Num. Actividad</label>
+<input type="number" id="intNumActividad" name="intNumActividad" class="form-control" required>
 </div>
 </div>
 <div class="col-lg-3">
 <div class="form-group">
-<label for="intPonderacion">Ponderación&nbsp;<small><span class="text text-danger" id="ponderacion_max">Debe ser menor o igual a </span></small></label>
-<input type="hidden" id="ponderacion_max_h">
+    <?php
+		$sql = "SELECT sum(ponderacion) FROM actividades WHERE id_componente = ".$_GET['c'];
+        $conn = new conexion();
+		$conexion = $conn->conectar($_SESSION['id_perfil']);
+		$ExeConsulta = $conexion->query($sql);
+		$conexion->close();
+        $Ponderacion = $ExeConsulta->fetch_array();
+
+    ?>
+<label for="intPonderacion">Ponderación&nbsp;<small><span class="text text-danger" id="ponderacion_max">Debe ser menor o igual a <?php print(100 - $Ponderacion[0]);?> </span></small></label>
+<input type="hidden" id="ponderacion_max_h" value="<?php echo $Ponderacion[0]; ?>">
 <input type="number" id="intPonderacion" name="intPonderacion" class="form-control" required>
 </div>
 </div>
     <div class="col-lg-3">
 <div class="form-group">
-<div class="i-checks"><label> <input type="checkbox" value=""> <i></i> Demanda </label></div>
+<div class="i-checks"><label> <input type="checkbox" value="" name="demanda"> <i></i> Demanda </label></div>
 </div>
 </div>
 </div>
 <div class="row">
 <div class="col-lg-8">
 <div class="form-group">
-<label for="txtNombreComponente">Descripción de la Actividad</label>
-<textarea id="txtNombreComponente" name="txtNombreComponente" maxlength="254" class="form-control" required></textarea>
+<label for="txtNombreActiviadad">Descripción de la Actividad</label>
+<textarea id="txtNombreActividad" name="txtNombreActiviadad" maxlength="254" class="form-control" required></textarea>
 </div>
 </div>
 </div>
@@ -127,77 +131,77 @@ Cargando . . . <img src='images/loading_verde.gif'>
     <div class="col-lg-3">
       <div class="form-group">
           <label>Enero</label>
-          <input type="number">
+          <input type="number" class="form-control">
       </div>
     </div>
     <div class="col-lg-3">
       <div class="form-group">
-          <label>Enero</label>
-          <input type="number">
+          <label>Febrero</label>
+          <input type="number" class="form-control">
       </div>
     </div>
     <div class="col-lg-3">
       <div class="form-group">
-          <label>Enero</label>
-          <input type="number">
+          <label>Marzo</label>
+          <input type="number" class="form-control">
       </div>
     </div>
     <div class="col-lg-3">
       <div class="form-group">
-          <label>Enero</label>
-          <input type="number">
-      </div>
-    </div>
-</div>
-    <div class="row">
-    <div class="col-lg-3">
-      <div class="form-group">
-          <label>Enero</label>
-          <input type="number">
-      </div>
-    </div>
-    <div class="col-lg-3">
-      <div class="form-group">
-          <label>Enero</label>
-          <input type="number">
-      </div>
-    </div>
-    <div class="col-lg-3">
-      <div class="form-group">
-          <label>Enero</label>
-          <input type="number">
-      </div>
-    </div>
-    <div class="col-lg-3">
-      <div class="form-group">
-          <label>Enero</label>
-          <input type="number">
+          <label>Abril</label>
+          <input type="number" class="form-control">
       </div>
     </div>
 </div>
     <div class="row">
     <div class="col-lg-3">
       <div class="form-group">
-          <label>Enero</label>
-          <input type="number">
+          <label>Mayo</label>
+          <input type="number" class="form-control">
       </div>
     </div>
     <div class="col-lg-3">
       <div class="form-group">
-          <label>Enero</label>
-          <input type="number">
+          <label>Junio</label>
+          <input type="number" class="form-control">
       </div>
     </div>
     <div class="col-lg-3">
       <div class="form-group">
-          <label>Enero</label>
-          <input type="number">
+          <label>Julio</label>
+          <input type="number" class="form-control">
       </div>
     </div>
     <div class="col-lg-3">
       <div class="form-group">
-          <label>Enero</label>
-          <input type="number">
+          <label>Agosto</label>
+          <input type="number" class="form-control">
+      </div>
+    </div>
+</div>
+    <div class="row">
+    <div class="col-lg-3">
+      <div class="form-group">
+          <label>Septiembre</label>
+          <input type="number" class="form-control">
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="form-group">
+          <label>Octubre</label>
+          <input type="number" class="form-control">
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="form-group">
+          <label>Noviembre</label>
+          <input type="number" class="form-control">
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="form-group">
+          <label>Diciembre</label>
+          <input type="number" class="form-control">
       </div>
     </div>
 </div>
@@ -309,4 +313,6 @@ Cargando . . . <img src='images/loading_verde.gif'>
   </div>
 
 </div>
+<script src="js/actividades.js">
+</script>
 
