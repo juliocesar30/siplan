@@ -140,7 +140,7 @@ session_start();
             $ExeConsultaF = $conexion->query($sql_funcion);
             $conexion ->close();
             $Rfun = $ExeConsultaF->fetch_array();
-            $sql = "SELECT id_subfuncion,subfuncion FROM subfuncion WHERE id_funcion_f = ".$Rfun[0];
+            $sql = "SELECT id_subfuncion,subfuncion FROM subfuncion WHERE id_funcion_f = ".$Rfun[0]." AND id_finalidad = ".$_POST['finalidad'];
             $conn = new conexion();
             $conexion = $conn->conectar($_SESSION['id_perfil']);
             $conexion->set_charset("utf8");

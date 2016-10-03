@@ -49,7 +49,7 @@ require_once("class/conexion.php");
 <div class="col-lg-12">
 <div class="ibox float-e-margins">
 <div class="ibox-content">
-<form role="form" class="form-horizontal" method="post" action="views/guardar_componente.php" enctype="application/x-www-form-urlencoded">
+<form role="form" class="form-horizontal" method="post" action="views/guardar_actividad.php" enctype="application/x-www-form-urlencoded">
 <input type="hidden" id="id_proyecto" name='id_proyecto' value="<?php echo $_GET['p']; ?>">
 <input type="hidden" id="id_proyecto" name='id_componente' value="<?php echo $_GET['c']; ?>">
 
@@ -84,12 +84,32 @@ require_once("class/conexion.php");
 </div>
 </div>
 <div class="row">
-<div class="col-lg-8">
+<div class="col-lg-4">
 <div class="form-group">
-<label for="txtNombreActiviadad">Descripción de la Actividad</label>
+<label for="txtNombreActiviadad">Nombre de la Actividad</label>
 <textarea id="txtNombreActividad" name="txtNombreActiviadad" maxlength="254" class="form-control" required></textarea>
 </div>
 </div>
+
+<div class="col-lg-4">
+<div class="form-group">
+<label for="txtDescripcionActiviadad">Descripción de la Actividad</label>
+<textarea id="txtNombreActividad" name="txtNombreActiviadad" maxlength="254" class="form-control" required></textarea>
+</div>
+</div>
+
+      <div class="col-lg-4">
+        <div class="form-group">
+            <label>Tipo de Actividad</label>
+            <select class='form-control m-b' name="sltTipoAct" required><option value=''>-Sleccione-</option>
+                <option value="1">Insumo</option>
+                <option value="2">Producto</option>
+                <option value="3">Mecanismo</option>
+                <option value="4">Control</option>
+            </select>
+        </div>
+    </div>
+
 </div>
 <div class="row">
 <div class="col-lg-4">
@@ -131,25 +151,25 @@ Cargando . . . <img src='images/loading_verde.gif'>
     <div class="col-lg-3">
       <div class="form-group">
           <label>Enero</label>
-          <input type="number" class="form-control">
+          <input type="number" class="form-control" name="enero">
       </div>
     </div>
     <div class="col-lg-3">
       <div class="form-group">
           <label>Febrero</label>
-          <input type="number" class="form-control">
+          <input type="number" class="form-control" name="febrero">
       </div>
     </div>
     <div class="col-lg-3">
       <div class="form-group">
           <label>Marzo</label>
-          <input type="number" class="form-control">
+          <input type="number" class="form-control" name="marzo">
       </div>
     </div>
     <div class="col-lg-3">
       <div class="form-group">
           <label>Abril</label>
-          <input type="number" class="form-control">
+          <input type="number" class="form-control" name="abril">
       </div>
     </div>
 </div>
@@ -157,25 +177,25 @@ Cargando . . . <img src='images/loading_verde.gif'>
     <div class="col-lg-3">
       <div class="form-group">
           <label>Mayo</label>
-          <input type="number" class="form-control">
+          <input type="number" class="form-control" name="mayo">
       </div>
     </div>
     <div class="col-lg-3">
       <div class="form-group">
           <label>Junio</label>
-          <input type="number" class="form-control">
+          <input type="number" class="form-control" name="junio">
       </div>
     </div>
     <div class="col-lg-3">
       <div class="form-group">
           <label>Julio</label>
-          <input type="number" class="form-control">
+          <input type="number" class="form-control" name="julio">
       </div>
     </div>
     <div class="col-lg-3">
       <div class="form-group">
           <label>Agosto</label>
-          <input type="number" class="form-control">
+          <input type="number" class="form-control" name="agosto">
       </div>
     </div>
 </div>
@@ -183,25 +203,25 @@ Cargando . . . <img src='images/loading_verde.gif'>
     <div class="col-lg-3">
       <div class="form-group">
           <label>Septiembre</label>
-          <input type="number" class="form-control">
+          <input type="number" class="form-control" name="septiembre">
       </div>
     </div>
     <div class="col-lg-3">
       <div class="form-group">
           <label>Octubre</label>
-          <input type="number" class="form-control">
+          <input type="number" class="form-control" name="octubre">
       </div>
     </div>
     <div class="col-lg-3">
       <div class="form-group">
           <label>Noviembre</label>
-          <input type="number" class="form-control">
+          <input type="number" class="form-control" name="noviembre">
       </div>
     </div>
     <div class="col-lg-3">
       <div class="form-group">
           <label>Diciembre</label>
-          <input type="number" class="form-control">
+          <input type="number" class="form-control" name="diciembre">
       </div>
     </div>
 </div>

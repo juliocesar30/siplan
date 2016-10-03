@@ -174,15 +174,15 @@ function cargaFuncion(v){
 }
 
 function cargaSubFuncion(v){
+
     document.getElementById('subfuncion_div').innerHTML = "Cargando . . . <img src='images/loading_verde.gif'>";
     var catalogo = "subfuncion";
        $.ajax({
        method: "POST",
        url: "class/catalogos.php",
-       data: {catalogo: catalogo,funcion: v}
+       data: {catalogo: catalogo,funcion: v,finalidad: $('#sltFinalidad').val()}
 })
   .done(function(msg) {
-
      document.getElementById('subfuncion_div').innerHTML = msg;
   });
 }

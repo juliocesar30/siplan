@@ -1,3 +1,15 @@
+<?php
+ require_once('class/conexion.php');
+  $idp = $_GET['p'];
+$sql = "call infoProyecto($idp)";
+            $conn = new conexion();
+            $conexion = $conn->conectar($_SESSION['id_perfil']);
+            $conexion->set_charset("utf8");
+            $ExeConsulta = $conexion->query($sql);
+            $conexion ->close();
+            $Res = $ExeConsulta->fetch_array();
+?>
+
 <style>
 /* The Modal (background) */
 .modal {
@@ -53,13 +65,13 @@
 <div class="col-lg-2">
 <div class="form-group">
 <label for="intNumProyecto">Num. Proyecto</label>
-<input type="number" id="intNumProyecto" name="intNumProyecto" class="form-control" required>
+<input type="number" id="intNumProyecto" name="intNumProyecto" class="form-control" value="<?php echo $Res[6]; ?>" required>
         </div>
     </div>
     <div class="col-lg-8">
         <div class="form-group">
             <label for="txtNombreProyecto">Nombre</label>
-            <input type="text" id="txtNombreProyecto" name="txtNombreProyecto" maxlength="254" class="form-control" required>
+            <input type="text" id="txtNombreProyecto" name="txtNombreProyecto" maxlength="254" class="form-control" value="<?php echo $Res[7]; ?>"  required>
         </div>
     </div>
 </div>
@@ -68,11 +80,30 @@
     <div class="col-lg-2">
         <div class="form-group">
             <label for="numInversion">Inversión Aproximada</label>
-            <input type="number" id="numInversion" name="numInversion" class="form-control" required>
+            <input type="number" id="numInversion" name="numInversion" class="form-control" value="<?php echo $Res[8]; ?>"  required>
         </div>
     </div>
     <div class="col-lg-8">
-        <div class="form-group" id="prog_pres_div"></div>
+        <div class="form-group" id="prog_pres_div">
+            <label for="sltProgPres">Programa Presupuestal</label>
+          <select class='form-control m-b' id='sltProgPres' name='sltProgPres'>
+              <option value="<?php echo $Res[37]; ?>" ><?php echo $Res[38];?></option>
+              <option value="">-------------</option>
+              <?php
+
+            $sql_progPres = "SELECT * FROM prog_presupuestarios";
+            $conexion = $conn->conectar($_SESSION['id_perfil']);
+            $conexion->set_charset("utf8");
+            $ExeProgPres= $conexion->query($sql_progPres);
+            $conexion ->close();
+
+
+              while($ResProgPres = $ExeProgPres->fetch_array()){
+                  echo "<option value='".$ResProgPres[0]."'>".$ResProgPres[1]."-".$ResProgPres[2]."</option>";
+              }
+              ?>
+          </select>
+        </div>
     </div>
 </div>
 
@@ -80,13 +111,13 @@
     <div class="col-lg-5">
         <div class="form-group">
             <label for="txtUresponsable">Unidad Responsable</label>
-            <input type="text" id="txtUresponsable" name="txtUresponsable" class="form-control" required>
+            <input type="text" id="txtUresponsable" name="txtUresponsable" class="form-control" value="<?php echo $Res[26]; ?>"  required>
         </div>
     </div>
     <div class="col-lg-5">
         <div class="form-group">
             <label for="txtNombreTitular">Nombre del Titular</label>
-            <input type="text" id="txtNombreTitular" name="txtNombreTitular" class="form-control" required>
+            <input type="text" id="txtNombreTitular" name="txtNombreTitular" class="form-control" value="<?php echo $Res[27]; ?>" required>
         </div>
     </div>
 </div>
@@ -94,7 +125,26 @@
 <div class="hr-line-dashed"></div>
 <h3><span class="text text-success">Alineación Plan Estatal de Desarrollo 2016-2021</span></h3>
 <div class="row">
-    <div class="col-lg-4"><div class="form-group" id="ejes_div"></div>
+    <div class="col-lg-4"><div class="form-group" id="ejes_div">
+        <label for="sltEje">Programa Presupuestal</label>
+          <select class='form-control m-b' id='sltProgPres' name='sltProgPres'>
+              <option value="<?php echo $Res[0]; ?>" ><?php echo $Res[1];?></option>
+              <option value="">-------------</option>
+              <?php
+
+            $sql_eje = "SELECT * FROM ejes";
+            $conexion = $conn->conectar($_SESSION['id_perfil']);
+            $conexion->set_charset("utf8");
+            $ExeEje= $conexion->query($sql_eje);
+            $conexion ->close();
+
+
+              while($Reseje = $ExeEje->fetch_array()){
+                  echo "<option value='".$Reseje[0]."'>".$Reseje[1]."</option>";
+              }
+              ?>
+          </select>
+    </div>
     </div>
     <div class="col-lg-4">
         <div class="form-group" id="linea_div">
@@ -270,12 +320,8 @@
   </div>
 
 </div>
-
-
-<script src="js/proyectos.js"></script>
 <script type="text/javascript">
     function cancelarEdit(){
         location.href="main.php?token=<?php echo md5(2); ?>"
     }
-    window.onload = cargar_selects_iniciales();
 </script>

@@ -45,7 +45,7 @@
 <div class="col-lg-12">
 <div class="ibox float-e-margins">
 <div class="ibox-content">
-<form role="form" class="form-horizontal" method="post" action="views/guardar_componente.php" enctype="application/x-www-form-urlencoded">
+<form role="form" class="form-horizontal" method="post" action="views/guardar_componente.php" enctype="application/x-www-form-urlencoded" onsubmit="return validar();">
 <input type="hidden" id="id_proyecto" name='id_proyecto' value="<?php echo $_GET['p']; ?>">
 <h3><span class="text text-success">Información General del componente</span></h3>
 <div class="row">
@@ -198,9 +198,25 @@ Cargando . . . <img src='images/loading_verde.gif'>
 </div>
 
 </div>
+<div>
+<div class="row">
+    <div class="col-lg-6">
+      <div class="form-group">
+<label for="txtNombreComponente">Medio de Verificación</label>
+<textarea id="txtMedioVerificacion" name="txtMedioVerificacion" maxlength="254" class="form-control" required></textarea>
+</div>
+    </div>
+        <div class="col-lg-6">
+      <div class="form-group">
+<label for="txtSupuesto">Supuesto</label>
+<textarea id="txtSupuesto" name="txtSupuesto" maxlength="254" class="form-control" required></textarea>
+</div>
+    </div>
+</div>
+</div>
 <div class="row">
 <div class="col-lg-4">
-    <button type="button" class="btn btn-default"><i class="fa fa-ban" aria-hidden="true"></i> Cancelar</button>
+    <button type="button" class="btn btn-default" onclick="cancelar();"><i class="fa fa-ban" aria-hidden="true"></i> Cancelar</button>
     &nbsp;
     <button type="submit" class="btn btn-default"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
 </div>
@@ -226,4 +242,63 @@ Cargando . . . <img src='images/loading_verde.gif'>
 <script src="js/componentes.js"></script>
 <script type="text/javascript">
     window.onload = cargar_selects_iniciales();
+
+function validar(){
+// validar ponderacion
+        <?php
+            require_once('class/conexion.php');
+		    $sql = "SELECT sum(ponderacion) FROM componentes WHERE id_proyecto = ".$_GET['p'];
+            $conn = new conexion();
+		    $conexion = $conn->conectar($_SESSION['id_perfil']);
+		    $ExeConsulta = $conexion->query($sql);
+		    $conexion->close();
+            $Ponderacion = $ExeConsulta->fetch_array();
+            if($Ponderacion[0] == ""){
+                $pondera = 0;
+            }else{
+                $pondera = $Ponderacion[0];
+            }
+        ?>
+         var ponderacion_max = 100 - <?php echo $pondera;?>;
+         if($('#intPonderacion').val() > ponderacion_max){
+             alert("Se ha sobrepasado la ponderación");
+             document.getElementById('intPonderacion').focus();
+             return false;
+         }
+//validar numero de componente
+       <?php
+        $sql = "SELECT num_componente FROM componentes WHERE  id_proyecto = ".$_GET['p'];
+		$conexion = $conn->conectar($_SESSION['id_perfil']);
+		$ExeConsulta = $conexion->query($sql);
+		$conexion->close();
+        $arregloNum = "";
+        while($Resultado = $ExeConsulta->fetch_array()){
+            $arregloNum = $arregloNum."'".$Resultado[0]."',";
+        }
+
+        $arregloNum = substr($arregloNum,0,-1);
+        echo "var numComponentes = [$arregloNum];\n";
+        ?>
+        var numCompReg = numComponentes.length;
+        encontrados = 0;
+         console.log("componentes registrados: "+numCompReg);
+         console.log("encontrados: "+encontrados);
+
+    for(x=0;x < numCompReg  ;x++){
+            console.log("vuelta: "+x);
+            if(numComponentes[x] == $('#intNumComponente').val()){
+                encontrados = 1;
+                console.log("encontrados: "+encontrados);
+            }
+        }
+
+        if(encontrados == 1){
+            alert("ya existe ese numero de componente, intenta con otro");
+            document.getElementById('intNumComponente').focus();
+            return false;
+        }else{
+            return true;
+        }
+
+}
 </script>

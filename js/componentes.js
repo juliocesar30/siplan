@@ -28,7 +28,6 @@ url: "class/componentes.php",
 data: { accion: 2,proyecto: p}
 })
 .done(function(msg) {
-console.log(msg);
 document.getElementById('eje_div').innerHTML = msg;
 linea($('#sltEje').val());
 });

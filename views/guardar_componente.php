@@ -46,13 +46,21 @@ $sltFrecuenciaInd,
 $sltSentidoInd,
 '$txtUmedidaInd',
 $intMetaInd,
-'n.a',
-'n.a'
+'$txtMedioVerificacion',
+'$txtSupuesto'
 )";
 
 $conn = new conexion();
 $conexion = $conn->conectar($_SESSION['id_perfil']);
-$conexion->query($sql);
+if($conexion->query($sql)){
+    $msg = "guarda";
+}else{
+    $msg = $conexion->error;
+}
 $conexion->close();
-echo $sql;
+
 ?>
+<script>
+    alert("se ha guardado el componente");
+   location.href="../main.php?token=1679091c5a880faf6fb5e6087eb1b2dc&p=<?php echo $id_proyecto;?>"
+</script>
