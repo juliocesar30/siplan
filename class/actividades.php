@@ -7,7 +7,7 @@ class actividades {
 		$sql = "SELECT
 a.id_actividad,
 a.num_actividad,
-a.descripcion,
+a.nombre_actividad,
 u.unidad_medida,
 a.cantidad,
 a.ponderacion,
@@ -38,7 +38,7 @@ if(isset($_POST['accion'])){
 <thead>
 <tr>
 <th>Num</th>
-<th>Componente</th>
+<th>Actividad</th>
 <th>U. medida</th>
 <th>Cantidad</th>
 <th>Ponderación</th>
@@ -65,9 +65,9 @@ if(isset($_POST['accion'])){
 			"<tr class='gradeX'>
 			<td>".$Res[1]."</td>
 			<td>".substr($Res[2],0,10)."...</td>
-			<td>".$ponderacionActual."</td>
 			<td>".$Res[3]."</td>
 			<td>".$Res[4]."</td>
+			<td>".$ponderacionActual."</td>
 			<td>
 			<a href='#' title='Información' class='btn btn-default btn-circle'><i class='fa fa-info' aria-hidden='true'></i></a>&nbsp;&nbsp;
 			<a href='main.php?token=".md5(9)."&p=".$id_proy."&c=".$id_comp."' title='Actividades' class='btn btn-default btn-circle'><i class='fa fa-cogs' aria-hidden='true'></i></a>&nbsp;&nbsp; $btn_acciones
