@@ -111,6 +111,20 @@ class proyectos{
         }
         return false;
     }
+
+
+    function infoProyecto(){
+       $proyecto = $_POST['proyecto'];
+       extract($_POST);
+       require_once('conexion.php');
+       $sql = "CALL infoProyecto($proyecto)";
+       $conn = new conexion();
+       $conexion = $conn->conectar($_SESSION['id_perfil']);
+         $conexion->set_charset("utf8");
+       $ExeQuery = $conexion->query($sql);
+       $conexion->close();
+       return $ExeQuery;
+    }
 }
 
 
@@ -157,7 +171,7 @@ if(isset($_POST['accion'])){
     if($status == 0 && $_SESSION['id_perfil'] == 2){
         $aprob = "<a href='javascript:aprobar($id_pr);' title='Aprobar' class='btn btn-default btn-circle'><i class='fa fa-check' aria-hidden='true'></i></a>&nbsp;&nbsp;
         <a href='main.php?token=".md5(8)."&p=$id_pr' title='Editar' class='btn btn-default btn-circle'><i class='fa fa-edit' aria-hidden='true'></i></a>&nbsp;&nbsp;
-        <a href='javascript:eliminar($id_pr);' title='Eliminar' class='btn btn-danger btn-circle'><i class='fa fa-trash' aria-hidden='true'></i></a>&nbsp;&nbsp;";
+        <a href='javascript:eliminar($id_pr);' title='Eliminar' class='btn btn-danger btn-circle btn-outline'><i class='fa fa-trash' aria-hidden='true'></i></a>&nbsp;&nbsp;";
     }
 
     if($status == 1 && $_SESSION['id_perfil'] == 3 or $status == 1 && $_SESSION['id_perfil'] == 1 ){
@@ -176,7 +190,7 @@ echo
 <td>".$ponderacionActual."</td>
 <td>".$leyenda."</td>
 <td>
-<a href='#' title='Información' class='btn btn-default btn-circle'><i class='fa fa-info' aria-hidden='true'></i></a>&nbsp;&nbsp;
+<a href='main.php?token=".md5(11)."&p=".$id_pr."' title='Información' class='btn btn-default btn-circle btn-outline'><i class='fa fa-info' aria-hidden='true'></i></a>&nbsp;&nbsp;
 <a href='main.php?token=".md5(6)."&p=".$id_pr."' title='Componentes' class='btn btn-default btn-circle'><i class='fa fa-gear' aria-hidden='true'></i></a>&nbsp;&nbsp;
 <a href='main.php?token=e4da3b7fbbce2345d7772b0674a318d5&p=".$id_pr."' title='Indicadores' class='btn btn-default btn-circle'><i class='fa fa-bar-chart' aria-hidden='true'></i></a>&nbsp;&nbsp;
 ".$aprob."

@@ -126,9 +126,9 @@ $sql = "call infoProyecto($idp)";
 <h3><span class="text text-success">Alineación Plan Estatal de Desarrollo 2016-2021</span></h3>
 <div class="row">
     <div class="col-lg-4"><div class="form-group" id="ejes_div">
-        <label for="sltEje">Programa Presupuestal</label>
-          <select class='form-control m-b' id='sltProgPres' name='sltProgPres'>
-              <option value="<?php echo $Res[0]; ?>" ><?php echo $Res[1];?></option>
+        <label for="sltEje">Eje</label>
+          <select class='form-control m-b' id='sltEje' name='sltEje' onchange='cargarLineasPED(this.value);' >
+              <option value="<?php echo $Res[0]; ?>" ><?php echo $Res[0] ." - ". $Res[1];?></option>
               <option value="">-------------</option>
               <?php
 
@@ -147,15 +147,45 @@ $sql = "call infoProyecto($idp)";
     </div>
     </div>
     <div class="col-lg-4">
-        <div class="form-group" id="linea_div">
-            <label >Linea</label>
-            <select class='form-control m-b'><option>-Sleccione Eje-</option></select>
+        <div class="form-group" id="linea_div" >
+             <label for='sltLinea'>Linea</label>
+            <select class='form-control m-b' id='sltLinea' name='sltLinea' onchange='cargarEstrategiasPED(this.value);' required>
+                <option value='<?php echo $Res[2]; ?>'><?php echo $Res[3]; ?></option>
+                <option value=''>-----------------</option>
+                <?php
+                 $sql_linea= "SELECT * FROM lineas WHERE id_eje = ".$Res[0];;
+            $conexion = $conn->conectar($_SESSION['id_perfil']);
+            $conexion->set_charset("utf8");
+            $ExeLinea= $conexion->query($sql_linea);
+            $conexion ->close();
+
+
+              while($Reslin = $ExeLinea->fetch_array()){
+                  echo "<option value='".$Reslin[0]."'>".$Reslin[2]."</option>";
+              }
+                ?>
+            </select>
         </div>
     </div>
     <div class="col-lg-4">
         <div class="form-group" id="estrategia_div">
-            <label for="txtNombreProyecto">Estrategia</label>
-            <select class='form-control m-b'><option>-Sleccione Eje-</option></select>
+            <label for='sltEstrategia'>Estrategia</label>
+            <select class='form-control m-b' id='sltEstrategia' name='sltEstrategia' required>
+                <option value='<?php echo $Res[4]; ?>'><?php echo $Res[5]; ?></option>
+                <option value=''>-----------</option>
+                 <?php
+                 $sql_estrategia= "SELECT * FROM estrategias WHERE id_linea = ".$Res[2];;
+            $conexion = $conn->conectar($_SESSION['id_perfil']);
+            $conexion->set_charset("utf8");
+            $Exeestrategia= $conexion->query($sql_estrategia);
+            $conexion ->close();
+
+
+              while($Resestrategia = $Exeestrategia->fetch_array()){
+                  echo "<option value='".$Resestrategia[0]."'>".$Resestrategia[3]."</option>";
+              }
+                ?>
+            </select>
         </div>
     </div>
 </div>
@@ -164,12 +194,19 @@ $sql = "call infoProyecto($idp)";
 <h3><span class="text text-success">Alineación Plan Nacional de Desarrollo 2012-2018</span></h3>
 <div class="row">
     <div class="col-lg-3">
-        <div class="form-group" id="pnd_ejes_div"></div>
+        <div class="form-group" id="pnd_ejes_div">
+            <label for='sltPndEje'>Meta Nacional</label>
+            <select class='form-control m-b' id='sltPndEje' name='sltPndEje' onchange='cargaObjPND(this.value);' required>
+                <option value='<?php echo $Res[29];?>'><?php echo $Res[30];?></option>
+            </select>
+        </div>
     </div>
     <div class="col-lg-3">
         <div class="form-group" id="pnd_objetivo_div">
             <label for="sltObjPND">Objetivo PND</label>
-            <select class='form-control m-b' id="sltObjPND" name="sltObjPND"><option value="">-Sleccione Eje PND-</option></select>
+            <select class='form-control m-b' id="sltObjPND" name="sltObjPND">
+                <option value="<?php echo $Res[31] ?>"><?php echo $Res[32] ?></option>
+            </select>
         </div>
     </div>
     <div class="col-lg-3">

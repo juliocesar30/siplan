@@ -10,7 +10,20 @@ class componentes {
 	function listar(){
 		require_once('conexion.php');
 		extract($_POST);
-		$sql = "SELECT id_componente,id_proyecto,num_componente,descripcion,ponderacion,u_medida,cantidad from componentes where id_proyecto = ".$proyecto;
+		$sql = "SELECT
+c.id_componente,
+c.id_proyecto,
+c.num_componente,
+c.descripcion,
+c.ponderacion,
+u.unidad_medida,
+c.cantidad,
+p.estatus,
+(select count(*) from actividades where id_componente = c.id_componente) as actividades
+from componentes c
+inner join u_medida_prog01 u on(c.u_medida = u.id_unidad)
+inner join proyectos p on(c.id_proyecto = p.id_proyecto)
+where c.id_proyecto = ".$proyecto;
 		$conn = new conexion();
 		$conexion = $conn->conectar($_SESSION['id_perfil']);
 		$conexion->set_charset("utf8");
@@ -98,22 +111,32 @@ $lista = $componente->listar();
 			    $id_proy = $Res[1];
 			    $ponderacionActual = $Res[4];
 			    $ponderacionTotal = $ponderacionTotal + $ponderacionActual;
-			    if($status == 0){
-			        echo "";
-			        $leyenda = "Sin Aprobar";
-			    }
+			    $estatus = $Res[7];
+                $actividades = $Res[8];
+                $eliminar_btn = "";
+                $editar_ntn = "";
+                if($estatus == 0 and $actividades == 0){
+                    $eliminar_btn =  "<a href='javascript:eliminar($id_comp);' title='Eliminar' class='btn btn-danger btn-circle'><i class='fa fa-trash' aria-hidden='true'></i></a>&nbsp;&nbsp;";
+                }
+
+                if($estatus == 0){
+                    $editar_ntn = "<a href='main.php?token=".md5(0)."&p=$id_comp' title='Editar' class='btn btn-default btn-circle'><i class='fa fa-edit' aria-hidden='true'></i></a>&nbsp;&nbsp";
+                }
 
 
 			echo
 			"<tr class='gradeX'>
 			<td>".$Res[2]."</td>
 			<td>".substr($Res[3],0,10)."...</td>
-			<td>".$ponderacionActual."</td>
 			<td>".$Res[5]."</td>
 			<td>".$Res[6]."</td>
+			<td>".$ponderacionActual."</td>
 			<td>
 			<a href='#' title='Información' class='btn btn-default btn-circle'><i class='fa fa-info' aria-hidden='true'></i></a>&nbsp;&nbsp;
-			<a href='main.php?token=".md5(9)."&p=".$id_proy."&c=".$id_comp."' title='Actividades' class='btn btn-default btn-circle'><i class='fa fa-cogs' aria-hidden='true'></i></a>&nbsp;&nbsp;
+			<a href='main.php?token=".md5(9)."&p=".$id_proy."&c=".$id_comp."' title='Actividades' class='btn btn-default btn-circle'><i class='fa fa-cogs' aria-hidden='true'></i>
+            </a>&nbsp;&nbsp;
+            $editar_ntn
+            $eliminar_btn
 			</td></tr>
 			";
 			    }
