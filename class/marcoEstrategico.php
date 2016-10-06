@@ -24,8 +24,9 @@ class marco_estrategico{
             $conexion->close();
             return "guardado";
         }else {
+            $error = $conexion->error;
             $conexion->close();
-            return $ConsultaAgregar;
+            return $error;
         }
     }
 
