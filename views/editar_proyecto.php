@@ -335,7 +335,6 @@ $sql = "call infoProyecto($idp)";
     &nbsp;
     <button type="submit" class="btn btn-default"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
 </div>
-
 </div>
 </form>
 </div>
@@ -344,21 +343,43 @@ $sql = "call infoProyecto($idp)";
 </div>
 </div>
 
-<!-- Trigger/Open The Modal -->
-
-
-<!-- The Modal -->
 <div id="myModal" class="modal">
-
-  <!-- Modal content -->
   <div class="modal-content">
     <span class="close">x</span>
     Cargando . . . <img src='images/loading_verde.gif'>
   </div>
-
 </div>
 <script type="text/javascript">
     function cancelarEdit(){
         location.href="main.php?token=<?php echo md5(2); ?>"
     }
+
+function cargarLineasPED(v){
+document.getElementById('linea_div').innerHTML = "Cargando . . . <img src='images/loading_verde.gif'>";
+document.getElementById('estrategia_div').innerHTML = "<label >Estrategia</label><select class='form-control m-b'><option>-Sleccione Linea-</option></select>";
+var catalogo = "lineas";
+$.ajax({
+method: "POST",
+url: "class/catalogos.php",
+data: { catalogo: catalogo,eje: v}
+})
+.done(function(msg) {
+document.getElementById('linea_div').innerHTML = msg;
+});
+}
+
+
+function cargarEstrategiasPED(v){
+document.getElementById('estrategia_div').innerHTML = "Cargando . . . <img src='images/loading_verde.gif'>";
+var catalogo = "estrategias";
+$.ajax({
+method: "POST",
+url: "class/catalogos.php",
+data: { catalogo: catalogo,linea: v}
+})
+.done(function(msg) {
+document.getElementById('estrategia_div').innerHTML = msg;
+});}
+
 </script>
+

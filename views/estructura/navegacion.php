@@ -106,17 +106,17 @@
 
 <?php } ?>
 <li>
-<a href="index.html"><i class="fa fa-gears"></i> <span class="nav-label">Administración</span> <span class="fa arrow"></span></a>
+<a href="#"><i class="fa fa-gears"></i> <span class="nav-label">Administración</span> <span class="fa arrow"></span></a>
  <ul class="nav nav-second-level collapse">
    <li><a href="dashboard_2.html">Cambiar Ejercicio</a></li>
   <?php if($_SESSION['id_perfil'] != 2 and $_SESSION['id_perfil'] != 5) { ?>
     <li><a data-toggle='modal' data-target='#cambioDep'>Cambiar Dependencia</a></li>
   <?php } ?>
   <?php if($_SESSION['id_perfil'] == 1 || $_SESSION['id_perfil'] == 3) { ?>
-     <li><a href="index.html">Usuarios</a></li>
-     <li><a href="index.html">Oficios Aprobación</a></li>
-      <li><a href="index.html">Permisos</a></li>
-     <li><a href="index.html">Trimestre</a></li>
+     <li><a href="main.php?token=<?php echo md5(12); ?>">Usuarios</a></li>
+     <li><a href="#">Oficios Aprobación</a></li>
+      <li><a href="#">Permisos</a></li>
+     <li><a href="#">Trimestre</a></li>
 
 
 

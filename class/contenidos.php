@@ -37,6 +37,9 @@
                      case md5(11):
                      require_once("views/info_proyecto.php");
                      break;
+                      case md5(12):
+                     require_once("views/usuarios_adm.php");
+                     break;
 
                  default:
                    require_once("views/error404.php");

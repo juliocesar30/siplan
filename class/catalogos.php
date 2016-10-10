@@ -285,7 +285,7 @@ if(isset($_POST['catalogo'])){
         case "funcion":
             $catalogo = new catalogos;
             $prog_pres = $catalogo->funcion();
-            echo "<label for='sltFuncion'>Funcion</label>";
+            echo "<label for='sltFuncion'>Función</label>";
             echo "<select class='form-control m-b' id='sltFuncion' name='sltFuncion' onchange='cargaSubFuncion(this.value)' required><option value='0'>-Seleccione-</option>";
             while($res = $prog_pres->fetch_array()){
                 echo "<option value='".$res[0]."'>".$res[1]."</option>";
@@ -297,7 +297,7 @@ if(isset($_POST['catalogo'])){
             $catalogo = new catalogos;
             $prog_pres = $catalogo->subfuncion();
 
-            echo "<label for='sltSubFuncion'>Funcion</label>";
+            echo "<label for='sltSubFuncion'>Subfunción</label>";
             echo "<select class='form-control m-b' id='sltSubFuncion' name='sltSubFuncion'><option value='0' required>-Seleccione-</option>";
             while($res = $prog_pres->fetch_array()){
                 echo "<option value='".$res[0]."'>".$res[1]."</option>";
