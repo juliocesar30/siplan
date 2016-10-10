@@ -25,7 +25,7 @@
 	<a href="main.php?token=<?php echo md5(0);?>"><i class="fa fa-home"></i> <span class="nav-label">Inicio</span></a>
 </li>
 <li>
-<a href="index.html"><i class="fa fa-list"></i> <span class="nav-label">Planeación</span> <span class="fa arrow"></span></a>
+<a href="#"><i class="fa fa-list"></i> <span class="nav-label">Planeación</span> <span class="fa arrow"></span></a>
  <ul class="nav nav-second-level collapse">
    <li><a href="main.php?token=<?php echo md5(1);?>">Marco Estratégico</a></li>
    <li><a href="main.php?token=<?php echo md5(2);?>">Proyectos</a></li>
@@ -33,49 +33,102 @@
    <li><a href="dashboard_3.html">Inversión</a></li>
 </ul>
 </li>
-<?php /*
+
 <li>
-<a href="index.html"><i class="fa fa-line-chart"></i> <span class="nav-label">Evaluación</span> <span class="fa arrow"></span></a>
+<a href="#"><i class="fa fa-line-chart"></i> <span class="nav-label">Evaluación</span> <span class="fa arrow"></span></a>
  <ul class="nav nav-second-level collapse">
-   <li><a href="index.html">Trimestral</a></li>
-   <li><a href="dashboard_2.html">Seguimiento</a></li>
-   <li><a href="dashboard_3.html">Avances</a></li>
-   <li><a href="dashboard_3.html">Cuenta Pública</a></li>
-   <li><a href="dashboard_3.html">Indicadores</a></li>
+   <li><a href="#">Trimestral</a></li>
+   <li><a href="#">Seguimiento</a></li>
+   <li><a href="#">Avances Fis/fin</a></li>
+   <li><a href="#">Cuenta Pública</a></li>
+   <li><a href="#">Indicadores</a></li>
 </ul>
 </li>
 
 
 <li>
-<a href="index.html"><i class="fa fa-bar-chart"></i> <span class="nav-label">Resultados</span> <span class="fa arrow"></span></a>
+<a href="#"><i class="fa fa-bar-chart"></i> <span class="nav-label">Resultados</span> <span class="fa arrow"></span></a>
  <ul class="nav nav-second-level collapse">
-   <li><a href="index.html">POA x DEP</a></li>
-   <li><a href="dashboard_2.html">POA x SECTOR</a></li>
-   <li><a href="dashboard_3.html">POA x EJES</a></li>
-   <li><a href="dashboard_3.html">% Dependencias</a></li>
-   <li><a href="dashboard_3.html">% Proyectos</a></li>
+   <?php if($_SESSION['id_perfil'] != 2 and $_SESSION['id_perfil'] != 5) { ?>
+   <li><a href="#">POA x DEP</a></li>
+   <li><a href="#">POA x SECTOR</a></li>
+   <li><a href="#">POA x EJES</a></li>
+   <li><a href="#">% Dependencias</a></li>
+   <li><a href="#">% Proyectos</a></li>
+    <?php } ?>
+   <li><a href="#">Resultados POA</a></li>
 </ul>
 </li>
 
+ <?php if($_SESSION['id_perfil'] == 1 || $_SESSION['id_perfil'] == 3)  { ?>
+<li>
+<a href="#"><i class="fa fa-usd"></i> <span class="nav-label">Presupuestal</span> <span class="fa arrow"></span></a>
+    <ul class="nav nav-second-level collapse">
+   <li><a href="#">Oficios de Ejecución</a></li>
+    <li><a href="#">Lista de Oficios</a></li>
+    </ul>
+</li>
+<?php } ?>
+
+<li>
+<?php if($_SESSION['id_perfil'] == 1 || $_SESSION['id_perfil'] == 3)  { ?>
+ <a href="#"><i class="fa fa-tasks"></i> <span class="nav-label">Reportes</span> <span class="fa arrow"></span></a>
+    <ul class="nav nav-second-level collapse">
+        <li><a href="#">POA</a></li>
+        <li><a href="#">Indicadores</a></li>
+        <li><a href="#">Proyectos</a></li>
+        <li><a href="#">Reportes Generales</a></li>
+        <li><a href="#">Resumen Oficios</a></li>
+        <li><a href="#">Resumen Est/Fin</a></li>
+        <li><a href="#">Avances Fis/fin</a></li>
+        <li><a href="#">Cuenta Pública</a></li>
+        <li><a href="#">Prog 3x1</a></li>
+    </ul>
+</li>
+<?php } ?>
+<?php if($_SESSION['id_perfil'] == 1 || $_SESSION['id_perfil'] == 3)  { ?>
+<li>
+  <a href="#"><i class="fa fa-money"></i> <span class="nav-label">Estados Financieros</span> <span class="fa arrow"></span></a>
+    <ul class="nav nav-second-level collapse">
+        <li><a href="#">Actualizar</a></li>
+        <li><a href="#">Mostrar</a></li>
+    </ul>
+    </li>
+<li>
+  <a href="#"><i class="fa fa-bookmark"></i> <span class="nav-label">Cierres de Ejercicio</span> <span class="fa arrow"></span></a>
+    </li>
+<li>
+  <a href="#"><i class="fa fa-book"></i> <span class="nav-label">Catálogos</span> <span class="fa arrow"></span></a>
+    </li>
+<li>
+  <a href="#"><i class="fa fa-globe"></i> <span class="nav-label">Municipio</span> <span class="fa arrow"></span></a>
+    </li>
+
+<?php } ?>
 <li>
 <a href="index.html"><i class="fa fa-gears"></i> <span class="nav-label">Administración</span> <span class="fa arrow"></span></a>
  <ul class="nav nav-second-level collapse">
    <li><a href="dashboard_2.html">Cambiar Ejercicio</a></li>
-
-  <?php if($_SESSION['id_perfil'] != 4) { ?>
+  <?php if($_SESSION['id_perfil'] != 2 and $_SESSION['id_perfil'] != 5) { ?>
     <li><a data-toggle='modal' data-target='#cambioDep'>Cambiar Dependencia</a></li>
   <?php } ?>
-
-  <?php if($_SESSION['id_perfil'] == 1) { ?>
+  <?php if($_SESSION['id_perfil'] == 1 || $_SESSION['id_perfil'] == 3) { ?>
      <li><a href="index.html">Usuarios</a></li>
-     <li><a href="index.html">Base de Datos</a></li>
-     <li><a href="index.html">Servicios Web</a></li>
+     <li><a href="index.html">Oficios Aprobación</a></li>
+      <li><a href="index.html">Permisos</a></li>
+     <li><a href="index.html">Trimestre</a></li>
+
+
+
   <?php } ?>
 
-
+    <?php if($_SESSION['id_perfil'] == 1) { ?>
+          <li><a href="index.html">Respaldar BD</a></li>
+      <li><a href="index.html">Estatus del Sistema</a></li>
+<?php } ?>
 </ul>
 </li>
-*/?>
+
 </ul>
 </div>
 </nav>
