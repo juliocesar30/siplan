@@ -1,56 +1,47 @@
 <?php
  require_once('class/conexion.php');
-  $idp = $_GET['p'];
+$idp = $_GET['p'];
 $sql = "call infoProyecto($idp)";
-            $conn = new conexion();
-            $conexion = $conn->conectar($_SESSION['id_perfil']);
-            $conexion->set_charset("utf8");
-            $ExeConsulta = $conexion->query($sql);
-            $conexion ->close();
-            $Res = $ExeConsulta->fetch_array();
+$conn = new conexion();
+$conexion = $conn->conectar($_SESSION['id_perfil']);
+$conexion->set_charset("utf8");
+$ExeConsulta = $conexion->query($sql);
+$conexion ->close();
+$Res = $ExeConsulta->fetch_array();
 ?>
-
 <style>
-/* The Modal (background) */
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+display: none;
+position: fixed;
+z-index: 1;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+overflow: auto;
+background-color: rgb(0,0,0);
+background-color: rgba(0,0,0,0.4);
 }
-
-/* Modal Content/Box */
 .modal-content {
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+background-color: #fefefe;
+margin: 15% auto;
+padding: 20px;
+border: 1px solid #888;
+width: 80%;
 }
-
-/* The Close Button */
 .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+color: #aaa;
+float: right;
+font-size: 28px;
+font-weight: bold;
 }
-
 .close:hover,
 .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+color: black;
+text-decoration: none;
+cursor: pointer;
 }
 </style>
-
-
 <div class="row wrapper border-bottom white-bg page-heading">
 <div class="col-lg-10"><h2>Editar Proyecto</h2></div>
 </div>
@@ -66,30 +57,29 @@ $sql = "call infoProyecto($idp)";
 <div class="form-group">
 <label for="intNumProyecto">Num. Proyecto</label>
 <input type="number" id="intNumProyecto" name="intNumProyecto" class="form-control" value="<?php echo $Res[6]; ?>" required>
-        </div>
-    </div>
-    <div class="col-lg-8">
-        <div class="form-group">
-            <label for="txtNombreProyecto">Nombre</label>
-            <input type="text" id="txtNombreProyecto" name="txtNombreProyecto" maxlength="254" class="form-control" value="<?php echo $Res[7]; ?>"  required>
-        </div>
-    </div>
 </div>
-
+</div>
+<div class="col-lg-8">
+<div class="form-group">
+<label for="txtNombreProyecto">Nombre</label>
+<input type="text" id="txtNombreProyecto" name="txtNombreProyecto" maxlength="254" class="form-control" value="<?php echo $Res[7]; ?>"  required>
+</div>
+</div>
+</div>
 <div class="row">
-    <div class="col-lg-2">
-        <div class="form-group">
-            <label for="numInversion">Inversión Aproximada</label>
-            <input type="number" id="numInversion" name="numInversion" class="form-control" value="<?php echo $Res[8]; ?>"  required>
-        </div>
-    </div>
-    <div class="col-lg-8">
-        <div class="form-group" id="prog_pres_div">
-            <label for="sltProgPres">Programa Presupuestal</label>
-          <select class='form-control m-b' id='sltProgPres' name='sltProgPres'>
-              <option value="<?php echo $Res[37]; ?>" ><?php echo $Res[38];?></option>
-              <option value="">-------------</option>
-              <?php
+<div class="col-lg-2">
+<div class="form-group">
+<label for="numInversion">Inversión Aproximada</label>
+<input type="number" id="numInversion" name="numInversion" class="form-control" value="<?php echo $Res[8]; ?>"  required>
+</div>
+</div>
+<div class="col-lg-8">
+<div class="form-group" id="prog_pres_div">
+<label for="sltProgPres">Programa Presupuestal</label>
+<select class='form-control m-b' id='sltProgPres' name='sltProgPres'>
+<option value="<?php echo $Res[37]; ?>" ><?php echo $Res[38];?></option>
+<option value="">-------------</option>
+<?php
 
             $sql_progPres = "SELECT * FROM prog_presupuestarios";
             $conexion = $conn->conectar($_SESSION['id_perfil']);
@@ -153,7 +143,7 @@ $sql = "call infoProyecto($idp)";
                 <option value='<?php echo $Res[2]; ?>'><?php echo $Res[3]; ?></option>
                 <option value=''>-----------------</option>
                 <?php
-                 $sql_linea= "SELECT * FROM lineas WHERE id_eje = ".$Res[0];;
+                 $sql_linea= "SELECT * FROM lineas WHERE id_eje = ".$Res[0];
             $conexion = $conn->conectar($_SESSION['id_perfil']);
             $conexion->set_charset("utf8");
             $ExeLinea= $conexion->query($sql_linea);
@@ -174,7 +164,7 @@ $sql = "call infoProyecto($idp)";
                 <option value='<?php echo $Res[4]; ?>'><?php echo $Res[5]; ?></option>
                 <option value=''>-----------</option>
                  <?php
-                 $sql_estrategia= "SELECT * FROM estrategias WHERE id_linea = ".$Res[2];;
+                 $sql_estrategia= "SELECT * FROM estrategias WHERE id_linea = ".$Res[2];
             $conexion = $conn->conectar($_SESSION['id_perfil']);
             $conexion->set_charset("utf8");
             $Exeestrategia= $conexion->query($sql_estrategia);
@@ -198,6 +188,19 @@ $sql = "call infoProyecto($idp)";
             <label for='sltPndEje'>Meta Nacional</label>
             <select class='form-control m-b' id='sltPndEje' name='sltPndEje' onchange='cargaObjPND(this.value);' required>
                 <option value='<?php echo $Res[29];?>'><?php echo $Res[30];?></option>
+                <option value=''>-------------</option>
+                     <?php
+                 $sql= "SELECT * FROM pnd_ejes";
+            $conexion = $conn->conectar($_SESSION['id_perfil']);
+            $conexion->set_charset("utf8");
+            $ExeCons= $conexion->query($sql);
+            $conexion ->close();
+
+
+              while($Res = $ExeCons->fetch_array()){
+                  echo "<option value='".$Res[0]."'>".$Res[1]."</option>";
+              }
+                ?>
             </select>
         </div>
     </div>
@@ -205,7 +208,7 @@ $sql = "call infoProyecto($idp)";
         <div class="form-group" id="pnd_objetivo_div">
             <label for="sltObjPND">Objetivo PND</label>
             <select class='form-control m-b' id="sltObjPND" name="sltObjPND">
-                <option value="<?php echo $Res[31] ?>"><?php echo $Res[32] ?></option>
+                <option value="<?php echo $Res[31]; ?>"><?php echo $Res[32] ?></option>
             </select>
         </div>
     </div>
