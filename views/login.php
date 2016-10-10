@@ -29,6 +29,9 @@
                 <div class="form-group">
                 <input type="password" class="form-control" placeholder="Password" name="clave" required="">
                 </div>
+                 <div class="form-group">
+                     <select name="ejercicio"  class='form-control m-b' ><option value='2017'>Ejercicio 2017</option></select>
+                </div>
                 <button type="submit" class="btn btn-primary block full-width m-b"><i class="fa fa-sign-in" aria-hidden="true"></i> Ingresar</button>
             </form>
         </div>
