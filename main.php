@@ -7,7 +7,7 @@ if($_SESSION['key'] != md5("labor vincit omnia")){
 }
 require_once("class/conexion.php");
 require_once("views/estructura/header.php");
-if($_SESSION['id_perfil'] == 1){
+if($_SESSION['id_perfil'] == 1 || $_SESSION['id_perfil'] == 3){
   $body_class = "pace-down skin-3";
 }else{
   $body_class = "pace-down skin-1";
