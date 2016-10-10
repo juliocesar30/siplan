@@ -83,18 +83,20 @@ class proyectos{
     }
 
     function aprobar(){
-        require_once('componentes.php');
-        $componente = new componentes();
-        $contar = $componente->contarPonderacion();
-        if($contar < 100){
+        require_once('conexion.php');
+        $sql = "call validarPonderacion(".$_POST['id_proyecto'].")";
+        $conn = new conexion();
+       $conexion = $conn->conectar($_SESSION['id_perfil']);
+       $ExeQuery = $conexion->query($sql);
+       $conexion->close();
+       $Res = $ExeQuery->fetch_array();
+        if($Res[0] < 100){
             return "errorPondera";
             die();
         }
 
         if($_SESSION['id_perfil'] == 2){
             $sql = "UPDATE proyectos SET estatus = 1 WHERE id_proyecto = ".$_POST['id_proyecto'];
-            require_once('conexion.php');
-            $conn = new conexion();
             $conexion = $conn->conectar($_SESSION['id_perfil']);
             $conexion->query($sql);
             $conexion->close();
@@ -102,8 +104,6 @@ class proyectos{
         }
         if($_SESSION['id_perfil'] == 1 OR $_SESSION['id_perfil'] == 3){
             $sql = "UPDATE proyectos SET estatus = 2 WHERE id_proyecto = ".$_POST['id_proyecto'];
-            require_once('conexion.php');
-            $conn = new conexion();
             $conexion = $conn->conectar($_SESSION['id_perfil']);
             $conexion->query($sql);
             $conexion->close();
@@ -237,8 +237,9 @@ break;
         $accion = $proyecto->eliminar();
         echo $accion;
         break;
+
         case 6:
-            $proyecto = new proyectos();
+        $proyecto = new proyectos();
         $accion = $proyecto->aprobar();
         echo $accion;
         break;
