@@ -56,6 +56,8 @@ cursor: pointer;
 <div class="col-lg-2">
 <div class="form-group">
 <label for="intNumProyecto">Num. Proyecto</label>
+<input type="hidden" id="num_proyecto_o" value="<?php echo $Res[6]; ?>">
+<input type="hidden" id="id_proyecto" value="<?php echo $_GET['p']; ?>">
 <input type="number" id="intNumProyecto" name="intNumProyecto" class="form-control" value="<?php echo $Res[6]; ?>" required>
 </div>
 </div>
@@ -460,12 +462,18 @@ cursor: pointer;
 </div>
 </div>
 <div id="myModal" class="modal">
-  <div class="modal-content">
+  <div class="modal-content" >
     <span class="close">x</span>
-    Cargando . . . <img src='images/loading_verde.gif'>
+      <div id="modalInfo" ><b>Validando y Guardando . . .</b> <img src='images/loading_verde.gif'></div>
   </div>
 </div>
 <script type="text/javascript">
+
+
+// Get the modal
+
+
+
 
 function cancelarEdit(){
         location.href="main.php?token=c81e728d9d4c2f636f067f89cc14862c";
@@ -610,16 +618,18 @@ function inicio(){
 }
 
 
-function validar(){
-	console.log("debe guardar");
-	return false;
-}
+
 
 window.onload = inicio;
 
  function validar(){
-    mostrarModal();
-    var numproyecto = document.getElementById('intNumProyecto').value;
+    var modal = document.getElementById('myModal');
+    modal.style.display = "block";
+
+    var num_pr_actual = $('#num_proyecto_o').val();
+    var numproyecto = $('#intNumProyecto').val();
+    var id_proyecto = $('#id_proyecto').val();
+
     var pondera = parseInt(document.getElementById('intPonderacion').value);
     var ponderamax = parseInt(document.getElementById('ponderacion_max_h').value);
 
@@ -630,14 +640,17 @@ window.onload = inicio;
         return false;
     }
 
+
+
     $.ajax({
        method: "POST",
        url: "class/proyectos.php",
-       data: {accion: 3,num_proyecto: numproyecto}
+       data: {accion: 7,num_proyecto: numproyecto,pr_actual: num_pr_actual,id_proyecto: id_proyecto}
     })
    .done(function(msg) {
-        ocultarModal();
-    if(msg == 1){
+
+    if(msg == "error"){
+        modal.style.display="none";
         alert("Ya existe un proyecto con ese numero");
         document.getElementById('intNumProyecto').value = '';
         document.getElementById('intNumProyecto').focus();
@@ -652,6 +665,9 @@ window.onload = inicio;
 }
 
 function guardarProyecto(){
+var modal = document.getElementById('myModal');
+modal.style.display = "block";
+var id_proyecto =  $('#id_proyecto').val();
 var eje = $('#sltEje').val();
 var linea = $('#sltLinea').val();
 var est = $('#sltEstrategia').val();
@@ -683,10 +699,10 @@ var progpres =  $('#sltProgPres').val();
 $.ajax({
 method: "POST",
 url: "class/proyectos.php",
-data: {accion: 4,eje: eje,linea: linea,est: est,num: num,nomb: nomb,inversion: inversion,pondera: pondera,umedida: umedida,proganual: proganual,progsem: progsem,secpob: secpob,benh: benh, benm: benm,just: just,fin: fin,fun: fun,subf: subfun,prop: prop,obspro: obspro,uresp: uresp,titular: titular,obj: obj,pndeje: pndeje,pndobj: pndobj,pndest: pndest,pndlin: pndlin,progpres: progpres}
+data: {accion: 8,id_proyecto: id_proyecto,eje: eje,linea: linea,est: est,num: num,nomb: nomb,inversion: inversion,pondera: pondera,umedida: umedida,proganual: proganual,progsem: progsem,secpob: secpob,benh: benh, benm: benm,just: just,fin: fin,fun: fun,subf: subfun,prop: prop,obspro: obspro,uresp: uresp,titular: titular,obj: obj,pndeje: pndeje,pndobj: pndobj,pndest: pndest,pndlin: pndlin,progpres: progpres}
    })
   .done(function(msg) {
-    ocultarModal();
+     modal.style.display = "none";
       if(msg == "guardado"){
         alert("el proyecto con numero "+num+" se guardó correctamente");
         location.href="main.php?token=c81e728d9d4c2f636f067f89cc14862c";

@@ -18,9 +18,7 @@ class proyectos{
        return $ExeConsulta;
 
     }
-    function informacion(){
-        return false;
-    }
+
 
     function agregar(){
         $dep = $_SESSION['id_dependencia'];
@@ -63,9 +61,7 @@ class proyectos{
         }else{ return "error02";}
     }
 
-    function actualizar(){
-        return false;
-    }
+
 
 
     function numero(){
@@ -124,6 +120,59 @@ class proyectos{
        $ExeQuery = $conexion->query($sql);
        $conexion->close();
        return $ExeQuery;
+    }
+
+    function prNumActual(){
+
+        require_once('conexion.php');
+        $sql = "SELECT num_proyecto from proyectos where id_proyecto = ".$_POST['id_proyecto'];
+        $conn = new conexion();
+        $conexion = $conn->conectar($_SESSION['id_perfil']);
+        $ExeQuery = $conexion->query($sql);
+        $Res = $ExeQuery->fetch_array();
+
+        if($Res[0] == $_POST['num_proyecto']){
+            return "continuar";
+        }
+        else{
+        $dep = $_SESSION['id_dependencia'];
+        $ejercicio = $_SESSION['ejercicio'];
+        $sql = "SELECT COUNT(*) FROM proyectos WHERE id_dependencia = $dep AND num_proyecto = ".$_POST['num_proyecto']." AND ejercicio = '$ejercicio'";
+        $conn = new conexion();
+        $conexion = $conn->conectar($_SESSION['id_perfil']);
+        $ExeQuery = $conexion->query($sql);
+        $conexion->close();
+        $Res = $ExeQuery->fetch_array();
+        if($Res[0] == 1){
+            $conexion->close;
+            return "error";
+        }else{
+            return "continuar";
+        }
+
+        }
+
+    }
+
+function actualizar(){
+         $dep = $_SESSION['id_dependencia'];
+       $ejercicio = $_SESSION['ejercicio'];
+        extract($_POST);
+       require_once('conexion.php');
+       $sql = "CALL actualiza_proyecto ($id_proyecto,$dep,$eje,$linea,$est,$num,'$nomb',$inversion,$pondera,'$umedida',$proganual,$progsem,$secpob,$benh,$benm,'$just',$fin,$fun,$subf,'$prop','$obspro','$uresp','$titular','$obj',$pndeje,$pndobj,$pndest,$pndlin,$progpres)";
+     $conn = new conexion();
+      $conexion = $conn->conectar($_SESSION['id_perfil']);
+     $conexion->set_charset("utf8");
+
+        if($conexion->query($sql)){
+          $conexion->close();
+           return "guardado";
+      }else{
+        return "error:".$conexion->error." - sql: ".$sql;
+        $conexion->close();
+
+       }
+
     }
 }
 
@@ -237,10 +286,19 @@ break;
         $accion = $proyecto->eliminar();
         echo $accion;
         break;
-
         case 6:
         $proyecto = new proyectos();
         $accion = $proyecto->aprobar();
+        echo $accion;
+        break;
+        case 7:
+        $proyecto = new proyectos();
+        $accion = $proyecto->prNumActual();
+        echo $accion;
+        break;
+                case 8:
+        $proyecto = new proyectos();
+        $accion = $proyecto->actualizar();
         echo $accion;
         break;
     }
