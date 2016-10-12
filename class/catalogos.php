@@ -182,7 +182,7 @@ if(isset($_POST['catalogo'])){
             $catalogo = new catalogos;
             $prog_pres = $catalogo->prog_pres();
             echo "<label for='sltProgPres'>Programa Presupuestario</label>";
-            echo "<select class='form-control m-b' id='sltProgPres' name='sltProgPres'><option value='0'>-Seleccione-</option>";
+            echo "<select class='form-control m-b' id='sltProgPres' name='sltProgPres' requiredº1><option value=''>-Seleccione-</option>";
             while($res = $prog_pres->fetch_array()){
                 echo "<option value='".$res[0]."'>".$res[1]." - ".$res[2]."</option>";
             }
@@ -225,7 +225,7 @@ if(isset($_POST['catalogo'])){
             $catalogo = new catalogos;
             $prog_pres = $catalogo->pnd_eje();
             echo "<label for='sltPndEje'>Meta Nacional</label>";
-            echo "<select class='form-control m-b' id='sltPndEje' name='sltPndEje' onchange='cargaObjPND(this.value);' required><option value='0'>-Seleccione-</option>";
+            echo "<select class='form-control m-b' id='sltPndEje' name='sltPndEje' onchange='cargaObjPND(this.value);' required><option value=''>-Seleccione-</option>";
             while($res = $prog_pres->fetch_array()){
                 echo "<option value='".$res[0]."'>".$res[1]."</option>";
             }
@@ -235,7 +235,7 @@ if(isset($_POST['catalogo'])){
             $catalogo = new catalogos;
             $prog_pres = $catalogo->pnd_objetivo();
             echo "<label for='sltObjPND'>Objetivo PND</label>";
-            echo "<select class='form-control m-b' id='sltObjPND' name='sltObjPND' onchange='cargaEstrategiaPND(this.value);' required><option value='0'>-Seleccione-</option>";
+            echo "<select class='form-control m-b' id='sltObjPND' name='sltObjPND' onchange='cargaEstrategiaPND(this.value);' required><option value=''>-Seleccione-</option>";
             while($res = $prog_pres->fetch_array()){
                 echo "<option value='".$res[0]."'>".$res[1]."</option>";
             }
@@ -245,7 +245,7 @@ if(isset($_POST['catalogo'])){
             $catalogo = new catalogos;
             $prog_pres = $catalogo->pnd_estrategia();
             echo "<label for='sltEstrategiaPND'>Estrategia PND</label>";
-            echo "<select class='form-control m-b' id='sltEstrategiaPND' name='sltEstrategiaPND' onchange='cargaLineaPND(this.value);' required><option value='0'>-Seleccione-</option>";
+            echo "<select class='form-control m-b' id='sltEstrategiaPND' name='sltEstrategiaPND' onchange='cargaLineaPND(this.value);' required><option value=''>-Seleccione-</option>";
             while($res = $prog_pres->fetch_array()){
                 echo "<option value='".$res[0]."'>".$res[1]."</option>";
             }
@@ -255,7 +255,7 @@ if(isset($_POST['catalogo'])){
             $catalogo = new catalogos;
             $prog_pres = $catalogo->pnd_linea();
             echo "<label for='sltLineaPND'>Línea de Acción PND</label>";
-            echo "<select class='form-control m-b' id='sltLineaPND' name='sltLineaPND' required><option value='0'>-Seleccione-</option>";
+            echo "<select class='form-control m-b' id='sltLineaPND' name='sltLineaPND' required><option value=''>-Seleccione-</option>";
             while($res = $prog_pres->fetch_array()){
                 echo "<option value='".$res[0]."'>".$res[1]."</option>";
             }
@@ -265,7 +265,7 @@ if(isset($_POST['catalogo'])){
             $catalogo = new catalogos;
             $prog_pres = $catalogo->sector_poblacional();
             echo "<label for='sltSectorPoblacional'>Sector Poblacional</label>";
-            echo "<select class='form-control m-b' id='sltSectorPoblacional' name='sltSectorPoblacional' required><option value='0'>-Seleccione-</option>";
+            echo "<select class='form-control m-b' id='sltSectorPoblacional' name='sltSectorPoblacional' required><option value=''>-Seleccione-</option>";
             while($res = $prog_pres->fetch_array()){
                 echo "<option value='".$res[0]."'>".$res[1]."</option>";
             }
@@ -275,7 +275,7 @@ if(isset($_POST['catalogo'])){
             $catalogo = new catalogos;
             $prog_pres = $catalogo->finalidad();
             echo "<label for='sltFinalidad'>Finalidad</label>";
-            echo "<select class='form-control m-b' id='sltFinalidad' name='sltFinalidad' onchange='cargaFuncion(this.value)' required><option value='0'>-Seleccione-</option>";
+            echo "<select class='form-control m-b' id='sltFinalidad' name='sltFinalidad' onchange='cargaFuncion(this.value)' required><option value=''>-Seleccione-</option>";
             while($res = $prog_pres->fetch_array()){
                 echo "<option value='".$res[0]."'>".$res[1]."</option>";
             }
@@ -286,7 +286,7 @@ if(isset($_POST['catalogo'])){
             $catalogo = new catalogos;
             $prog_pres = $catalogo->funcion();
             echo "<label for='sltFuncion'>Función</label>";
-            echo "<select class='form-control m-b' id='sltFuncion' name='sltFuncion' onchange='cargaSubFuncion(this.value)' required><option value='0'>-Seleccione-</option>";
+            echo "<select class='form-control m-b' id='sltFuncion' name='sltFuncion' onchange='cargaSubFuncion(this.value)' required><option value=''>-Seleccione-</option>";
             while($res = $prog_pres->fetch_array()){
                 echo "<option value='".$res[0]."'>".$res[1]."</option>";
             }
@@ -298,7 +298,7 @@ if(isset($_POST['catalogo'])){
             $prog_pres = $catalogo->subfuncion();
 
             echo "<label for='sltSubFuncion'>Subfunción</label>";
-            echo "<select class='form-control m-b' id='sltSubFuncion' name='sltSubFuncion'><option value='0' required>-Seleccione-</option>";
+            echo "<select class='form-control m-b' id='sltSubFuncion' name='sltSubFuncion' required><option value=''>-Seleccione-</option>";
             while($res = $prog_pres->fetch_array()){
                 echo "<option value='".$res[0]."'>".$res[1]."</option>";
             }

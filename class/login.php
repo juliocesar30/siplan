@@ -20,9 +20,9 @@ $conexion = $conn->conectar(5);
 $clave = $funciones->encriptar($_POST['clave']);
 $consultaUsuario = "call acceso('".$_POST['usuario']."','$clave')";
 $ExConsulta = $conexion->query($consultaUsuario);
-$ResConsulta = $ExConsulta->fetch_array()[0];
+$ResConsulta = $ExConsulta->fetch_array();
 $conexion->close();
-if($ResConsulta == 0){
+if($ResConsulta[0] == 0){
     unset($conexion);
     unset($conn);
   ?>

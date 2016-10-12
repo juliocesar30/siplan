@@ -76,18 +76,15 @@ cursor: pointer;
 <div class="col-lg-8">
 <div class="form-group" id="prog_pres_div">
 <label for="sltProgPres">Programa Presupuestal</label>
-<select class='form-control m-b' id='sltProgPres' name='sltProgPres'>
+<select class='form-control m-b' id='sltProgPres' name='sltProgPres' required>
 <option value="<?php echo $Res[37]; ?>" ><?php echo $Res[38];?></option>
 <option value="">-------------</option>
 <?php
-
-            $sql_progPres = "SELECT * FROM prog_presupuestarios";
-            $conexion = $conn->conectar($_SESSION['id_perfil']);
+   $sql_progPres = "SELECT * FROM prog_presupuestarios";
+  $conexion = $conn->conectar($_SESSION['id_perfil']);
             $conexion->set_charset("utf8");
             $ExeProgPres= $conexion->query($sql_progPres);
             $conexion ->close();
-
-
               while($ResProgPres = $ExeProgPres->fetch_array()){
                   echo "<option value='".$ResProgPres[0]."'>".$ResProgPres[1]."-".$ResProgPres[2]."</option>";
               }
@@ -117,7 +114,7 @@ cursor: pointer;
 <div class="row">
     <div class="col-lg-4"><div class="form-group" id="ejes_div">
         <label for="sltEje">Eje</label>
-          <select class='form-control m-b' id='sltEje' name='sltEje' onchange='cargarLineasPED(this.value);' >
+          <select class='form-control m-b' id='sltEje' name='sltEje' onchange='cargarLineasPED(this.value);' required>
               <option value="<?php echo $Res[0]; ?>" ><?php echo $Res[0] ." - ". $Res[1];?></option>
               <option value="">-------------</option>
               <?php
@@ -197,8 +194,8 @@ cursor: pointer;
             $conexion ->close();
 
 
-              while($Res = $ExeCons->fetch_array()){
-                  echo "<option value='".$Res[0]."'>".$Res[1]."</option>";
+              while($ResPND = $ExeCons->fetch_array()){
+                  echo "<option value='".$ResPND[0]."'>".$ResPND[1]."</option>";
               }
                 ?>
             </select>
@@ -207,21 +204,62 @@ cursor: pointer;
     <div class="col-lg-3">
         <div class="form-group" id="pnd_objetivo_div">
             <label for="sltObjPND">Objetivo PND</label>
-            <select class='form-control m-b' id="sltObjPND" name="sltObjPND">
+            <select class='form-control m-b' id="sltObjPND" name="sltObjPND"  onchange='cargaEstrategiaPND(this.value);' required>
                 <option value="<?php echo $Res[31]; ?>"><?php echo $Res[32] ?></option>
+                <option value=''>----------</option>
+                <?php
+                 $sqlpndobj= "SELECT * FROM pnd_objetivos WHERE id_pnd_eje = ".$Res[29];
+            $conexion = $conn->conectar($_SESSION['id_perfil']);
+            $conexion->set_charset("utf8");
+            $ExeConsPndobj= $conexion->query($sqlpndobj);
+            $conexion ->close();
+
+
+              while($ResPNDO = $ExeConsPndobj->fetch_array()){
+                  echo "<option value='".$ResPNDO[0]."'>".$ResPNDO[2]."</option>";
+              }
+                ?>
             </select>
         </div>
     </div>
     <div class="col-lg-3">
         <div class="form-group" id="pnd_estrategia_div">
             <label for="sltEstrategiaPND">Estrategia PND</label>
-            <select class='form-control m-b' id="sltEstrategiaPND" name="sltEstrategiaPND"><option value="">-Sleccione Eje PND-</option></select>
+            <select class='form-control m-b' id="sltEstrategiaPND" name="sltEstrategiaPND"  onchange='cargaLineaPND(this.value);' required>
+             <option value="<?php echo $Res[33]; ?>"><?php echo $Res[34] ?></option>
+                <option value=''>----------</option>
+                <?php
+                 $sqlpndest= "SELECT * FROM pnd_estrategias WHERE id_pnd_objetivo = ".$Res[31];
+            $conexion = $conn->conectar($_SESSION['id_perfil']);
+            $conexion->set_charset("utf8");
+            $ExeConsPndest= $conexion->query($sqlpndest);
+            $conexion ->close();
+
+              while($ResPNDEs = $ExeConsPndest->fetch_array()){
+                  echo "<option value='".$ResPNDEs[0]."'>".$ResPNDEs[3]."</option>";
+              }
+                ?>
+            </select>
         </div>
     </div>
     <div class="col-lg-3">
         <div class="form-group" id="pnd_linea_div">
             <label for="sltLineaPND">Línea de Acción PND</label>
-            <select class='form-control m-b' id="sltLineaPND" name="sltLineaPND"><option value="">-Sleccione Eje PND-</option></select>
+            <select class='form-control m-b' id="sltLineaPND" name="sltLineaPND" required>
+             <option value="<?php echo $Res[35]; ?>"><?php echo $Res[36] ?></option>
+                <option value=''>----------</option>
+                <?php
+            $sqlpndlin= "SELECT * FROM pnd_lineas_accion WHERE id_pnd_estrategia = ".$Res[33];
+            $conexion = $conn->conectar($_SESSION['id_perfil']);
+            $conexion->set_charset("utf8");
+            $ExeConsPndlin= $conexion->query($sqlpndlin);
+            $conexion ->close();
+
+              while($ResPNDL = $ExeConsPndlin->fetch_array()){
+                  echo "<option value='".$ResPNDL[0]."'>".$ResPNDL[4]."</option>";
+              }
+                ?>
+            </select>
         </div>
     </div>
 </div>
@@ -239,7 +277,7 @@ cursor: pointer;
         <div class="form-group" >
             <label for="intPonderacion">Ponderación&nbsp;<small><span class="text text-danger" id="ponderacion_max">Debe ser menor o igual a </span></small></label>
             <input type="hidden" id="ponderacion_max_h">
-            <input type="number" id="intPonderacion" name="intPonderacion" class="form-control" required>
+            <input type="number" id="intPonderacion" name="intPonderacion" class="form-control" value="<?php echo $Res[9]; ?>" required >
         </div>
     </div>
 </div>
@@ -248,19 +286,26 @@ cursor: pointer;
     <div class="col-lg-4">
         <div class="form-group" >
             <label for="txtObjetivo">Objetivo</label>
-            <textarea class="form-control" rows="4" id="txtObjetivo" name="txtObjetivo" required></textarea>
+            <textarea class="form-control" rows="4" id="txtObjetivo" name="txtObjetivo" required>
+            <?php echo $Res[28]; ?>
+            </textarea>
         </div>
     </div>
      <div class="col-lg-4">
         <div class="form-group" >
             <label for="txtProposito">Propósito</label>
-            <textarea class="form-control" rows="4" id="txtProposito" name="txtProposito" required></textarea>
+
+            <textarea class="form-control" rows="4" id="txtProposito" name="txtProposito" required>
+            <?php echo $Res[24]; ?>
+            </textarea>
         </div>
     </div>
     <div class="col-lg-4">
         <div class="form-group" >
             <label for="txtJustificacion">Justificación</label>
-            <textarea class="form-control" rows="4" id="txtJustificacion" name="txtJustificacion" required></textarea>
+            <textarea class="form-control" rows="4" id="txtJustificacion" name="txtJustificacion" required>
+
+            <?php echo $Res[17]; ?></textarea>
         </div>
     </div>
 </div>
@@ -269,17 +314,35 @@ cursor: pointer;
 <div class="col-lg-4">
     <div class="form-group" >
     <label for="intBenMuj">Beneficiarios Mujeres</label>
-  <input type="number" id="intBenMuj" name="intBenMuj" class="form-control" required>
+  <input type="number" id="intBenMuj" name="intBenMuj" class="form-control" value="<?php echo $Res[16]; ?>" required>
     </div>
 </div>
 <div class="col-lg-4" >
     <div class="form-group" >
        <label for="intBenHom">Beneficiarios Hombres</label>
-  <input type="number" id="intBenHom" name="intBenHom" class="form-control" required>
+  <input type="number" id="intBenHom" name="intBenHom" class="form-control" value = "<?php echo $Res[15]; ?>" required>
     </div>
 </div>
 <div class="col-lg-4">
-    <div class="form-group" id="sector_div"></div>
+    <div class="form-group" id="sector_div">
+    <label for="sltSectorPoblacional">Sector Poblacional</label>
+            <select class='form-control m-b' id='sltSectorPoblacional' name='sltSectorPoblacional' required>
+             <option value="<?php echo $Res[13]; ?>"><?php echo $Res[14] ?></option>
+                <option value=''>----------</option>
+                <?php
+            $sqlsecp= "SELECT * FROM sector_poblacional";
+            $conexion = $conn->conectar($_SESSION['id_perfil']);
+            $conexion->set_charset("utf8");
+            $ExeConsSecPob= $conexion->query($sqlsecp);
+            $conexion ->close();
+
+              while($ResSecPob= $ExeConsSecPob->fetch_array()){
+                  echo "<option value='".$ResSecPob[0]."'>".$ResSecPob[1]."</option>";
+              }
+                ?>
+            </select>
+
+    </div>
 </div>
 </div>
 
@@ -287,37 +350,88 @@ cursor: pointer;
 <div class="col-lg-4">
     <div class="form-group">
         <label for="txtUmedida">Unidad de Medida</label>
-        <input type="text" class="form-control" id="txtUmedida" name="txtUmedida" required>
+        <input type="text" class="form-control" id="txtUmedida" name="txtUmedida" value="<?php echo $Res[10]; ?>" required>
     </div>
 </div>
 <div class="col-lg-4">
     <div class="form-group">
          <label for="intProgAnual">Programado Anual</label>
-        <input type="number" class="form-control" id="intProgAnual" name="intProgAnual" required>
+        <input type="number" class="form-control" id="intProgAnual" name="intProgAnual" value="<?php echo $Res[11]; ?>" required>
     </div>
 </div>
 <div class="col-lg-4">
     <div class="form-group">
         <label for="intProgSem">Programado Semestral</label>
-        <input type="number" class="form-control" id="intProgSem" name="intProgSem" required>
+        <input type="number" class="form-control" id="intProgSem" name="intProgSem" value="<?php echo $Res[12]; ?>" required>
     </div>
 </div>
 </div>
 
 <div class="row">
 <div class="col-lg-4">
-    <div class="form-group" id="finalidad_div"></div>
+    <div class="form-group" id="finalidad_div">
+        <label for='sltFinalidad'>Finalidad</label>
+            <select class='form-control m-b' id='sltFinalidad' name='sltFinalidad' onchange='cargaFuncion(this.value)' required>
+                <option value='<?php echo $Res[18]; ?>'><?php echo $Res[19]; ?></option>
+                <option value=''>--------</option>
+                  <?php
+            $sqlfin= "SELECT * FROM finalidad";
+            $conexion = $conn->conectar($_SESSION['id_perfil']);
+            $conexion->set_charset("utf8");
+            $ExeConsFin= $conexion->query($sqlfin);
+            $conexion ->close();
+              while($ResFin= $ExeConsFin->fetch_array()){
+                  echo "<option value='".$ResFin[0]."'>".$ResFin[1]."</option>";
+              }
+                ?>
+        </select>
+
+
+    </div>
 </div>
 <div class="col-lg-4">
     <div class="form-group" id="funcion_div">
         <label for="sltFuncion">Función</label>
-        <select id="sltFuncion" name="sltFuncion" class='form-control m-b'><option value="">-Seleccione Finalidad-</option></select>
+        <select select class='form-control m-b' id='sltFuncion' name='sltFuncion' onchange='cargaSubFuncion(this.value)' required>
+            <option value='<?php echo $Res[20]; ?>'><?php echo $Res[21]; ?></option>
+            <option value=''>--------</option>
+            <?php
+            $sqlfun= "SELECT * FROM funcion WHERE id_finalidad = ".$Res[18];
+            $conexion = $conn->conectar($_SESSION['id_perfil']);
+            $conexion->set_charset("utf8");
+            $ExeConsfun= $conexion->query($sqlfun);
+            $conexion ->close();
+              while($ResFun= $ExeConsfun->fetch_array()){
+                  echo "<option value='".$ResFun[0]."'>".$ResFun[3]."</option>";
+              }
+                ?>
+        </select>
+
     </div>
 </div>
 <div class="col-lg-4">
     <div class="form-group" id="subfuncion_div">
         <label for="sltSubFuncion">Sub-Función</label>
-        <select id="sltSubFuncion" name="sltSubFuncion" class='form-control m-b'><option value="">-Seleccione Finalidad-</option></select>
+        <select  class='form-control m-b' id='sltSubFuncion' name='sltSubFuncion' required>
+             <option value='<?php echo $Res[22]; ?>'><?php echo $Res[23]; ?></option>
+            <option value=''>--------</option>
+        <?php
+            $sql_subfuncion = "SELECT id_funf FROM funcion WHERE id_funcion = ".$Res[20];
+            $conexion = $conn->conectar($_SESSION['id_perfil']);
+            $ExeConsultaF = $conexion->query($sql_subfuncion);
+            $conexion ->close();
+            $Rfun = $ExeConsultaF->fetch_array();
+            $sqlsb = "SELECT id_subfuncion,subfuncion FROM subfuncion WHERE id_funcion_f = ".$Rfun[0]." AND id_finalidad = ".$Res[18];
+            $conexion = $conn->conectar($_SESSION['id_perfil']);
+            $conexion->set_charset("utf8");
+            $ExeConsfun = $conexion->query($sqlsb);
+            $conexion ->close();
+              while($ResFun= $ExeConsfun->fetch_array()){
+                  echo "<option value='".$ResFun[0]."'>".$ResFun[1]."</option>";
+              }
+                ?>
+        </select>
+
     </div>
 </div>
 </div>
@@ -345,7 +459,6 @@ cursor: pointer;
 </div>
 </div>
 </div>
-
 <div id="myModal" class="modal">
   <div class="modal-content">
     <span class="close">x</span>
@@ -353,9 +466,10 @@ cursor: pointer;
   </div>
 </div>
 <script type="text/javascript">
-    function cancelarEdit(){
-        location.href="main.php?token=<?php echo md5(2); ?>"
-    }
+
+function cancelarEdit(){
+        location.href="main.php?token=c81e728d9d4c2f636f067f89cc14862c";
+}
 
 function cargarLineasPED(v){
 document.getElementById('linea_div').innerHTML = "Cargando . . . <img src='images/loading_verde.gif'>";
@@ -382,7 +496,208 @@ data: { catalogo: catalogo,linea: v}
 })
 .done(function(msg) {
 document.getElementById('estrategia_div').innerHTML = msg;
+
+
 });}
 
-</script>
 
+ function pnd_ejes(){
+document.getElementById('pnd_ejes_div').innerHTML = "Cargando . . . <img src='images/loading_verde.gif'>";
+var catalogo = "pnd_ejes";
+$.ajax({
+method: "POST",
+url: "class/catalogos.php",
+data: { catalogo: catalogo}
+})
+.done(function(msg) {
+document.getElementById('pnd_ejes_div').innerHTML = msg;
+});
+}
+
+function cargaObjPND(v){
+document.getElementById('pnd_objetivo_div').innerHTML = "Cargando . . . <img src='images/loading_verde.gif'>";
+document.getElementById('pnd_estrategia_div').innerHTML = "<label for='sltEstrategiaPND'>Estrategia PND</label><select class='form-control m-b' id='sltEstrategiaPND' name='sltEstrategiaPND'><option>-Sleccione Objetivo PND-</option></select>";
+    document.getElementById('pnd_linea_div').innerHTML = "<label for='sltLineaPND'>Línea de Acción PND</label><select class='form-control m-b' id='sltLineaPND' name='sltLineaPND'><option>-Sleccione Objetivo PND-</option></select>";
+    var catalogo = "pnd_objetivos";
+       $.ajax({
+       method: "POST",
+       url: "class/catalogos.php",
+       data: { catalogo: catalogo,eje: v}
+})
+  .done(function(msg) {
+     document.getElementById('pnd_objetivo_div').innerHTML = msg;
+  });
+
+}
+
+function cargaEstrategiaPND(v){
+    document.getElementById('pnd_estrategia_div').innerHTML = "Cargando . . . <img src='images/loading_verde.gif'>";
+     document.getElementById('pnd_linea_div').innerHTML = "<label for='sltLineaPND'>Línea de Acción PND</label><select class='form-control m-b' id='sltLineaPND' name='sltLineaPND'><option>-Sleccione Estrategia PND-</option></select>";
+    var catalogo = "pnd_estrategias";
+       $.ajax({
+       method: "POST",
+       url: "class/catalogos.php",
+       data: { catalogo: catalogo,objetivo: v}
+})
+  .done(function(msg) {
+     document.getElementById('pnd_estrategia_div').innerHTML = msg;
+  });
+
+
+}
+
+function cargaLineaPND(v){
+    document.getElementById('pnd_linea_div').innerHTML = "Cargando . . . <img src='images/loading_verde.gif'>";
+    var catalogo = "pnd_lineas";
+       $.ajax({
+       method: "POST",
+       url: "class/catalogos.php",
+       data: { catalogo: catalogo,estrategia: v}
+})
+  .done(function(msg) {
+     document.getElementById('pnd_linea_div').innerHTML = msg;
+  });
+}
+
+
+function ponderacion_maxima(){
+    $.ajax({
+       method: "POST",
+       url: "class/proyectos.php",
+       data: { accion: 2}
+})
+  .done(function(msg) {
+     var PonderaActual = parseInt(<?php echo $Res[9]; ?>);
+     var max = parseInt(msg);
+    pmax = PonderaActual + max;
+     document.getElementById('ponderacion_max').innerHTML = "&nbsp;debe ser menor o igual a: "+pmax;
+     document.getElementById('ponderacion_max_h').value=msg;
+  });
+}
+
+
+function cargaFuncion(v){
+    document.getElementById('funcion_div').innerHTML = "Cargando . . . <img src='images/loading_verde.gif'>";
+    document.getElementById('subfuncion_div').innerHTML = "<label for='sltSubFuncion'>SubFunción</label><select class='form-control m-b' id='sltSubFuncion' name='sltSubfunción'><option>-Sleccione Función-</option></select>";
+    var catalogo = "funcion";
+       $.ajax({
+       method: "POST",
+       url: "class/catalogos.php",
+       data: {catalogo: catalogo,finalidad: v}
+})
+  .done(function(msg) {
+     document.getElementById('funcion_div').innerHTML = msg;
+  });
+}
+
+function cargaSubFuncion(v){
+
+    document.getElementById('subfuncion_div').innerHTML = "Cargando . . . <img src='images/loading_verde.gif'>";
+    var catalogo = "subfuncion";
+       $.ajax({
+       method: "POST",
+       url: "class/catalogos.php",
+       data: {catalogo: catalogo,funcion: v,finalidad: $('#sltFinalidad').val()}
+})
+  .done(function(msg) {
+     document.getElementById('subfuncion_div').innerHTML = msg;
+  });
+}
+
+
+function inicio(){
+	ponderacion_maxima();
+}
+
+
+function validar(){
+	console.log("debe guardar");
+	return false;
+}
+
+window.onload = inicio;
+
+ function validar(){
+    mostrarModal();
+    var numproyecto = document.getElementById('intNumProyecto').value;
+    var pondera = parseInt(document.getElementById('intPonderacion').value);
+    var ponderamax = parseInt(document.getElementById('ponderacion_max_h').value);
+
+    if(pondera > ponderamax){
+        ocultarModal();
+        alert("La ponderacion no puede ser mayor a: "+ponderamax);
+        document.getElementById('intPonderacion').focus();
+        return false;
+    }
+
+    $.ajax({
+       method: "POST",
+       url: "class/proyectos.php",
+       data: {accion: 3,num_proyecto: numproyecto}
+    })
+   .done(function(msg) {
+        ocultarModal();
+    if(msg == 1){
+        alert("Ya existe un proyecto con ese numero");
+        document.getElementById('intNumProyecto').value = '';
+        document.getElementById('intNumProyecto').focus();
+        return false;
+    }else{
+        var resultado_guardar = guardarProyecto();
+    }
+
+  });
+
+   return false;
+}
+
+function guardarProyecto(){
+var eje = $('#sltEje').val();
+var linea = $('#sltLinea').val();
+var est = $('#sltEstrategia').val();
+var num = $('#intNumProyecto').val();
+var nomb = $('#txtNombreProyecto').val();
+var inversion = $('#numInversion').val();
+var pondera = $('#intPonderacion').val();
+var umedida = $('#txtUmedida').val();
+var proganual = $('#intProgAnual').val();
+var progsem =  $('#intProgSem').val();
+var secpob = $('#sltSectorPoblacional').val();
+var benh = $('#intBenHom').val();
+var benm =  $('#intBenMuj').val();
+var just = $('#txtJustificacion').val();
+var fin = $('#sltFinalidad').val();
+var fun = $('#sltFuncion').val();
+var subfun = $('#sltSubFuncion').val();
+var prop = $('#txtProposito').val();
+var obspro = $('#ObservacionesProyecto').val();
+var uresp = $('#txtUresponsable').val();
+var titular = $('#txtNombreTitular').val();
+var obj = $('#txtObjetivo').val();
+var pndeje = $('#sltPndEje').val();
+var pndobj = $('#sltObjPND').val();
+var pndest = $('#sltEstrategiaPND').val();
+var pndlin = $('#sltLineaPND').val();
+var progpres =  $('#sltProgPres').val();
+
+$.ajax({
+method: "POST",
+url: "class/proyectos.php",
+data: {accion: 4,eje: eje,linea: linea,est: est,num: num,nomb: nomb,inversion: inversion,pondera: pondera,umedida: umedida,proganual: proganual,progsem: progsem,secpob: secpob,benh: benh, benm: benm,just: just,fin: fin,fun: fun,subf: subfun,prop: prop,obspro: obspro,uresp: uresp,titular: titular,obj: obj,pndeje: pndeje,pndobj: pndobj,pndest: pndest,pndlin: pndlin,progpres: progpres}
+   })
+  .done(function(msg) {
+    ocultarModal();
+      if(msg == "guardado"){
+        alert("el proyecto con numero "+num+" se guardó correctamente");
+        location.href="main.php?token=c81e728d9d4c2f636f067f89cc14862c";
+      }else{
+          console.log(msg);
+          alert("ha ocurrido un error al intentar guardar el proyecto");
+      }
+  });
+
+}
+
+
+
+</script>
