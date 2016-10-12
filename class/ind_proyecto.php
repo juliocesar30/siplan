@@ -18,8 +18,22 @@ class indicador_proyecto {
        return $Res[0];
     }
 
-    function agregar(){
-        return "underm";
+    function guardar(){
+       require_once('conexion.php');
+       extract($_POST);
+       $sql = "call guarda_IndicadorProyecto($id_proyecto,'$fin_objetivo','$fin_nombre','$fin_metodo',$fin_tipo,$fin_dimension,$fin_frecuencia,$fin_sentido,'$fin_umedida','$fin_meta','$fin_medio_verifica','$fin_supuesto','$proposito_objetivo','$proposito_nombre','$proposito_metodo',$proposito_tipo,$proposito_dimension,$proposito_frecuencia,$proposito_sentido,'$proposito_umedida','$proposito_meta','$proposito_medio_verifica','$proposito_supuesto')";
+       $conn = new conexion();
+       $conexion = $conn->conectar($_SESSION['id_perfil']);
+       if($conexion->query($sql)){
+           $conexion->close();
+           return "guardado";
+       }else{
+           $error = "Error: ".$conexion->error;
+           $conexion->close;
+           return $error;
+       }
+
+
     }
 
     function actualizar(){
@@ -40,12 +54,11 @@ if(isset($_POST['accion'])){
 			echo $accion->buscar();
 		break;
 		case 2:
-			$accion->agregar();
-			echo $accion;
+			print($accion->guardar());
 		break;
 		case 3:
-			$accion->actualizar();
-			echo $accion;
+			$res = $accion->actualizar();
+			echo $res;
 		break;
 		case 4:
 			$accion->informacion();

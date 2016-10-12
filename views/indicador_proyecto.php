@@ -1,3 +1,25 @@
+<?php
+
+  $id_proyecto = $_GET['p'];
+  $query1 = "select count(*) from indicadores_proyecto where id_proyecto = $id_proyecto";
+  $conn = new conexion();
+  $conexion = $conn->conectar($_SESSION['id_perfil']);
+  $ExeConsulta = $conexion->query($query1);
+  $conexion->close();
+  $Res = $ExeConsulta->fetch_array();
+
+  if($Res[0] == 1){
+
+    $query2 = "select * from indicadores_proyecto where id_proyecto = $id_proyecto";
+    $conn = new conexion();
+    $conexion = $conn->conectar($_SESSION['id_perfil']);
+    $ExeConsulta = $conexion->query($query2);
+    $conexion->close();
+    $Res = $ExeConsulta->fetch_array();
+  }
+
+?>
+
 <div class="row wrapper border-bottom white-bg page-heading">
 <div class="col-lg-10"><h2>Indicador del Proyecto</h2></div>
 </div>
@@ -161,8 +183,8 @@
 </div>
     <div class="col-lg-3">
     <div class="form-group" id="linea_div">
-            <label for="sltFrecuanciaPro">Frecuencia</label>
-            <select class='form-control m-b' id="sltFrecuanciaPro" required>
+            <label for="sltFrecuenciaPro">Frecuencia</label>
+            <select class='form-control m-b' id="sltFrecuenciaPro" required>
                 <option value="">-Sleccione-</option>
                 <option value="1">Mensual</option>
                 <option value="2">Bimestral</option>
@@ -225,7 +247,7 @@
 </div>
 
 </div>
-<div id="accion"></div>
+<input type="hidden" value="2" id="accion">
 <input type="hidden" value="<?php echo $_GET['p']; ?>" id="idproyecto">
 </form>
 </div></div></div></div></div>
@@ -233,34 +255,72 @@
 <script type="text/javascript">
 
 function inicio(){
-	var proyecto = $('#idproyecto').val();
-    $.ajax({
-    	method: "POST",
-        url: "class/ind_proyecto.php",
-        data: {accion: 1, idproyecto: proyecto}
-        })
-        .done(function(msg) {
-            if(msg == 1){
-                informacion();
-            }
-         });
- }
+var proyecto = $('#idproyecto').val();
+$.ajax({
+method: "POST",
+url: "class/ind_proyecto.php",
+data: {accion: 1, idproyecto: proyecto}
+})
+.done(function(msg) {
+if(msg == 1){
+document.getElementById('accion').value=3;
+informacion();
+}
+});
+}
 
 function informacion(){
-   console.log("carga informacion ya guaradada");
+   document.getElementById('txtObjetivoFin').value = "<?php echo $Res[1]; ?>";
+   document.getElementById('txtNombreIndFin').value = "<?php echo $Res[2]; ?>";
+   document.getElementById('txtMetodoFin').value = "<?php echo $Res[3]; ?>";
+
 }
 
 function guardar(){
 var accion = $('#accion').val();
-
 $.ajax({
  method: "POST",
  url: "class/ind_proyecto.php",
-            data: {accion: accion}
+            data: {accion: accion,
+                   id_proyecto: $('#idproyecto').val(),
+                   fin_objetivo: $('#txtObjetivoFin').val(),
+                   fin_nombre: $('#txtNombreIndFin').val(),
+                   fin_metodo: $('#txtMetodoFin').val(),
+                   fin_tipo: $('#sltTipoFin').val(),
+                   fin_dimension: $('#sltDimensionFin').val(),
+                   fin_frecuencia: $('#sltFrecuanciaFin').val(),
+                   fin_sentido: $('#sltSentidoFin').val(),
+                   fin_umedida: $('#txtUmedidaFin').val(),
+                   fin_meta: $('#txtMetaFin').val(),
+                   fin_medio_verifica: $('#txtMedioFin').val(),
+                   fin_supuesto: $('#txtSupuestoFin').val(),
+                   proposito_objetivo: $('#txtObjetivoPro').val(),
+                   proposito_nombre: $('#txtNombreIndPro').val(),
+                   proposito_metodo: $('#txtMetodoPro').val(),
+                   proposito_tipo: $('#sltTipoPro').val(),
+                   proposito_dimension: $('#sltDimensionPro').val(),
+                   proposito_frecuencia: $('#sltFrecuenciaPro').val(),
+                   proposito_sentido: $('#sltSentidoPro').val(),
+                   proposito_umedida: $('#txtUmedidaPro').val(),
+                   proposito_meta: $('#txtMetaPro').val(),
+                   proposito_medio_verifica: $('#txtMedioPro').val(),
+                   proposito_supuesto: $('#txtSupuestoPro').val()
+
+                  }
         })
  .done(function(msg) {
-   console.log(msg);
+    if(msg == "guardado"){
+        alert("Se ha guardado el Indicador");
+        location.href = "main.php?token=c81e728d9d4c2f636f067f89cc14862c";
+        return false;
+    }else{
+        alert("ha ocurrido un error");
+        return false;
+    }
+
 });
+
+    return false;
 }
   window.onload = inicio;
 </script>
