@@ -109,13 +109,11 @@ function eliminar(v){
   .done(function(msg) {
      if(msg == "eliminado"){
         console.log("eliminado");
+        alert("Componente Eliminado");
         location.reload();
-     }
-     if(msg == "error01"){
-        console.log(msg);
-     }
-     if(msg == "error02"){
-        console.log(msg);
+     }else{
+         alert(msg);
+         return false;
      }
 
   });

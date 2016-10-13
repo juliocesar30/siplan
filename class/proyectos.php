@@ -47,18 +47,43 @@ class proyectos{
        $ejercicio = $_SESSION['ejercicio'];
        extract($_POST);
        require_once('conexion.php');
-       $sql = "SELECT COUNT(*) FROM componentes WHERE id_proyecto = ".$proyecto;
-         $conn = new conexion();
+       //verificar si existen Actividades
+       $sql = "SELECT COUNT(*) FROM actividades WHERE id_proyecto = ".$proyecto;
+       $conn = new conexion();
        $conexion = $conn->conectar($_SESSION['id_perfil']);
        $ExSql = $conexion->query($sql);
-        $conexion->close();
-        $Res = $ExSql->fetch_array();
-        if($Res[0] == 0){
-           $ConsultaElimina = "DELETE FROM proyectos WHERE id_proyecto = ".$proyecto;
-             $conn = new conexion();
+       $conexion->close();
+       $Res = $ExSql->fetch_array();
+
+        if($Res[0] > 0){
+            return "No se puede eliminar, existen actividades";
+            die();
+        }
+
+       unset($conexion);
+       $sql = "SELECT COUNT(*) FROM componentes WHERE id_proyecto = ".$proyecto;
        $conexion = $conn->conectar($_SESSION['id_perfil']);
-            if($conexion->query($ConsultaElimina)){return "eliminado";}else{return "error01";}
-        }else{ return "error02";}
+       $ExSql = $conexion->query($sql);
+       $conexion->close();
+       $Res = $ExSql->fetch_array();
+
+       if($Res[0] > 0){
+           return "No se puede eliminar, contiene componentes";
+           die();
+        }else{
+           unset($conexion);
+          $ConsultaElimina = "DELETE FROM proyectos WHERE id_proyecto = ".$proyecto." AND estatus = 0";
+          $conexion = $conn->conectar($_SESSION['id_perfil']);
+          if($conexion->query($ConsultaElimina)){
+              $conexion->close;
+              return "eliminado";
+          }else{
+             $error = "error al eliminar: ".$conexion->error;
+              $conexion->close();
+              return $error;
+              die();
+          }
+       }
     }
 
 
