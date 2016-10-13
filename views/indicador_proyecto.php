@@ -9,8 +9,49 @@
   $Res = $ExeConsulta->fetch_array();
 
   if($Res[0] == 1){
-
-    $query2 = "select * from indicadores_proyecto where id_proyecto = $id_proyecto";
+     $actualizar = true;
+    $query2 = "select
+ip.fin_objetivo,
+ip.fin_nombre,
+ip.fin_metodo,
+ip.fin_tipo,
+tiF.tipo_indicador,
+ip.fin_dimension,
+diF.dimension_indicador,
+ip.fin_frecuencia,
+fiF.frecuencia,
+ip.fin_sentido,
+siF.sentido,
+ip.fin_umedida,
+ip.fin_meta,
+ip.fin_medio_verifica,
+ip.fin_supuesto,
+ip.proposito_objetivo,
+ip.proposito_nombre,
+ip.proposito_metodo,
+ip.proposito_tipo,
+tiP.tipo_indicador,
+ip.proposito_dimension,
+diP.dimension_indicador,
+ip.proposito_frecuencia,
+fiP.frecuencia,
+ip.proposito_sentido,
+siP.sentido,
+ip.proposito_umedida,
+ip.proposito_meta,
+ip.proposito_medio_verifica,
+ip.proposito_supuesto
+from
+indicadores_proyecto ip
+inner join tipo_indicador tiF on (ip.fin_tipo = tiF.id_tipo_indicador)
+inner join dimension_indicador diF on (ip.fin_dimension = diF.id_dimension_indicador)
+inner join frecuencia_indicador fiF on (ip.fin_frecuencia = fiF.id_frecuencia)
+inner join sentido_indicador siF on (ip.fin_sentido = siF.id_sentido)
+inner join tipo_indicador tiP on (ip.proposito_tipo = tiP.id_tipo_indicador)
+inner join dimension_indicador diP on (ip.proposito_dimension = diP.id_dimension_indicador)
+inner join frecuencia_indicador fiP on (ip.proposito_frecuencia = fiP.id_frecuencia)
+inner join sentido_indicador siP on (ip.proposito_sentido = siP.id_sentido)
+where ip.id_proyecto = $id_proyecto";
     $conn = new conexion();
     $conexion = $conn->conectar($_SESSION['id_perfil']);
     $ExeConsulta = $conexion->query($query2);
@@ -56,6 +97,9 @@
 <div class="form-group">
 <label for="sltTipoFin">Tipo</label>
 <select class='form-control m-b' id="sltTipoFin" required>
+    <?php if($actualizar){ ?>
+        <option value="<?php echo $Res[3]; ?>"><?php echo $Res[4]; ?></option>
+    <?php } ?>
     <option value=''>-Sleccione-</option>
      <option value='1'>Impacto</option>
      <option value='2'>Proceso</option>
@@ -68,6 +112,9 @@
     <div class="form-group">
             <label for="sltDimensionFin">Dimensión</label>
             <select class='form-control m-b' id="sltDimensionFin" required>
+                 <?php if($actualizar){ ?>
+        <option value="<?php echo $Res[5]; ?>"><?php echo $Res[6]; ?></option>
+    <?php } ?>
                 <option value="">-Seleccione-</option>
                 <option value="1">Eficiencia</option>
                 <option value="2">Eficacia</option>
@@ -80,6 +127,9 @@
     <div class="form-group" id="linea_div">
             <label for="sltFrecuanciaFin">Frecuencia</label>
             <select class='form-control m-b' id="sltFrecuanciaFin" required>
+                 <?php if($actualizar){ ?>
+        <option value="<?php echo $Res[7]; ?>"><?php echo $Res[8]; ?></option>
+    <?php } ?>
                 <option value="">-Sleccione-</option>
                 <option value="1">Mensual</option>
                 <option value="2">Bimestral</option>
@@ -93,6 +143,9 @@
     <div class="form-group" id="linea_div">
             <label for="sltSentidoFin">Sentido</label>
             <select class='form-control m-b' id="sltSentidoFin" required>
+                 <?php if($actualizar){ ?>
+        <option value="<?php echo $Res[9]; ?>"><?php echo $Res[10]; ?></option>
+    <?php } ?>
                 <option value="">-Sleccione-</option>
                 <option value="1">Incremento</option>
                 <option value="2">Decremento</option>
@@ -161,6 +214,9 @@
 <div class="form-group">
 <label for="sltTipoPro">Tipo</label>
 <select class='form-control m-b' id="sltTipoPro" required>
+     <?php if($actualizar){ ?>
+        <option value="<?php echo $Res[18]; ?>"><?php echo $Res[19]; ?></option>
+    <?php } ?>
     <option value=''>-Sleccione-</option>
      <option value='1'>Impacto</option>
      <option value='2'>Proceso</option>
@@ -173,6 +229,9 @@
     <div class="form-group">
             <label for="sltDimensionPro">Dimensión</label>
             <select class='form-control m-b' id="sltDimensionPro" required>
+                 <?php if($actualizar){ ?>
+        <option value="<?php echo $Res[20]; ?>"><?php echo $Res[21]; ?></option>
+    <?php } ?>
                 <option value="">-Seleccione-</option>
                 <option value="1">Eficiencia</option>
                 <option value="2">Eficacia</option>
@@ -185,6 +244,9 @@
     <div class="form-group" id="linea_div">
             <label for="sltFrecuenciaPro">Frecuencia</label>
             <select class='form-control m-b' id="sltFrecuenciaPro" required>
+                 <?php if($actualizar){ ?>
+        <option value="<?php echo $Res[22]; ?>"><?php echo $Res[23]; ?></option>
+    <?php } ?>
                 <option value="">-Sleccione-</option>
                 <option value="1">Mensual</option>
                 <option value="2">Bimestral</option>
@@ -198,6 +260,9 @@
     <div class="form-group" id="linea_div">
             <label for="sltSentidoPro">Sentido</label>
             <select class='form-control m-b' id="sltSentidoPro" required>
+                 <?php if($actualizar){ ?>
+        <option value="<?php echo $Res[24]; ?>"><?php echo $Res[25]; ?></option>
+    <?php } ?>
                 <option value="">-Sleccione-</option>
                 <option value="1">Incremento</option>
                 <option value="2">Decremento</option>
@@ -270,9 +335,22 @@ informacion();
 }
 
 function informacion(){
-   document.getElementById('txtObjetivoFin').value = "<?php echo $Res[1]; ?>";
-   document.getElementById('txtNombreIndFin').value = "<?php echo $Res[2]; ?>";
-   document.getElementById('txtMetodoFin').value = "<?php echo $Res[3]; ?>";
+   document.getElementById('txtObjetivoFin').value = "<?php echo $Res[0]; ?>";
+   document.getElementById('txtNombreIndFin').value = "<?php echo $Res[1]; ?>";
+   document.getElementById('txtMetodoFin').value = "<?php echo $Res[2]; ?>";
+   document.getElementById('txtUmedidaFin').value = "<?php echo $Res[11]; ?>";
+    document.getElementById('txtMetaFin').value = "<?php echo $Res[12]; ?>";
+    document.getElementById('txtMedioFin').value = "<?php echo $Res[13]; ?>";
+    document.getElementById('txtSupuestoFin').value = "<?php echo $Res[14]; ?>";
+
+    document.getElementById('txtObjetivoPro').value = "<?php echo $Res[15]; ?>";
+   document.getElementById('txtNombreIndPro').value = "<?php echo $Res[16]; ?>";
+   document.getElementById('txtMetodoPro').value = "<?php echo $Res[17]; ?>";
+   document.getElementById('txtUmedidaPro').value = "<?php echo $Res[26]; ?>";
+    document.getElementById('txtMetaPro').value = "<?php echo $Res[27]; ?>";
+    document.getElementById('txtMedioPro').value = "<?php echo $Res[28]; ?>";
+    document.getElementById('txtSupuestoPro').value = "<?php echo $Res[29]; ?>";
+
 
 }
 
