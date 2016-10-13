@@ -104,7 +104,39 @@ Cargando . . . <img src='images/loading_verde.gif'>
 <div class="hr-line-dashed"></div>
 <h3><span class="text text-success">Alineación Plan Estatal de Desarrollo 2016-2021</span></h3>
 <div class="row">
-<div class="col-lg-4"><div class="form-group" id="eje_div"></div>
+<div class="col-lg-4">
+    <div class="form-group" id="eje_div">
+    <label for='sltEje'>Eje</label>
+        <?php
+         $query1 = "SELECT p.id_eje, e.eje FROM proyectos p INNER JOIN ejes e on (p.id_eje = e.id_eje) WHERE id_proyecto = ".$_GET['p'];
+            $conn = new conexion();
+            $conexion = $conn->conectar($_SESSION['id_perfil']);
+            $conexion->set_charset("utf8");
+            $ExeConsulta = $conexion->query($query1);
+            $conexion ->close();
+            unset($conexion);
+            $Res1 = $ExeConsulta->fetch_array();
+           $ideje = $Res1[0];
+        ?>
+    <select class='form-control m-b' id='sltEje' name='sltEje'  onchange='linea(this.value);' required>
+            <?php
+
+            echo "<option value='".$ideje."' selected>".$Res1[1]."</option>";
+
+            $sql2 = "SELECT * FROM ejes";
+            $conexion = $conn->conectar($_SESSION['id_perfil']);
+            $conexion->set_charset("utf8");
+            $ExeConsulta2 = $conexion->query($sql2);
+            $conexion ->close();
+            unset($conexion);
+
+            while($Res2 = $ExeConsulta2->fetch_array()){
+                echo "<option value='".$Res2[0]."'>".$Res2[1]."</option>";
+            }
+
+            ?>
+        </select>
+    </div>
 </div>
 <div class="col-lg-4">
 <div class="form-group" id="linea_div"></div>
@@ -301,4 +333,6 @@ function validar(){
         }
 
 }
+
+
 </script>
