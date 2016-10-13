@@ -16,7 +16,7 @@
 <div class="col-lg-12">
 <div class="ibox float-e-margins">
 
-        <div class="tooltip-demo ibox-title">
+<div class="tooltip-demo ibox-title">
 &nbsp;&nbsp;
 <div class="btn-group">
 <a href="javascript:nuevo()" class="btn btn-outline btn-default" data-toggle="tooltip" data-placement="bottom" title="Importar a PDF">&nbsp;<i class="fa fa-plus" aria-hidden="true"></i> Nuevo</a>
@@ -132,12 +132,33 @@ function aprobar(v){
          alert("proyecto actualizado");
          listar();
 
-     }
-     if (msg == "errorPondera"){
-         alert("No se puede aprobar, ponderación incompleta en componentes");
+     }else{
+         alert(msg);
          return false;
      }
+
   });
 
 }
+
+function rechazar(v){
+       $.ajax({
+       method: "POST",
+       url: "class/proyectos.php",
+       data: {accion: 9,id_proyecto: v}
+})
+  .done(function(msg) {
+     if(msg == "guardado"){
+         alert("proyecto rechazado");
+         listar();
+
+     }else{
+         alert("error: "+msg);
+         return false;
+     }
+
+  });
+
+}
+
 </script>

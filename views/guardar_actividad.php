@@ -72,7 +72,6 @@ $intMetaInd,
 '$sltTipoAct'
 )
 ";
-echo $sql;
 $conn = new conexion();
 $conexion = $conn->conectar($_SESSION['id_perfil']);
 if($conexion->query($sql)){
@@ -83,5 +82,5 @@ if($conexion->query($sql)){
 ?>
 <script>
    alert("se ha guardado la actividad");
-   // location.href="../main.php?token=45c48cce2e2d7fbdea1afc51c7c6ad26&p=<?php echo $id_proyecto; ?>&c=<?php echo $id_componente; ?>"
+  // location.href="../main.php?token=45c48cce2e2d7fbdea1afc51c7c6ad26&p=<?php echo $id_proyecto; ?>&c=<?php echo $id_componente; ?>"
 </script>

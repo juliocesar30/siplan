@@ -14,108 +14,118 @@ class proyectos{
        $conexion = $conn->conectar($_SESSION['id_perfil']);
        $conexion->set_charset("utf8");
        $ExeConsulta = $conexion->query($sql);
-        $conexion->close();
+       $conexion->close();
        return $ExeConsulta;
 
     }
 
-
     function agregar(){
         $dep = $_SESSION['id_dependencia'];
-       $ejercicio = $_SESSION['ejercicio'];
+        $ejercicio = $_SESSION['ejercicio'];
         extract($_POST);
-       require_once('conexion.php');
-       $sql = "CALL guardar_proyecto ($dep,$eje,$linea,$est,$num,'$nomb',$inversion,$pondera,'$umedida',$proganual,$progsem,$secpob,$benh,$benm,'$just',$fin,$fun,$subf,'$prop','$obspro','$uresp','$titular','$obj',$pndeje,$pndobj,$pndest,$pndlin,$progpres,'$ejercicio')";
-     $conn = new conexion();
-      $conexion = $conn->conectar($_SESSION['id_perfil']);
-     $conexion->set_charset("utf8");
-
+        require_once('conexion.php');
+        $sql = "CALL guardar_proyecto ($dep,$eje,$linea,$est,$num,'$nomb',$inversion,$pondera,'$umedida',$proganual,$progsem,$secpob,$benh,$benm,'$just',$fin,$fun,$subf,'$prop','$obspro','$uresp','$titular','$obj',$pndeje,$pndobj,$pndest,$pndlin,$progpres,'$ejercicio')";
+        $conn = new conexion();
+        $conexion = $conn->conectar($_SESSION['id_perfil']);
+        $conexion->set_charset("utf8");
         if($conexion->query($sql)){
-          $conexion->close();
-           return "guardado";
-      }else{
-        $conexion->close();
-        return "error:";
+            $conexion->close();
+            return "guardado";
+        }else{
+            $conexion->close();
+            return "error:";
        }
-
-
     }
 
     function eliminar(){
-
-       $dep = $_SESSION['id_dependencia'];
-       $ejercicio = $_SESSION['ejercicio'];
-       extract($_POST);
-       require_once('conexion.php');
-       //verificar si existen Actividades
-       $sql = "SELECT COUNT(*) FROM actividades WHERE id_proyecto = ".$proyecto;
-       $conn = new conexion();
-       $conexion = $conn->conectar($_SESSION['id_perfil']);
-       $ExSql = $conexion->query($sql);
-       $conexion->close();
-       $Res = $ExSql->fetch_array();
-
+        $dep = $_SESSION['id_dependencia'];
+        $ejercicio = $_SESSION['ejercicio'];
+        extract($_POST);
+        require_once('conexion.php');
+        $sql = "SELECT COUNT(*) FROM actividades WHERE id_proyecto = ".$proyecto;
+        $conn = new conexion();
+        $conexion = $conn->conectar($_SESSION['id_perfil']);
+        $ExSql = $conexion->query($sql);
+        $conexion->close();
+        $Res = $ExSql->fetch_array();
         if($Res[0] > 0){
             return "No se puede eliminar, existen actividades";
             die();
         }
-
-       unset($conexion);
-       $sql = "SELECT COUNT(*) FROM componentes WHERE id_proyecto = ".$proyecto;
-       $conexion = $conn->conectar($_SESSION['id_perfil']);
-       $ExSql = $conexion->query($sql);
-       $conexion->close();
-       $Res = $ExSql->fetch_array();
-
-       if($Res[0] > 0){
-           return "No se puede eliminar, contiene componentes";
-           die();
+        unset($conexion);
+        $sql = "SELECT COUNT(*) FROM componentes WHERE id_proyecto = ".$proyecto;
+        $conexion = $conn->conectar($_SESSION['id_perfil']);
+        $ExSql = $conexion->query($sql);
+        $conexion->close();
+        $Res = $ExSql->fetch_array();
+        if($Res[0] > 0){
+            return "No se puede eliminar, contiene componentes";
+            die();
         }else{
-           unset($conexion);
-          $ConsultaElimina = "DELETE FROM proyectos WHERE id_proyecto = ".$proyecto." AND estatus = 0";
-          $conexion = $conn->conectar($_SESSION['id_perfil']);
-          if($conexion->query($ConsultaElimina)){
-              $conexion->close;
-              return "eliminado";
-          }else{
-             $error = "error al eliminar: ".$conexion->error;
-              $conexion->close();
-              return $error;
-              die();
+            unset($conexion);
+            $ConsultaElimina = "DELETE FROM proyectos WHERE id_proyecto = ".$proyecto." AND estatus = 0";
+            $conexion = $conn->conectar($_SESSION['id_perfil']);
+            if($conexion->query($ConsultaElimina)){
+                $conexion->close;
+                return "eliminado";
+            }else{
+                $error = "error al eliminar: ".$conexion->error;
+                $conexion->close();
+                return $error;
+                die();
           }
        }
     }
 
-
-
-
     function numero(){
-       $dep = $_SESSION['id_dependencia'];
-       $ejercicio = $_SESSION['ejercicio'];
-       extract($_POST);
-       require_once('conexion.php');
-       $sql = "SELECT COUNT(*) FROM proyectos WHERE id_dependencia = $dep AND num_proyecto = $num_proyecto AND ejercicio = '$ejercicio'";
-       $conn = new conexion();
-       $conexion = $conn->conectar($_SESSION['id_perfil']);
-       $ExeQuery = $conexion->query($sql);
-       $conexion->close();
-       $Res = $ExeQuery->fetch_array();
+        $dep = $_SESSION['id_dependencia'];
+        $ejercicio = $_SESSION['ejercicio'];
+        extract($_POST);
+        require_once('conexion.php');
+        $sql = "SELECT COUNT(*) FROM proyectos WHERE id_dependencia = $dep AND num_proyecto = $num_proyecto AND ejercicio = '$ejercicio'";
+        $conn = new conexion();
+        $conexion = $conn->conectar($_SESSION['id_perfil']);
+        $ExeQuery = $conexion->query($sql);
+        $conexion->close();
+        $Res = $ExeQuery->fetch_array();
         return $Res[0];
     }
 
     function aprobar(){
         require_once('conexion.php');
-        $sql = "call validarPonderacion(".$_POST['id_proyecto'].")";
+
+        $sql = "SELECT count(*) FROM marco_estrategico WHERE id_dependencia = ".$_SESSION['id_dependencia'];
         $conn = new conexion();
-       $conexion = $conn->conectar($_SESSION['id_perfil']);
-       $ExeQuery = $conexion->query($sql);
-       $conexion->close();
-       $Res = $ExeQuery->fetch_array();
-        if($Res[0] < 100){
-            return "errorPondera";
+        $conexion = $conn->conectar($_SESSION['id_perfil']);
+        $ExeQuery = $conexion->query($sql);
+        $conexion->close();
+        $Res = $ExeQuery->fetch_array();
+        if($Res[0] != 1){
+            return "No se tiene capturado el Marco Estratégico";
             die();
         }
 
+        $sql = "SELECT count(*) FROM indicadores_proyecto WHERE id_proyecto = ".$_POST['id_proyecto'];
+        $conn = new conexion();
+        $conexion = $conn->conectar($_SESSION['id_perfil']);
+        $ExeQuery = $conexion->query($sql);
+        $conexion->close();
+        $Res = $ExeQuery->fetch_array();
+        if($Res[0] != 1){
+            return "No se tiene capturado el Indicador del Proyecto";
+            die();
+        }
+
+        $sql = "call validarPonderacion(".$_POST['id_proyecto'].")";
+        $conn = new conexion();
+        $conexion = $conn->conectar($_SESSION['id_perfil']);
+        $ExeQuery = $conexion->query($sql);
+        $conexion->close();
+        $Res = $ExeQuery->fetch_array();
+        if($Res[0] < 100){
+            return "Profavor Revise su ponderación";
+            die();
+        }
         if($_SESSION['id_perfil'] == 2){
             $sql = "UPDATE proyectos SET estatus = 1 WHERE id_proyecto = ".$_POST['id_proyecto'];
             $conexion = $conn->conectar($_SESSION['id_perfil']);
@@ -123,6 +133,7 @@ class proyectos{
             $conexion->close();
             return "actualizado";
         }
+
         if($_SESSION['id_perfil'] == 1 OR $_SESSION['id_perfil'] == 3){
             $sql = "UPDATE proyectos SET estatus = 2 WHERE id_proyecto = ".$_POST['id_proyecto'];
             $conexion = $conn->conectar($_SESSION['id_perfil']);
@@ -130,7 +141,7 @@ class proyectos{
             $conexion->close();
             return "actualizado";
         }
-        return false;
+
     }
 
 
@@ -199,6 +210,22 @@ function actualizar(){
        }
 
     }
+
+    function rechazar(){
+         require_once('conexion.php');
+       $sql = "UPDATE proyectos SET estatus = 0 WHERE id_proyecto = ".$_POST['id_proyecto'];
+     $conn = new conexion();
+      $conexion = $conn->conectar($_SESSION['id_perfil']);
+
+        if($conexion->query($sql)){
+          $conexion->close();
+           return "guardado";
+      }else{
+        return "error:".$conexion->error." - sql: ".$sql;
+        $conexion->close();
+
+       }
+    }
 }
 
 
@@ -250,11 +277,11 @@ if(isset($_POST['accion'])){
 
     if($status == 1 && $_SESSION['id_perfil'] == 3 or $status == 1 && $_SESSION['id_perfil'] == 1 ){
         $aprob = "<a href='#' title='Aprobar' class='btn btn-success btn-circle'><i class='fa fa-check' aria-hidden='true'></i></a>&nbsp;&nbsp;
-         <a href='#' title='Rechazar' class='btn btn-warning btn-circle'><i class='fa fa-close' aria-hidden='true'></i></a>&nbsp;&nbsp;";
+         <a href='javascript:rechazar($id_pr);' title='Rechazar' class='btn btn-warning btn-circle'><i class='fa fa-close' aria-hidden='true'></i></a>&nbsp;&nbsp;";
     }
 
       if($status == 2 && $_SESSION['id_perfil'] == 3 or $status == 2 && $_SESSION['id_perfil'] == 1 ){
-        $aprob = "<a href='#' title='Rechazar' class='btn btn-warning btn-circle'><i class='fa fa-close' aria-hidden='true'></i></a>&nbsp;&nbsp;";
+        $aprob = "<a href='javascript:rechazar($id_pr);' title='Rechazar' class='btn btn-warning btn-circle'><i class='fa fa-close' aria-hidden='true'></i></a>&nbsp;&nbsp;";
     }
 
 echo
@@ -321,9 +348,14 @@ break;
         $accion = $proyecto->prNumActual();
         echo $accion;
         break;
-                case 8:
+        case 8:
         $proyecto = new proyectos();
         $accion = $proyecto->actualizar();
+        echo $accion;
+        break;
+        case 9:
+        $proyecto = new proyectos();
+        $accion = $proyecto->rechazar();
         echo $accion;
         break;
     }
