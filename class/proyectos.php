@@ -139,6 +139,31 @@ class proyectos{
             $conexion = $conn->conectar($_SESSION['id_perfil']);
             $conexion->query($sql);
             $conexion->close();
+            unset($conexion);
+            $sql_proyecto = "SELECT * FROM proyectos WHERE id_proyecto = ".$_POST['id_proyecto'];
+            $conexion = $conn->conectar($_SESSION['id_perfil']);
+            $conexion->set_charset("utf8");
+            $ExeCons = $conexion->query($sql);
+            $conexion->close();
+            $Proyecto = $ExeCons->fetch_array();
+            $sql_proyecto = "SELECT * FROM componentes WHERE id_proyecto = ".$_POST['id_proyecto'];
+            $conexion = $conn->conectar($_SESSION['id_perfil']);
+            $conexion->set_charset("utf8");
+            $ExeCons = $conexion->query($sql);
+            $conexion->close();
+            $Componentes = $ExeCons->fetch_array();
+            $sql_proyecto = "SELECT * FROM actividades WHERE id_proyecto = ".$_POST['id_proyecto'];
+            $conexion = $conn->conectar($_SESSION['id_perfil']);
+            $conexion->set_charset("utf8");
+            $ExeCons = $conexion->query($sql);
+            $conexion->close();
+            $Componentes = $ExeCons->fetch_array();
+
+            $conexion_finanzas = mysqli_connect("localhost","siplan_finanzas","tr15t4n14","siplan_finanzas");
+            $query = "call guarda_proyecto()";
+
+
+
             return "actualizado";
         }
 
