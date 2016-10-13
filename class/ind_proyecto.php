@@ -38,7 +38,20 @@ class indicador_proyecto {
     }
 
     function actualizar(){
-        return "underm";
+          require_once('conexion.php');
+       extract($_POST);
+       $sql = "call actualiza_IndicadorProyecto($id_proyecto,'$fin_objetivo','$fin_nombre','$fin_metodo',$fin_tipo,$fin_dimension,$fin_frecuencia,$fin_sentido,'$fin_umedida','$fin_meta','$fin_medio_verifica','$fin_supuesto','$proposito_objetivo','$proposito_nombre','$proposito_metodo',$proposito_tipo,$proposito_dimension,$proposito_frecuencia,$proposito_sentido,'$proposito_umedida','$proposito_meta','$proposito_medio_verifica','$proposito_supuesto')";
+       $conn = new conexion();
+       $conexion = $conn->conectar($_SESSION['id_perfil']);
+       $conexion->set_charset("utf8");
+       if($conexion->query($sql)){
+           $conexion->close();
+           return "guardado";
+       }else{
+           $error = "Error: ".$conexion->error;
+           $conexion->close;
+           return $error;
+       }
     }
 
 

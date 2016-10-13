@@ -53,7 +53,9 @@ inner join frecuencia_indicador fiP on (ip.proposito_frecuencia = fiP.id_frecuen
 inner join sentido_indicador siP on (ip.proposito_sentido = siP.id_sentido)
 where ip.id_proyecto = $id_proyecto";
     $conn = new conexion();
+
     $conexion = $conn->conectar($_SESSION['id_perfil']);
+        $conexion->set_charset("utf8");
     $ExeConsulta = $conexion->query($query2);
     $conexion->close();
     $Res = $ExeConsulta->fetch_array();
@@ -96,11 +98,11 @@ where ip.id_proyecto = $id_proyecto";
 <div class="col-lg-3">
 <div class="form-group">
 <label for="sltTipoFin">Tipo</label>
-<select class='form-control m-b' id="sltTipoFin" required>
+<select class='form-control m-b' id='sltTipoFin' required>
     <?php if($actualizar){ ?>
         <option value="<?php echo $Res[3]; ?>"><?php echo $Res[4]; ?></option>
     <?php } ?>
-    <option value=''>-Sleccione-</option>
+     <option value=''>-Sleccione-</option>
      <option value='1'>Impacto</option>
      <option value='2'>Proceso</option>
      <option value='3'>Producto</option>
@@ -111,7 +113,7 @@ where ip.id_proyecto = $id_proyecto";
     <div class="col-lg-3">
     <div class="form-group">
             <label for="sltDimensionFin">Dimensión</label>
-            <select class='form-control m-b' id="sltDimensionFin" required>
+            <select class='form-control m-b' id="sltDimensionFin" name="sltDimensionFin" required>
                  <?php if($actualizar){ ?>
         <option value="<?php echo $Res[5]; ?>"><?php echo $Res[6]; ?></option>
     <?php } ?>
@@ -126,7 +128,7 @@ where ip.id_proyecto = $id_proyecto";
     <div class="col-lg-3">
     <div class="form-group" id="linea_div">
             <label for="sltFrecuanciaFin">Frecuencia</label>
-            <select class='form-control m-b' id="sltFrecuanciaFin" required>
+            <select class='form-control m-b' id="sltFrecuanciaFin" name="sltFrecuanciaFin" required>
                  <?php if($actualizar){ ?>
         <option value="<?php echo $Res[7]; ?>"><?php echo $Res[8]; ?></option>
     <?php } ?>
@@ -142,7 +144,7 @@ where ip.id_proyecto = $id_proyecto";
     <div class="col-lg-3">
     <div class="form-group" id="linea_div">
             <label for="sltSentidoFin">Sentido</label>
-            <select class='form-control m-b' id="sltSentidoFin" required>
+            <select class='form-control m-b' id="sltSentidoFin" name="sltSentidoFin" required>
                  <?php if($actualizar){ ?>
         <option value="<?php echo $Res[9]; ?>"><?php echo $Res[10]; ?></option>
     <?php } ?>
@@ -159,13 +161,13 @@ where ip.id_proyecto = $id_proyecto";
     <div class="col-lg-6">
         <div class="form-group">
             <label for="txtUmedidaFin">Unidad Medida</label>
-            <input type="text" id="txtUmedidaFin" maxlength="128" class="form-control" required>
+            <input type="text" id="txtUmedidaFin" name="txtUmedidaFin" maxlength="128" class="form-control" required>
         </div>
     </div>
         <div class="col-lg-6">
         <div class="form-group">
             <label for="txtMetaFin">Meta Anual</label>
-            <input type="number" id="txtMetaFin" maxlength="254" class="form-control" required>
+            <input type="number" id="txtMetaFin" name="txtMetaFin" maxlength="254" class="form-control" required>
         </div>
     </div>
 </div>
@@ -174,13 +176,13 @@ where ip.id_proyecto = $id_proyecto";
     <div class="col-lg-6">
         <div class="form-group">
             <label for="txtSupuestoFin">Supuestos</label>
-            <textarea id="txtSupuestoFin" class="form-control" required></textarea>
+            <textarea id="txtSupuestoFin" name="txtSupuestoFin" class="form-control" required></textarea>
         </div>
     </div>
         <div class="col-lg-6">
         <div class="form-group">
             <label for="txtMedioFin">Medio de Verificación</label>
-            <textarea id="txtMedioFin" class="form-control" required></textarea>
+            <textarea id="txtMedioFin" name="txtMedioFin" class="form-control" required></textarea>
         </div>
     </div>
 </div>
