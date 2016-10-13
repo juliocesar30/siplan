@@ -1,7 +1,8 @@
 function cargar_selects_iniciales() {
+    var id_eje = $('#sltEje').val();
     ponderacion_maxima();
     prog_pres_sel();
-    ejes();
+    linea(id_eje);
     cargaUmedida();
 }
 
@@ -19,19 +20,7 @@ document.getElementById('prog_pres_div').innerHTML = msg;
 }
 
 
-function ejes(){
-document.getElementById('eje_div').innerHTML = "Cargando . . . <img src='images/loading_verde.gif'>";
-var p = $('#id_proyecto').val();
-$.ajax({
-method: "POST",
-url: "class/componentes.php",
-data: { accion: 2,proyecto: p}
-})
-.done(function(msg) {
-document.getElementById('eje_div').innerHTML = msg;
-linea($('#sltEje').val());
-});
-}
+
 
 
 function ponderacion_maxima(){
@@ -55,17 +44,7 @@ function ponderacion_maxima(){
 }
 
 
-function linea(v){
-    $.ajax({
-       method: "POST",
-       url: "class/catalogos.php",
-       data: { catalogo: "lineas", eje: v}
-})
-  .done(function(msg) {
-    document.getElementById('linea_div').innerHTML = msg;
-  });
 
-}
 
 function cargarEstrategiasPED(v){
 document.getElementById('estrategia_div').innerHTML = "Cargando . . . <img src='images/loading_verde.gif'>";
@@ -102,6 +81,18 @@ document.getElementById('tipo_umed_div').innerHTML = msg;
 }
 
 
+
+function linea(v){
+    $.ajax({
+       method: "POST",
+       url: "class/catalogos.php",
+       data: { catalogo: "lineas", eje: v}
+})
+  .done(function(msg) {
+    document.getElementById('linea_div').innerHTML = msg;
+  });
+
+}
 
 // Get the modal
 var modal = document.getElementById('myModal');
