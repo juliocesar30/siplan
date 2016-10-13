@@ -70,7 +70,7 @@ if(isset($_POST['accion'])){
 			<td>".$ponderacionActual."</td>
 			<td>
 			<a href='#' title='Información' class='btn btn-default btn-circle'><i class='fa fa-info' aria-hidden='true'></i></a>&nbsp;&nbsp;
-			<a href='main.php?token=".md5(9)."&p=".$id_proy."&c=".$id_comp."' title='Actividades' class='btn btn-default btn-circle'><i class='fa fa-cogs' aria-hidden='true'></i></a>&nbsp;&nbsp; $btn_acciones
+			$btn_acciones
 			</td></tr>
 			";
 			    }

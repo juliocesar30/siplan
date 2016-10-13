@@ -1,7 +1,3 @@
-<?php
-
-require_once("class/conexion.php");
-?>
 <style>
 /* The Modal (background) */
 .modal {
@@ -94,7 +90,7 @@ require_once("class/conexion.php");
 <div class="col-lg-4">
 <div class="form-group">
 <label for="txtDescripcionActiviadad">Descripción de la Actividad</label>
-<textarea id="txtNombreActividad" name="txtNombreActiviadad" maxlength="254" class="form-control" required></textarea>
+<textarea id="txtDescripcionActiviadad" name="txtDescripcionActiviadad" maxlength="254" class="form-control" required></textarea>
 </div>
 </div>
 
@@ -102,10 +98,10 @@ require_once("class/conexion.php");
         <div class="form-group">
             <label>Tipo de Actividad</label>
             <select class='form-control m-b' name="sltTipoAct" required><option value=''>-Sleccione-</option>
-                <option value="1">Insumo</option>
-                <option value="2">Producto</option>
-                <option value="3">Mecanismo</option>
-                <option value="4">Control</option>
+                <option value="Insumo">Insumo</option>
+                <option value="Producto">Producto</option>
+                <option value="Mecanismo">Mecanismo</option>
+                <option value="Control">Control</option>
             </select>
         </div>
     </div>
@@ -133,15 +129,97 @@ Cargando . . . <img src='images/loading_verde.gif'>
 <div class="hr-line-dashed"></div>
 <h3><span class="text text-success">Alineación Plan Estatal de Desarrollo 2016-2021</span></h3>
 <div class="row">
-<div class="col-lg-4"><div class="form-group" id="eje_div"></div>
+<div class="col-lg-4">
+    <div class="form-group" id="eje_div">
+        <label for='sltEje'>Eje</label>
+        <?php
+         $query1 = "SELECT p.id_eje, e.eje FROM proyectos p INNER JOIN ejes e on (p.id_eje = e.id_eje) WHERE id_proyecto = ".$_GET['p'];
+            $conn = new conexion();
+            $conexion = $conn->conectar($_SESSION['id_perfil']);
+            $conexion->set_charset("utf8");
+            $ExeConsulta = $conexion->query($query1);
+            $conexion ->close();
+            unset($conexion);
+            $Res1 = $ExeConsulta->fetch_array();
+           $ideje = $Res1[0];
+        ?>
+         <select class='form-control m-b' id='sltEje' name='sltEje'  onchange='linea(this.value);' required>
+        <?php
+
+            echo "<option value='".$ideje."' selected>".$Res1[1]."</option>";
+
+            $sql2 = "SELECT * FROM ejes";
+            $conexion = $conn->conectar($_SESSION['id_perfil']);
+            $conexion->set_charset("utf8");
+            $ExeConsulta2 = $conexion->query($sql2);
+            $conexion ->close();
+            unset($conexion);
+
+            while($Res2 = $ExeConsulta2->fetch_array()){
+                echo "<option value='".$Res2[0]."'>".$Res2[1]."</option>";
+            }
+
+            ?>
+        </select>
+    </div>
 </div>
 <div class="col-lg-4">
-<div class="form-group" id="linea_div"></div>
+<div class="form-group" id="linea_div">
+
+     <label for='sltLinea'>Linea</label>
+        <?php
+         $query1 = "SELECT c.linea, l.linea, c.eje FROM componentes c INNER JOIN lineas l on (c.linea = l.id_linea) WHERE c.id_componente = ".$_GET['c'];
+            $conn = new conexion();
+            $conexion = $conn->conectar($_SESSION['id_perfil']);
+            $conexion->set_charset("utf8");
+            $ExeConsulta = $conexion->query($query1);
+            $conexion ->close();
+            unset($conexion);
+            $Res1 = $ExeConsulta->fetch_array();
+            $ideje = $Res1[2];
+            $idlinea = $Res1[0];
+        ?>
+         <select class='form-control m-b' id='sltLinea' name='sltLinea'  onchange='cargarEstrategiasPED(this.value);' required>
+        <?php
+
+            echo "<option value='".$ideje."' selected>".$Res1[1]."</option>";
+
+            $sql2 = "SELECT * FROM lineas where id_eje = $ideje";
+            $conexion = $conn->conectar($_SESSION['id_perfil']);
+            $conexion->set_charset("utf8");
+            $ExeConsulta2 = $conexion->query($sql2);
+            $conexion ->close();
+            unset($conexion);
+
+            while($Res2 = $ExeConsulta2->fetch_array()){
+                echo "<option value='".$Res2[0]."'>".$Res2[2]."</option>";
+            }
+
+            ?>
+        </select>
+
+    </div>
 </div>
 <div class="col-lg-4">
 <div class="form-group" id="estrategia_div">
 <label for="txtNombreProyecto">Estrategia</label>
-<select class='form-control m-b'><option>-Sleccione Linea-</option></select>
+<select class='form-control m-b' name="sltEstrategia">
+    <option value="">-Seleccione-</option>
+    <?php
+
+            $sql2 = "SELECT * FROM estrategias where id_linea = $idlinea";
+            $conexion = $conn->conectar($_SESSION['id_perfil']);
+            $conexion->set_charset("utf8");
+            $ExeConsulta2 = $conexion->query($sql2);
+            $conexion ->close();
+            unset($conexion);
+
+            while($Res2 = $ExeConsulta2->fetch_array()){
+                echo "<option value='".$Res2[0]."'>".$Res2[3]."</option>";
+            }
+
+            ?>
+</select>
 </div>
 </div>
 </div>
@@ -151,25 +229,25 @@ Cargando . . . <img src='images/loading_verde.gif'>
     <div class="col-lg-3">
       <div class="form-group">
           <label>Enero</label>
-          <input type="number" class="form-control" name="enero">
+          <input type="number" class="form-control" name="enero" value="0">
       </div>
     </div>
     <div class="col-lg-3">
       <div class="form-group">
           <label>Febrero</label>
-          <input type="number" class="form-control" name="febrero">
+          <input type="number" class="form-control" name="febrero" value="0">
       </div>
     </div>
     <div class="col-lg-3">
       <div class="form-group">
           <label>Marzo</label>
-          <input type="number" class="form-control" name="marzo">
+          <input type="number" class="form-control" name="marzo" value="0">
       </div>
     </div>
     <div class="col-lg-3">
       <div class="form-group">
           <label>Abril</label>
-          <input type="number" class="form-control" name="abril">
+          <input type="number" class="form-control" name="abril" value="0">
       </div>
     </div>
 </div>
@@ -177,25 +255,25 @@ Cargando . . . <img src='images/loading_verde.gif'>
     <div class="col-lg-3">
       <div class="form-group">
           <label>Mayo</label>
-          <input type="number" class="form-control" name="mayo">
+          <input type="number" class="form-control" name="mayo" value="0">
       </div>
     </div>
     <div class="col-lg-3">
       <div class="form-group">
           <label>Junio</label>
-          <input type="number" class="form-control" name="junio">
+          <input type="number" class="form-control" name="junio" value="0">
       </div>
     </div>
     <div class="col-lg-3">
       <div class="form-group">
           <label>Julio</label>
-          <input type="number" class="form-control" name="julio">
+          <input type="number" class="form-control" name="julio" value="0">
       </div>
     </div>
     <div class="col-lg-3">
       <div class="form-group">
           <label>Agosto</label>
-          <input type="number" class="form-control" name="agosto">
+          <input type="number" class="form-control" name="agosto" value="0">
       </div>
     </div>
 </div>
@@ -203,25 +281,25 @@ Cargando . . . <img src='images/loading_verde.gif'>
     <div class="col-lg-3">
       <div class="form-group">
           <label>Septiembre</label>
-          <input type="number" class="form-control" name="septiembre">
+          <input type="number" class="form-control" name="septiembre" value="0">
       </div>
     </div>
     <div class="col-lg-3">
       <div class="form-group">
           <label>Octubre</label>
-          <input type="number" class="form-control" name="octubre">
+          <input type="number" class="form-control" name="octubre" value="0">
       </div>
     </div>
     <div class="col-lg-3">
       <div class="form-group">
           <label>Noviembre</label>
-          <input type="number" class="form-control" name="noviembre">
+          <input type="number" class="form-control" name="noviembre" value="0">
       </div>
     </div>
     <div class="col-lg-3">
       <div class="form-group">
           <label>Diciembre</label>
-          <input type="number" class="form-control" name="diciembre">
+          <input type="number" class="form-control" name="diciembre" value="0">
       </div>
     </div>
 </div>
@@ -307,6 +385,20 @@ Cargando . . . <img src='images/loading_verde.gif'>
     </div>
 </div>
 
+</div>
+    <div class="row">
+    <div class="col-lg-6">
+      <div class="form-group">
+<label for="txtMedioVerificacion">Medio de Verificación</label>
+<textarea id="txtMedioVerificacion" name="txtMedioVerificacion" maxlength="254" class="form-control" required></textarea>
+</div>
+    </div>
+        <div class="col-lg-6">
+      <div class="form-group">
+<label for="txtSupuesto">Supuesto</label>
+<textarea id="txtSupuesto" name="txtSupuesto" maxlength="254" class="form-control" required></textarea>
+</div>
+    </div>
 </div>
 <div class="row">
 <div class="col-lg-4">

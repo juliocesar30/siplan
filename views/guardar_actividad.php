@@ -9,8 +9,6 @@ $sql = "INSERT INTO actividades
 id_proyecto,
 demanda,
 num_actividad,
-nombre_actividad,
-tipo_actividad,
 descripcion,
 eje,
 linea,
@@ -22,18 +20,25 @@ ponderacion,
 enero,febrero,marzo,abril,
 mayo,junio,julio,agosto,
 septiembre,octubre,noviembre,diciembre,
-nombre_indicador,metodo_calculo,
-tipo_indicador,dimension_indicador,frecuencia_indicador,sentido_indicador,
-umedida_indicador,meta_indicador,medio_verificacion,supuesto)
+nombre_indicador,
+metodo_calculo,
+tipo_indicador,
+dimension_indicador,
+frecuencia_indicador,
+sentido_indicador,
+umedida_indicador,
+meta_indicador,
+medio_verificacion,
+supuesto,
+nombre_actividad,
+tipo_actividad)
 
 VALUES
 ($id_componente,
 $id_proyecto,
 $demanda,
 $intNumActividad,
-'$txtNombreActiviadad',
 '$txtDescripcionActiviadad',
-$sltTipoAct,
 $sltEje,
 $sltLinea,
 $sltEstrategia,
@@ -60,15 +65,23 @@ $sltdimensionInd,
 $sltFrecuenciaInd,
 $sltSentidoInd,
 '$txtUmedidaInd',
-$intMetaInd,'n.a','n.a')
+$intMetaInd,
+'$txtMedioVerificacion',
+'$txtSupuesto',
+'$txtNombreActiviadad',
+'$sltTipoAct'
+)
 ";
-
+echo $sql;
 $conn = new conexion();
 $conexion = $conn->conectar($_SESSION['id_perfil']);
 if($conexion->query($sql)){
     $msg = "guarda";
+}else{
+    print($conexion->error);
 }
 ?>
 <script>
-   location.href="../main.php?token=45c48cce2e2d7fbdea1afc51c7c6ad26&p=<?php echo $id_proyecto; ?>&c=<?php echo $id_componente; ?>"
+   alert("se ha guardado la actividad");
+   // location.href="../main.php?token=45c48cce2e2d7fbdea1afc51c7c6ad26&p=<?php echo $id_proyecto; ?>&c=<?php echo $id_componente; ?>"
 </script>

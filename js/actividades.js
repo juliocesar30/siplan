@@ -1,24 +1,6 @@
 function cargar_selects_iniciales() {
-    ejes();
     cargaUmedida();
 }
-
-function ejes(){
-document.getElementById('eje_div').innerHTML = "Cargando . . . <img src='images/loading_verde.gif'>";
-var p = $('#id_proyecto').val();
-$.ajax({
-method: "POST",
-url: "class/componentes.php",
-data: { accion: 2,proyecto: p}
-})
-.done(function(msg) {
-console.log(msg);
-document.getElementById('eje_div').innerHTML = msg;
-linea($('#sltEje').val());
-});
-}
-
-
 
 function linea(v){
     $.ajax({
