@@ -182,7 +182,7 @@ if(isset($_POST['catalogo'])){
             $catalogo = new catalogos;
             $prog_pres = $catalogo->prog_pres();
             echo "<label for='sltProgPres'>Programa Presupuestario</label>";
-            echo "<select class='form-control m-b' id='sltProgPres' name='sltProgPres' requiredº1><option value=''>-Seleccione-</option>";
+            echo "<select class='form-control m-b' id='sltProgPres' name='sltProgPres' required><option value=''>-Seleccione-</option>";
             while($res = $prog_pres->fetch_array()){
                 echo "<option value='".$res[0]."'>".$res[1]." - ".$res[2]."</option>";
             }
@@ -309,7 +309,7 @@ if(isset($_POST['catalogo'])){
             $catalogo = new catalogos;
             $prog_pres = $catalogo->uMedidasProg01();
             echo "<label for='sltumedida'>Unidad de Medida</label>";
-            echo "<select class='form-control m-b' id='sltumedida' name='sltumedida' onchange='cargaTipoMedida(this.value)' required><option value='0'>-Seleccione-</option>";
+            echo "<select class='form-control m-b' id='sltumedida' name='sltumedida' onchange='cargaTipoMedida(this.value)' required><option value=''>-Seleccione-</option>";
             while($res = $prog_pres->fetch_array()){
                 echo "<option value='".$res[0]."'>".$res[1]."</option>";
             }
@@ -319,7 +319,7 @@ if(isset($_POST['catalogo'])){
             $catalogo = new catalogos;
             $prog_pres = $catalogo->tipouMedidasProg01();
             echo "<label for='slttipoumedida'>Tipo Unidad de Medida</label>";
-            echo "<select class='form-control m-b' id='slttipoumedida' name='slttipoumedida' required><option value='0'>-Seleccione-</option>";
+            echo "<select class='form-control m-b' id='slttipoumedida' name='slttipoumedida' required><option value=''>-Seleccione-</option>";
             while($res = $prog_pres->fetch_array()){
                 echo "<option value='".$res[0]."'>".$res[1]."</option>";
             }
