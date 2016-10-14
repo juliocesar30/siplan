@@ -10,16 +10,29 @@
 <div class="col-sm-4">
 <ul class="list-group clear-list m-t">
 <li class="list-group-item fist-item">
-<span class="label label-default">1</span> Proyectos de la Dependencia
+<?php
+    $sql = "select
+(select count(*) from proyectos where id_dependencia = ".$_SESSION['id_dependencia']."),
+(select count(*) from proyectos where id_dependencia = ".$_SESSION['id_dependencia']." and estatus = 1) as ap_dep,
+(select count(*) from proyectos where id_dependencia = ".$_SESSION['id_dependencia']." and estatus = 2) as ap_upla,
+(select count(*) from proyectos where id_dependencia = ".$_SESSION['id_dependencia']." and estatus = 0) as no_ap;";
+    $conn = new conexion();
+    $conexion = $conn->conectar($_SESSION['id_perfil']);
+    $ExeConsulta = $conexion->query($sql);
+    $Res = $ExeConsulta->fetch_array();
+    $conexion ->close();
+    unset($conexion);
+    ?>
+<span class="label label-default"><?php echo $Res[0]; ?></span> Proyectos de la Dependencia
 </li>
 <li class="list-group-item">
-<span class="label label-success">2</span> Aprobados por la UPLA
+<span class="label label-success"><?php echo $Res[1]; ?></span> Aprobados por la UPLA
 </li>
 <li class="list-group-item">
-<span class="label label-warning">3</span> Aprobados por la Dependencia
+<span class="label label-warning"><?php echo $Res[2]; ?></span> Aprobados por la Dependencia
 </li>
 <li class="list-group-item">
-<span class="label label-danger">4</span> Sin aprobar
+<span class="label label-danger"><?php echo $Res[3]; ?></span> Sin aprobar
 </li>
 </ul>
 </div>
@@ -29,6 +42,9 @@
 Información
 </div>
 <div class="panel-body">
+    <h3>Bienvenido</h3>
+    <p>Sistema Integral de Información para la Planeación de Gobierno del Estado de Zacatecas</p>
+    <p><small>Version 6.0</small></p>
 <?php  
 	$MarcoEstrategicoQuery = "SELECT COUNT(*) FROM marco_estrategico WHERE id_dependencia = ".$_SESSION['id_dependencia']." AND ejercicio = ".$_SESSION['ejercicio'];
 	$conn = new conexion();
