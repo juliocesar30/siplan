@@ -81,6 +81,18 @@ where c.id_proyecto = ".$proyecto;
         return $Resultado[0];
     }
 
+    function eliminar(){
+        require_once('conexion.php');
+        extract($_POST);
+		$sql = "SELECT count(*) FROM componentes WHERE num_componente = ".$_POST['num_componente']." AND id_proyecto = ".$_POST['proyecto'];
+        $conn = new conexion();
+		$conexion = $conn->conectar($_SESSION['id_perfil']);
+		$ExeConsulta = $conexion->query($sql);
+		$conexion->close();
+        $Resultado = $ExeConsulta->fetch_array();
+        return $Resultado[0];
+    }
+
 }
 
 

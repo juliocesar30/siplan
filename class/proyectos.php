@@ -24,7 +24,7 @@ class proyectos{
         $ejercicio = $_SESSION['ejercicio'];
         extract($_POST);
         require_once('conexion.php');
-        $sql = "CALL guardar_proyecto ($dep,$eje,$linea,$est,$num,'$nomb',$inversion,$pondera,'$umedida',$proganual,$progsem,$secpob,$benh,$benm,'$just',$fin,$fun,$subf,'$prop','$obspro','$uresp','$titular','$obj',$pndeje,$pndobj,$pndest,$pndlin,$progpres,'$ejercicio')";
+        $sql = "CALL guardar_proyecto ($dep,$eje,$linea,$est,$num,'$nomb','$inversion',$pondera,'$umedida','$proganual','$progsem',$secpob,$benh,$benm,'$just',$fin,$fun,$subf,'$prop','$obspro','$uresp','$titular','$obj',$pndeje,$pndobj,$pndest,$pndlin,$progpres,'$ejercicio')";
         $conn = new conexion();
         $conexion = $conn->conectar($_SESSION['id_perfil']);
         $conexion->set_charset("utf8");
@@ -399,25 +399,22 @@ $Actividades[32],
 
     }
 
-function actualizar(){
-         $dep = $_SESSION['id_dependencia'];
-       $ejercicio = $_SESSION['ejercicio'];
+    function actualizar(){
+        $dep = $_SESSION['id_dependencia'];
+        $ejercicio = $_SESSION['ejercicio'];
         extract($_POST);
-       require_once('conexion.php');
-       $sql = "CALL actualiza_proyecto ($id_proyecto,$dep,$eje,$linea,$est,$num,'$nomb',$inversion,$pondera,'$umedida',$proganual,$progsem,$secpob,$benh,$benm,'$just',$fin,$fun,$subf,'$prop','$obspro','$uresp','$titular','$obj',$pndeje,$pndobj,$pndest,$pndlin,$progpres)";
-     $conn = new conexion();
-      $conexion = $conn->conectar($_SESSION['id_perfil']);
-     $conexion->set_charset("utf8");
-
+        require_once('conexion.php');
+        $sql = "CALL actualiza_proyecto($id_proyecto,$dep,$eje,$linea,$est,$num,'$nomb',$inversion,$pondera,'$umedida',$proganual,$progsem,$secpob,$benh,$benm,'$just',$fin,$fun,$subf,'$prop','$obspro','$uresp','$titular','$obj',$pndeje,$pndobj,$pndest,$pndlin,$progpres)";
+        $conn = new conexion();
+        $conexion = $conn->conectar($_SESSION['id_perfil']);
+        $conexion->set_charset("utf8");
         if($conexion->query($sql)){
-          $conexion->close();
-           return "guardado";
-      }else{
-        return "error:".$conexion->error." - sql: ".$sql;
-        $conexion->close();
-
-       }
-
+            $conexion->close();
+            return "guardado";
+        }else{
+            return "error:".$conexion->error." - sql: ".$sql;
+            $conexion->close();
+        }
     }
 
     function rechazar(){

@@ -444,7 +444,9 @@ cursor: pointer;
       <label for="ObservacionesProyecto">
           Observaciones del Proyecto
       </label>
-        <textarea name="ObservacionesProyecto" id="ObservacionesProyecto" class="form-control" rows="4"></textarea>
+        <textarea name="ObservacionesProyecto" id="ObservacionesProyecto" class="form-control" rows="4">
+        <?php echo $Res[25]; ?>
+        </textarea>
     </div>
     </div>
 </div>
@@ -461,6 +463,7 @@ cursor: pointer;
 </div>
 </div>
 </div>
+
 <div id="myModal" class="modal">
   <div class="modal-content" >
     <span class="close">x</span>
@@ -468,12 +471,6 @@ cursor: pointer;
   </div>
 </div>
 <script type="text/javascript">
-
-
-// Get the modal
-
-
-
 
 function cancelarEdit(){
         location.href="main.php?token=c81e728d9d4c2f636f067f89cc14862c";
@@ -579,7 +576,7 @@ function ponderacion_maxima(){
      var max = parseInt(msg);
     pmax = PonderaActual + max;
      document.getElementById('ponderacion_max').innerHTML = "&nbsp;debe ser menor o igual a: "+pmax;
-     document.getElementById('ponderacion_max_h').value=msg;
+     document.getElementById('ponderacion_max_h').value=pmax;
   });
 }
 
@@ -617,30 +614,24 @@ function inicio(){
 	ponderacion_maxima();
 }
 
-
-
-
 window.onload = inicio;
 
- function validar(){
+
+function validar(){
     var modal = document.getElementById('myModal');
     modal.style.display = "block";
-
     var num_pr_actual = $('#num_proyecto_o').val();
     var numproyecto = $('#intNumProyecto').val();
     var id_proyecto = $('#id_proyecto').val();
-
     var pondera = parseInt(document.getElementById('intPonderacion').value);
     var ponderamax = parseInt(document.getElementById('ponderacion_max_h').value);
 
     if(pondera > ponderamax){
-        ocultarModal();
+        modal.style.display = "none";
         alert("La ponderacion no puede ser mayor a: "+ponderamax);
         document.getElementById('intPonderacion').focus();
         return false;
     }
-
-
 
     $.ajax({
        method: "POST",
@@ -709,9 +700,10 @@ data: {accion: 8,id_proyecto: id_proyecto,eje: eje,linea: linea,est: est,num: nu
       }else{
           console.log(msg);
           alert("ha ocurrido un error al intentar guardar el proyecto");
+          return false;
       }
   });
-
+return false;
 }
 
 
