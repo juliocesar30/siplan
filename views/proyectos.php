@@ -128,6 +128,7 @@ function aprobar(v){
        data: {accion: 6,id_proyecto: v}
 })
   .done(function(msg) {
+           console.log(msg);
      if(msg == "actualizado"){
          alert("proyecto actualizado");
          listar();

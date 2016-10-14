@@ -26,10 +26,10 @@
 <span class="label label-default"><?php echo $Res[0]; ?></span> Proyectos de la Dependencia
 </li>
 <li class="list-group-item">
-<span class="label label-success"><?php echo $Res[1]; ?></span> Aprobados por la UPLA
+<span class="label label-success"><?php echo $Res[2]; ?></span> Aprobados por la UPLA
 </li>
 <li class="list-group-item">
-<span class="label label-warning"><?php echo $Res[2]; ?></span> Aprobados por la Dependencia
+<span class="label label-warning"><?php echo $Res[1]; ?></span> Aprobados por la Dependencia
 </li>
 <li class="list-group-item">
 <span class="label label-danger"><?php echo $Res[3]; ?></span> Sin aprobar
