@@ -10,24 +10,24 @@ class conexion {
         $this->db = "siplan";
         switch($u){
             case 1:
-            $this->usuario = "siplan_admin";
-            $this->clave = "pEcrUrewr?_?Ur47";
+            $this->usuario = "usr_siplan";
+            $this->clave = "siplan.2016";
             break;
             case 2:
-            $this->usuario = "siplan_dep";
-            $this->clave = "jhh.!!rtTusj889L?yd%";
+            $this->usuario = "usr_siplan";
+            $this->clave = "siplan.2016";
             break;
             case 3:
-            $this->usuario = "siplan_planea";
-            $this->clave = "fAW2SPa_HEth8@a#";
+            $this->usuario = "usr_siplan";
+            $this->clave = "siplan.2016";
             break;
             case 4:
-            $this->usuario = "siplan_evalua";
-            $this->clave = "xaB*Uw-dAPr#8hUh";
+            $this->usuario = "usr_siplan";
+            $this->clave = "siplan.2016";
             break;
             case 5:
-            $this->usuario = "siplan_consultas";
-            $this->clave = "IEwmQLQf&/NYmaRkih4";
+            $this->usuario = "usr_siplan";
+            $this->clave = "siplan.2016";
             break;
         }
        $conn = new mysqli($this->host,$this->usuario,$this->clave,$this->db);
