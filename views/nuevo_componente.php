@@ -123,16 +123,6 @@ Cargando . . . <img src='images/loading_verde.gif'>
 
             echo "<option value='".$ideje."' selected>".$Res1[1]."</option>";
 
-            $sql2 = "SELECT * FROM ejes";
-            $conexion = $conn->conectar($_SESSION['id_perfil']);
-            $conexion->set_charset("utf8");
-            $ExeConsulta2 = $conexion->query($sql2);
-            $conexion ->close();
-            unset($conexion);
-
-            while($Res2 = $ExeConsulta2->fetch_array()){
-                echo "<option value='".$Res2[0]."'>".$Res2[1]."</option>";
-            }
 
             ?>
         </select>
